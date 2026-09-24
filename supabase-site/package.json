@@ -1,0 +1,16 @@
+{
+  "name": "teebanj-supabase",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node commerce.test.mjs",
+    "verify:live": "node verify.mjs"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.57.4"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.10"
+  }
+}
