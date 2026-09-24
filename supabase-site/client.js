@@ -25,7 +25,7 @@ async function api(action, body) {
       email: body.email,
       password: body.password,
     });
-    if (error) throw error;
+    if (error) throw Error(error.message === "Invalid login credentials" ? "Invalid login credentials. Register this email first or use the password-reset email." : error.message);
     await requirePasswordChange();
     if (action === "admin-login" && !(await api("session")).admin) {
       await client.auth.signOut();
@@ -91,6 +91,13 @@ window.formAction = (id, action, make, success) => {
     }
   });
 };
+document.addEventListener("click", (event) => {
+  const toggle = event.target.closest(".password-toggle");
+  if (!toggle) return;
+  const input = toggle.previousElementSibling;
+  input.type = input.type === "password" ? "text" : "password";
+  toggle.setAttribute("aria-label", input.type === "password" ? "Show password" : "Hide password");
+});
 async function script(src) {
   await new Promise((resolve, reject) => {
     const s = document.createElement("script");

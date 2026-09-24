@@ -328,6 +328,7 @@ td input {
 .site-footer .supplied-logo-window {
   width: 260px;
 }
+.password-toggle { margin-left: -42px; position: relative; background: transparent; border: 0; cursor: pointer; padding: 8px; color: var(--ink); }
 @media (max-width: 620px) {
   .supplied-logo-window {
     width: 166px;
