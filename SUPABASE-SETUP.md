@@ -29,11 +29,11 @@ The static build copies an explicit allowlist of storefront files.
 Import the repository and set Root Directory to `supabase-site`.
 Enable Vercel's option to include source files outside that root directory, because the build reuses ../assets, ../css, ../js and HTML.
 The checked-in vercel.json sets the build command and dist output.
-This build has not yet been deployed to Vercel.
+The static build is live at https://dist-psi-three-80.vercel.app. The Vercel project is `dist` in `abahvictor360-3017s-projects`; its Git root is configured to `supabase-site`. The Supabase alternative is on branch `codex/supabase-store` in draft PR #1. Main remains the PHP/MySQL version until that PR is merged.
 
 ## Account setup
-In Supabase Authentication > URL Configuration, set Site URL to the final storefront URL.
-Allow the exact account.html URL for confirmation redirects (and the localhost version during testing).
+In Supabase Authentication > URL Configuration, set Site URL to https://dist-psi-three-80.vercel.app.
+Allow https://dist-psi-three-80.vercel.app/account.html for confirmation redirects (and http://localhost:8088/account.html during local testing). These Auth settings still need to be configured.
 Keep email confirmation enabled; configure your own SMTP provider before public registration.
 Create your account through the storefront and confirm its email.
 Then use Supabase SQL Editor to promote only your account:
