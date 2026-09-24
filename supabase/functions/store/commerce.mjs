@@ -100,7 +100,8 @@ export async function signatureValid(raw, signature, key, url) {
   }
 }
 export function createCommerce(db, env, checked, HttpError, transport = fetch) {
-  const location = env("SQUARE_LOCATION_ID");
+  // SQUARE_LOCATION is accepted as an alias for dashboards set up with that name.
+  const location = env("SQUARE_LOCATION_ID") || env("SQUARE_LOCATION");
   const environment = env("SQUARE_ENVIRONMENT") || "sandbox";
   const configured = () =>
     !!location &&
