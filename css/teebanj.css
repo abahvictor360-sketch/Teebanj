@@ -281,16 +281,59 @@ td input {
 }
 
 /* Original supplied artwork, displayed through a viewport excluding sheet labels. */
-.supplied-logo { flex-shrink: 0; }
-.supplied-logo-window { display: block; position: relative; overflow: hidden; width: 210px; aspect-ratio: 850 / 480; }
-.supplied-logo-window img { position: absolute; width: 147.529412%; max-width: none; height: auto; left: -23.529412%; top: -4.166667%; }
-.site-footer .supplied-logo-window { width: 260px; max-width: 100%; }
-@media (max-width: 620px) {
-  .supplied-logo-window { width: 166px; }
-  .site-footer .supplied-logo-window { width: 240px; }
+.supplied-logo {
+  flex-shrink: 0;
 }
-/* Supplied logo is already transparent and sized for the header. */
-.supplied-logo-window { aspect-ratio: 12 / 5; width: 210px; }
-.supplied-logo-window img { width: 100%; height: 100%; left: 0; top: 0; object-fit: contain; }
-.site-footer .supplied-logo-window { width: 260px; }
-@media (max-width: 620px) { .supplied-logo-window { width: 166px; } .site-footer .supplied-logo-window { width: 220px; } }
+.supplied-logo-window {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  width: 210px;
+  aspect-ratio: 850 / 480;
+}
+.supplied-logo-window img {
+  position: absolute;
+  width: 147.529412%;
+  max-width: none;
+  height: auto;
+  left: -23.529412%;
+  top: -4.166667%;
+}
+.site-footer .supplied-logo-window {
+  width: 260px;
+  max-width: 100%;
+}
+@media (max-width: 620px) {
+  .supplied-logo-window {
+    width: 166px;
+  }
+  .site-footer .supplied-logo-window {
+    width: 240px;
+  }
+}
+/* Show only the main mark; restore the artwork's original square proportions.
+   The existing PNG contains the full brand sheet compressed to 720 x 300. */
+.supplied-logo-window {
+  aspect-ratio: 465 / 264;
+  width: 210px;
+}
+.supplied-logo-window img {
+  width: 154.83871%;
+  height: auto;
+  aspect-ratio: 1;
+  left: -26.88172%;
+  top: -5.45455%;
+  object-fit: fill;
+}
+.site-footer .supplied-logo-window {
+  width: 260px;
+}
+.password-toggle { margin-left: -42px; position: relative; background: transparent; border: 0; cursor: pointer; padding: 8px; color: var(--ink); }
+@media (max-width: 620px) {
+  .supplied-logo-window {
+    width: 166px;
+  }
+  .site-footer .supplied-logo-window {
+    width: 220px;
+  }
+}

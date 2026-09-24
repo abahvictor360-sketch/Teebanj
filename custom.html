@@ -10,37 +10,37 @@
     />
     <link rel="icon" href="assets/site/product-placeholder.svg" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <meta name="theme-color" content="#963c2d" />
+    <meta name="theme-color" content="#c4501a" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/teebanj.css" />
+    <link rel="stylesheet" href="css/refresh.css" />
   </head>
   <body>
     <div data-shell="header"></div>
     <main>
       <div class="page-head">
         <div class="wrap">
-          <h1>Made for you</h1>
-          <p class="crumbs"><a href="index.html">Home</a> / Made for you</p>
+          <h1 data-cms="custom.title">Made for you</h1>
+          <p class="crumbs"><a href="index.html">Home</a> / <span data-cms="custom.title">Made for you</span></p>
         </div>
       </div>
       <section>
-        <div class="wrap content-page">
-          <span class="eyebrow">Your occasion. Your expression.</span>
-          <h2>A design with your story in it.</h2>
-          <p>
-            From a one-of-a-kind outfit to coordinated Aso Ebi clothing, start
-            with a conversation. Share your inspiration, preferred fabric,
-            measurements and event date.
-          </p>
-          <p>We will discuss the design, price and timing before you commit.</p>
-          <a class="btn btn-primary" href="contact.html"
-            >Start your design enquiry →</a
-          >
+        <div class="wrap story">
+          <div class="rich">
+            <span class="eyebrow" data-cms="custom.eyebrow"></span>
+            <h2 data-cms="custom.heading"></h2>
+            <div data-cms-paras="custom.body"></div>
+            <div class="hero2-cta">
+              <a class="btn btn-primary" href="contact.html">Start your design enquiry</a>
+              <a class="btn btn-ghost" id="customWa" href="#" target="_blank" rel="noopener">Chat on WhatsApp</a>
+            </div>
+          </div>
+          <img class="contain" src="assets/site/hero-couple.webp" data-cms-img="custom.image" alt="Custom African print outfits" />
         </div>
       </section>
     </main>
@@ -48,7 +48,13 @@
     <script src="js/preview.js"></script>
     <script src="api/products.php"></script>
     <script src="js/products.js"></script>
+    <script src="js/content.js"></script>
     <script src="js/main.js"></script>
     <script src="js/api.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("customWa").href = waLink("Hello Teebanj, I would like to discuss a custom design.");
+      });
+    </script>
   </body>
 </html>

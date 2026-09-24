@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="robots" content="noindex" />
     <title>Store administration | Teebanj Fashion World</title>
     <meta
       name="description"
@@ -10,172 +11,425 @@
     />
     <link rel="icon" href="assets/site/product-placeholder.svg" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <meta name="theme-color" content="#963c2d" />
+    <meta name="theme-color" content="#c4501a" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/teebanj.css" />
+    <link rel="stylesheet" href="css/refresh.css" />
   </head>
-  <body>
-    <div data-shell="header"></div>
+  <body class="admin-body">
     <main>
-      <div class="page-head">
-        <div class="wrap">
-          <h1>Store administration</h1>
-          <p class="crumbs">
-            <a href="index.html">Home</a> / Store administration
-          </p>
-        </div>
-      </div>
-      <section>
-        <div class="wrap admin-layout">
-          <form class="card" id="adminLogin" style="max-width: 500px">
-            <h2>Administrator sign in</h2>
-            <div class="field">
-              <label for="email">Email</label
-              ><input
-                id="email"
-                name="email"
-                type="email"
-                autocomplete="username"
-                required
-              />
-            </div>
-            <div class="field">
-              <label for="password">Password</label
-              ><input
-                id="password"
-                name="password"
-                type="password"
-                autocomplete="current-password"
-                required
-              />
-            </div>
-            <button type="submit" class="btn btn-primary">Sign in</button>
-            <p role="status"></p>
-          </form>
-          <div id="dashboard" hidden>
-            <div class="admin-controls">
-              <button id="sync" class="btn btn-primary">
-                Import / refresh Square catalogue</button
-              ><button id="refresh" class="btn btn-ghost">
-                Refresh dashboard</button
-              ><button id="logout" class="btn btn-ghost">Sign out</button>
-            </div>
-            <p>
-              Set products, CAD prices, variations, photos and stock in Square
-              first. Enable inventory tracking at the configured location.
-              Importing refreshes this website from Square.
-            </p>
-            <p id="adminStatus" role="status"></p>
-            <div class="admin-section">
-              <h2>Orders</h2>
-              <div id="orders" class="table-wrap"></div>
-            </div>
-            <div class="admin-section">
-              <h2>Products and inventory</h2>
-              <div id="products" class="table-wrap"></div>
-            </div>
-            <div class="admin-section">
-              <h2>Messages</h2>
-              <div id="messages"></div>
-            </div>
-            <div class="admin-section">
-              <h2>Newsletter subscribers</h2>
-              <div id="subscribers"></div>
+      <div class="adm-login" id="adminLoginWrap">
+        <form class="adm-login-card" id="adminLogin">
+          <a class="logo supplied-logo" href="index.html" aria-label="Teebanj Fashion World home"
+            ><span class="supplied-logo-window"
+              ><img src="assets/site/teebanj-logo-transparent.png" alt="Teebanj Fashion World" width="1254" height="1254" /></span
+          ></a>
+          <h1>Store admin</h1>
+          <p class="sub">Sign in with your administrator account.</p>
+          <div class="f">
+            <label for="email">Email address</label>
+            <div class="input">
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>
+              <input id="email" name="email" type="email" autocomplete="username" required />
             </div>
           </div>
+          <div class="f">
+            <label for="password">Password</label>
+            <div class="input">
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
+              <input id="password" name="password" type="password" autocomplete="current-password" required />
+              <button type="button" class="password-toggle" aria-label="Show password"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg></button>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+          <p role="status" class="alert"></p>
+          <p class="fine"><a class="linkish" href="index.html">&larr; Back to the store</a></p>
+        </form>
+      </div>
+
+      <div class="adm" id="dashboard" hidden>
+        <aside class="adm-side" id="admSide">
+          <div class="adm-brand"><span class="logo-plate"><span class="supplied-logo-window"><img src="assets/site/teebanj-logo-transparent.png" alt="Teebanj Fashion World" width="1254" height="1254" /></span></span></div>
+          <nav class="adm-nav" id="admNav" aria-label="Admin sections">
+            <button data-tab="overview"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5" /><rect x="13" y="4" width="7" height="7" rx="1.5" /><rect x="4" y="13" width="7" height="7" rx="1.5" /><rect x="13" y="13" width="7" height="7" rx="1.5" /></svg>Overview</button>
+            <button data-tab="orders"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z" /><path d="M9 8h6M9 12h6M9 16h3" /></svg>Orders<span class="count" id="cOrders"></span></button>
+            <button data-tab="products"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z" /><path d="M3 7.5 12 12l9-4.5M12 12v9" /></svg>Products<span class="count" id="cProducts"></span></button>
+            <button data-tab="messages"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>Messages<span class="count" id="cMessages"></span></button>
+            <button data-tab="subscribers"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5" /><path d="M2.5 20a6.5 6.5 0 0 1 13 0" /><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6" /></svg>Subscribers<span class="count" id="cSubscribers"></span></button>
+            <button data-tab="content"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z" /></svg>Site content</button>
+          </nav>
+          <div class="adm-side-foot">
+            <a href="index.html" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9 5.5 4h13L20 9M4 9h16v11H4z" /><path d="M10 20v-5h4v5" /></svg>View store</a>
+            <button id="logout"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h10" /></svg>Sign out</button>
+          </div>
+        </aside>
+
+        <div class="adm-main">
+          <header class="adm-top">
+            <button class="icon-btn adm-menu" id="admMenu" aria-label="Open admin menu" aria-expanded="false" aria-controls="admSide"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg></button>
+            <div>
+              <h1 id="admTitle">Overview</h1>
+              <p class="adm-sub" id="admWho"></p>
+            </div>
+            <div class="adm-actions">
+              <span id="adminStatus" role="status" class="adm-status"></span>
+              <button id="refresh" class="btn btn-ghost btn-sm"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.8-4M4 5v4h4M4 13a8 8 0 0 0 14.8 4M20 19v-4h-4" /></svg>Refresh</button>
+              <button id="sync" class="btn btn-primary btn-sm">Sync Square catalogue</button>
+            </div>
+          </header>
+
+          <section class="adm-panel" data-tab-panel="overview">
+            <div class="stats" id="stats"></div>
+            <div class="adm-cols">
+              <div class="panel">
+                <div class="panel-head"><h3>Recent orders</h3><button class="linkish" data-tab="orders">View all</button></div>
+                <div id="recentOrders"></div>
+              </div>
+              <div class="panel">
+                <div class="panel-head"><h3>Stock alerts</h3><button class="linkish" data-tab="products">View products</button></div>
+                <div id="lowStock"></div>
+              </div>
+            </div>
+            <div class="panel adm-help">
+              <h3>How the catalogue works</h3>
+              <p>Products, CAD prices, variations, photos and stock live in Square. Enable inventory tracking at the configured location, then use <b>Sync Square catalogue</b> to refresh this website. Square records each sale, and the store reads the new stock level back.</p>
+            </div>
+          </section>
+
+          <section class="adm-panel" data-tab-panel="orders" hidden>
+            <div class="toolbar">
+              <input type="search" id="orderSearch" placeholder="Search by reference, name or email" aria-label="Search orders" />
+              <select id="orderStatus" aria-label="Filter by status">
+                <option value="">All statuses</option>
+                <option value="pending">Pending</option>
+                <option value="paid">Paid, to ship</option>
+                <option value="shipped">Shipped</option>
+                <option value="refund_review">Refund review</option>
+                <option value="cancelled">Cancelled</option>
+              </select>
+            </div>
+            <div id="orders"></div>
+          </section>
+
+          <section class="adm-panel" data-tab-panel="products" hidden>
+            <div class="toolbar">
+              <input type="search" id="productSearch" placeholder="Search by name or SKU" aria-label="Search products" />
+              <select id="productFilter" aria-label="Filter products">
+                <option value="">All products</option>
+                <option value="visible">Visible on site</option>
+                <option value="hidden">Hidden</option>
+                <option value="low">Low stock (3 or fewer)</option>
+                <option value="out">Out of stock</option>
+              </select>
+            </div>
+            <div id="products"></div>
+          </section>
+
+          <section class="adm-panel" data-tab-panel="messages" hidden>
+            <div class="toolbar">
+              <input type="search" id="messageSearch" placeholder="Search messages" aria-label="Search messages" />
+            </div>
+            <div id="messages" class="msg-list"></div>
+          </section>
+
+          <section class="adm-panel" data-tab-panel="subscribers" hidden>
+            <div class="toolbar">
+              <span class="muted" id="subCount"></span>
+              <button class="btn btn-ghost btn-sm" id="copyEmails">Copy emails</button>
+              <button class="btn btn-dark btn-sm" id="exportCsv"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14" /></svg>Export CSV</button>
+            </div>
+            <div id="subscribers"></div>
+          </section>
+
+          <section class="adm-panel" data-tab-panel="content" hidden>
+            <p class="adm-sub" style="margin: 0 0 1rem">Change your logo, homepage slides, contact details and page text. Each section publishes on its own when you click Save and publish.</p>
+            <div id="cmsGroups"></div>
+          </section>
         </div>
-      </section>
+      </div>
     </main>
-    <div data-shell="footer"></div>
     <script src="js/preview.js"></script>
     <script src="api/products.php"></script>
     <script src="js/products.js"></script>
+    <script src="js/content.js"></script>
     <script src="js/main.js"></script>
     <script src="js/api.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        const status = document.getElementById("adminStatus");
+        const $ = (id) => document.getElementById(id);
+        const status = $("adminStatus");
+        const titles = { overview: "Overview", orders: "Orders", products: "Products and inventory", messages: "Messages", subscribers: "Newsletter subscribers", content: "Site content" };
+        let d = { orders: [], products: [], messages: [], subscribers: [] };
+        const when = (v) => (v ? new Date(String(v).replace(" ", "T")).toLocaleString("en-CA", { dateStyle: "medium", timeStyle: "short" }) : "");
+        const pill = (s) => `<span class="pill-s ${escapeHtml(s)}">${escapeHtml(String(s).replace("_", " "))}</span>`;
+        const ref = (id) => "#" + escapeHtml(String(id).slice(0, 8).toUpperCase());
+        const has = (q, ...fields) => !q || fields.join(" ").toLowerCase().includes(q.toLowerCase());
+        const customer = (o) => { try { return JSON.parse(o.customer_json) || {}; } catch { return {}; } };
+        const empty = (title, text) => `<div class="empty-state"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z" /><path d="M3 7.5 12 12l9-4.5M12 12v9" /></svg><b>${title}</b>${text}</div>`;
+        const table = (head, rows) => `<div class="table-scroll"><table class="tbl"><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table></div>`;
+
+        function tab(name) {
+          if (!titles[name]) name = "overview";
+          document.querySelectorAll("[data-tab-panel]").forEach((p) => (p.hidden = p.dataset.tabPanel !== name));
+          document.querySelectorAll("#admNav button").forEach((b) => b.classList.toggle("on", b.dataset.tab === name));
+          $("admTitle").textContent = titles[name];
+          if ($("admSide").classList.contains("open")) setSide(false);
+          if (location.hash.slice(1) !== name) history.replaceState(null, "", "#" + name);
+        }
+        document.addEventListener("click", (e) => {
+          const t = e.target.closest("[data-tab]");
+          if (t) tab(t.dataset.tab);
+        });
+        const setSide = (open) => {
+          $("admSide").classList.toggle("open", open);
+          $("admMenu").setAttribute("aria-expanded", String(open));
+          document.querySelector(".adm-scrim")?.remove();
+          if (open) {
+            const scrim = Object.assign(document.createElement("div"), { className: "adm-scrim" });
+            scrim.addEventListener("click", () => setSide(false));
+            document.body.append(scrim);
+          }
+        };
+        $("admMenu").addEventListener("click", () => setSide(!$("admSide").classList.contains("open")));
+        document.addEventListener("keydown", (e) => e.key === "Escape" && setSide(false));
+
+        function drawOverview() {
+          const paid = d.orders.filter((o) => ["paid", "shipped"].includes(o.status));
+          const revenue = paid.reduce((n, o) => n + Number(o.total_cents || 0), 0);
+          const toShip = d.orders.filter((o) => o.status === "paid").length;
+          const review = d.orders.filter((o) => o.status === "refund_review").length;
+          const visible = d.products.filter((p) => Number(p.active));
+          const low = visible.filter((p) => Number(p.stock) <= 3);
+          const stat = (label, value, note, tone = "") => `<div class="stat ${tone}"><span>${label}</span><b>${value}</b><small>${note}</small></div>`;
+          $("stats").innerHTML =
+            stat("Paid revenue", money(revenue / 100), `${paid.length} paid or shipped orders`) +
+            stat("To ship", toShip, "Paid, waiting for tracking", toShip ? "warn" : "") +
+            stat("Refund review", review, "Check these in Square", review ? "bad" : "") +
+            stat("Products live", visible.length, `${low.length} low or out of stock`, low.length ? "warn" : "") +
+            stat("Messages", d.messages.length, "Most recent 100") +
+            stat("Subscribers", d.subscribers.length, "With marketing consent");
+          $("recentOrders").innerHTML = d.orders.length
+            ? table("<th>Order</th><th>Customer</th><th>Status</th><th class='num'>Total</th>", d.orders.slice(0, 6).map((o) => `<tr><td>${ref(o.id)}<br><small class="muted">${when(o.created_at)}</small></td><td>${escapeHtml(customer(o).name)}</td><td>${pill(o.status)}</td><td class="num">${money(o.total_cents / 100)}</td></tr>`).join(""))
+            : empty("No orders yet", "Orders appear here once customers check out.");
+          $("lowStock").innerHTML = low.length
+            ? table("<th>Product</th><th class='num'>Stock</th>", low.slice(0, 8).map((p) => `<tr><td>${escapeHtml(p.name)}<br><small class="muted">${escapeHtml(p.variation_name)}</small></td><td class="num">${pill(Number(p.stock) < 1 ? "out" : "low").replace(/>(out|low)</, `>${Number(p.stock)}<`)}</td></tr>`).join(""))
+            : empty("All stocked up", d.products.length ? "No visible product is at 3 units or fewer." : "Sync your Square catalogue to import products.");
+          $("cOrders").textContent = toShip || "";
+          $("cProducts").textContent = d.products.length || "";
+          $("cMessages").textContent = d.messages.length || "";
+          $("cSubscribers").textContent = d.subscribers.length || "";
+        }
+        function drawOrders() {
+          const q = $("orderSearch").value, st = $("orderStatus").value;
+          const list = d.orders.filter((o) => { const c = customer(o); return (!st || o.status === st) && has(q, o.id, c.name, c.email, c.phone); });
+          $("orders").innerHTML = list.length
+            ? table(
+                "<th>Order</th><th>Items</th><th>Customer and delivery</th><th class='num'>Total</th><th>Tracking</th><th></th>",
+                list.map((o) => {
+                  const c = customer(o);
+                  const canShip = ["paid", "shipped"].includes(o.status);
+                  return `<tr><td><b>${ref(o.id)}</b><br>${pill(o.status)}<br><small class="muted">${when(o.created_at)}</small></td><td><ul>${(o.items || []).map((i) => `<li>${escapeHtml(i.name)} × ${Number(i.quantity)}</li>`).join("")}</ul></td><td><b>${escapeHtml(c.name)}</b><br><a class="linkish" href="mailto:${escapeHtml(c.email)}">${escapeHtml(c.email)}</a><br>${escapeHtml(c.phone)}<br><small class="muted">${escapeHtml(c.address)}, ${escapeHtml(c.city)}, ${escapeHtml(c.province)} ${escapeHtml(c.postal)}</small></td><td class="num"><b>${money(o.total_cents / 100)}</b></td><td><input class="adm-input" aria-label="Tracking for order ${ref(o.id)}" id="track-${escapeHtml(o.id)}" value="${escapeHtml(o.tracking)}" placeholder="Carrier and tracking number" ${canShip ? "" : "disabled"}></td><td><div class="row-actions"><button class="btn btn-primary btn-sm" data-ship="${escapeHtml(o.id)}" ${canShip ? "" : "disabled"}>Save, mark shipped</button><button class="btn btn-ghost btn-sm" data-reconcile="${escapeHtml(o.id)}">Check payment</button></div></td></tr>`;
+                }).join(""),
+              )
+            : empty(d.orders.length ? "No matching orders" : "No orders yet", d.orders.length ? "Try a different search or status." : "Orders appear here once customers check out.");
+        }
+        function drawProducts() {
+          const q = $("productSearch").value, f = $("productFilter").value;
+          const list = d.products.filter((p) => {
+            const s = Number(p.stock), on = Number(p.active);
+            return has(q, p.name, p.sku, p.variation_name) && (!f || (f === "visible" && on) || (f === "hidden" && !on) || (f === "low" && s <= 3 && s > 0) || (f === "out" && s < 1));
+          });
+          $("products").innerHTML = list.length
+            ? table(
+                "<th></th><th>Product</th><th>Variation / SKU</th><th class='num'>Price</th><th class='num'>Stock</th><th>Visible</th>",
+                list.map((p) => {
+                  const s = Number(p.stock);
+                  const src = p.image_url && /^(https:\/\/|assets\/)/.test(p.image_url) ? p.image_url : "assets/site/product-placeholder.svg";
+                  return `<tr><td><img class="thumb" src="${escapeHtml(src)}" alt="" loading="lazy"></td><td><b>${escapeHtml(p.name)}</b></td><td>${escapeHtml(p.variation_name)}<br><span class="mono">${escapeHtml(p.sku)}</span></td><td class="num">${money(p.price_cents / 100)}</td><td class="num">${s < 1 ? pill("out").replace(">out<", ">0<") : s <= 3 ? pill("low").replace(">low<", `>${s}<`) : s}</td><td>${Number(p.active) ? pill("yes") : pill("hidden")}</td></tr>`;
+                }).join(""),
+              )
+            : empty(d.products.length ? "No matching products" : "No products imported yet", d.products.length ? "Try a different search or filter." : "Set up your items in Square, then click Sync Square catalogue.");
+        }
+        function drawMessages() {
+          const q = $("messageSearch").value;
+          const list = d.messages.filter((m) => has(q, m.name, m.email, m.subject, m.message));
+          $("messages").innerHTML = list.length
+            ? list.map((m) => `<article class="msg"><header><div><b>${escapeHtml(m.subject)}</b><small>${escapeHtml(m.name)} · ${escapeHtml(m.email)}</small></div><time>${when(m.created_at)}</time></header><p>${escapeHtml(m.message)}</p><a class="btn btn-ghost btn-sm" href="mailto:${escapeHtml(m.email)}?subject=${encodeURIComponent("Re: " + m.subject)}">Reply by email</a></article>`).join("")
+            : empty(d.messages.length ? "No matching messages" : "No messages yet", d.messages.length ? "Try a different search." : "Contact form messages appear here.");
+        }
+        function drawSubscribers() {
+          $("subCount").textContent = d.subscribers.length + " subscribers";
+          $("subscribers").innerHTML = d.subscribers.length
+            ? table("<th>Email</th><th>Consent given</th>", d.subscribers.map((s) => `<tr><td>${escapeHtml(s.email)}</td><td>${when(s.consent_at)}</td></tr>`).join(""))
+            : empty("No subscribers yet", "Newsletter sign-ups from the homepage appear here.");
+        }
+        function drawAll() { drawOverview(); drawOrders(); drawProducts(); drawMessages(); drawSubscribers(); if (!cmsEl.childElementCount) drawContent(); labelTables(); }
+        /* ---------- site content editor ---------- */
+        const cmsEl = $("cmsGroups");
+        const input = (f, value, attr) => {
+          const v = escapeHtml(value ?? "");
+          if (f.type === "textarea") return `<textarea ${attr} rows="${f.rows || 3}">${v}</textarea>`;
+          if (f.type === "select") return `<select ${attr}>${f.options.map(([o, l]) => `<option value="${o}" ${o === value ? "selected" : ""}>${escapeHtml(l)}</option>`).join("")}</select>`;
+          if (f.type === "image")
+            return `<div class="cms-img"><img src="${escapeHtml(safeUrl(value, "assets/site/product-placeholder.svg"))}" alt=""><div><input type="text" ${attr} value="${v}" placeholder="Image address" data-image><div class="row"><label class="btn btn-dark"><input type="file" accept="image/jpeg,image/png,image/webp,image/gif" hidden data-upload>${icon("upload")}Upload image</label>${f.default ? `<button type="button" class="btn btn-ghost" data-default="${escapeHtml(f.default)}">Use original</button>` : ""}</div></div></div>`;
+          return `<input type="text" ${attr} value="${v}">`;
+        };
+        const fieldHtml = (f, value, attr, wide) =>
+          `<div class="cms-field${wide ? " wide" : ""}"><label>${escapeHtml(f.label)}</label>${input(f, value, attr)}${f.hint ? `<p class="hint">${escapeHtml(f.hint)}</p>` : ""}</div>`;
+        const itemHtml = (f, item, i, n) =>
+          `<div class="cms-item"><div class="cms-item-head"><b>${escapeHtml(f.label.replace(/s$/, ""))} ${i + 1}</b><button type="button" data-move="-1" aria-label="Move up" ${i ? "" : "disabled"}>${icon("up")}</button><button type="button" data-move="1" aria-label="Move down" ${i < n - 1 ? "" : "disabled"}>${icon("down")}</button>${f.fixed ? "" : `<button type="button" data-remove aria-label="Remove">${icon("trash")}</button>`}</div><div class="cms-item-grid">${f.item.map((sub) => fieldHtml(sub, item[sub.key], `data-sub="${sub.key}"`, sub.type === "textarea" || sub.type === "image")).join("")}</div></div>`;
+        const listHtml = (f, items) =>
+          `<div class="cms-field wide" data-list="${f.key}"><label>${escapeHtml(f.label)}</label><div class="cms-list">${items.map((it, i) => itemHtml(f, it, i, items.length)).join("")}</div>${f.fixed ? "" : `<p><button type="button" class="btn btn-ghost btn-sm" data-add-item ${items.length >= (f.max || 10) ? "disabled" : ""}>${icon("plus")}Add ${escapeHtml(f.label.replace(/s$/, "").toLowerCase())}</button></p>`}</div>`;
+        function drawContent() {
+          cmsEl.innerHTML = CMS_GROUPS.map(
+            (g, gi) =>
+              `<details class="panel cms-group" data-group="${g.id}" ${gi ? "" : "open"}><summary><div><h3>${escapeHtml(g.title)}</h3>${g.note ? `<small>${escapeHtml(g.note)}</small>` : ""}</div></summary><div class="cms-body">${g.fields
+                .map((f) => (f.type === "list" ? listHtml(f, cms(f.key)) : fieldHtml(f, cms(f.key), `data-key="${f.key}"`)))
+                .join("")}<div class="cms-actions"><span class="muted" data-saved></span><button type="button" class="btn btn-ghost btn-sm" data-revert>Undo changes</button><button type="button" class="btn btn-primary btn-sm" data-save>Save and publish</button></div></div></details>`,
+          ).join("");
+        }
+        function readList(box) {
+          return [...box.querySelectorAll(".cms-item")].map((it) =>
+            Object.fromEntries([...it.querySelectorAll("[data-sub]")].map((el) => [el.dataset.sub, el.value.trim()])),
+          );
+        }
+        function redrawList(box, items) {
+          const f = CMS_FIELDS[box.dataset.list];
+          box.outerHTML = listHtml(f, items);
+        }
+        cmsEl.addEventListener("input", (e) => {
+          if (e.target.matches("[data-image]")) e.target.closest(".cms-img").querySelector("img").src = safeUrl(e.target.value, "assets/site/product-placeholder.svg");
+          const g = e.target.closest(".cms-group");
+          if (g) g.querySelector("[data-saved]").textContent = "Unsaved changes";
+        });
+        cmsEl.addEventListener("change", async (e) => {
+          if (!e.target.matches("[data-upload]") || !e.target.files[0]) return;
+          const wrap = e.target.closest(".cms-img");
+          const text = wrap.querySelector("[data-image]");
+          const label = e.target.closest("label");
+          label.classList.add("is-busy");
+          status.textContent = "Uploading image…";
+          try {
+            const { url } = await api("media-upload", { file: e.target.files[0] });
+            text.value = url;
+            text.dispatchEvent(new Event("input", { bubbles: true }));
+            status.textContent = "Image uploaded. Save to publish it.";
+          } catch (err) {
+            status.textContent = "";
+            toast(err.message);
+          } finally {
+            label.classList.remove("is-busy");
+            e.target.value = "";
+          }
+        });
+        cmsEl.addEventListener("click", async (e) => {
+          const b = e.target.closest("button");
+          if (!b) return;
+          const g = b.closest(".cms-group");
+          if (b.dataset.default !== undefined) {
+            const text = b.closest(".cms-img").querySelector("[data-image]");
+            text.value = b.dataset.default;
+            text.dispatchEvent(new Event("input", { bubbles: true }));
+          }
+          const box = b.closest("[data-list]");
+          if (box && (b.dataset.move || b.dataset.remove !== undefined || b.dataset.addItem !== undefined)) {
+            const items = readList(box);
+            const i = [...box.querySelectorAll(".cms-item")].indexOf(b.closest(".cms-item"));
+            if (b.dataset.move) {
+              const j = i + Number(b.dataset.move);
+              [items[i], items[j]] = [items[j], items[i]];
+            } else if (b.dataset.remove !== undefined) {
+              if (!confirm("Remove this item? It is only deleted when you save.")) return;
+              items.splice(i, 1);
+            } else items.push({});
+            redrawList(box, items);
+            g.querySelector("[data-saved]").textContent = "Unsaved changes";
+          }
+          if (b.dataset.revert !== undefined) {
+            drawContent();
+            document.querySelector(`.cms-group[data-group="${g.dataset.group}"]`).open = true;
+          }
+          if (b.dataset.save !== undefined) {
+            const entries = [
+              ...[...g.querySelectorAll("[data-key]")].map((el) => ({ key: el.dataset.key, value: el.value.trim() })),
+              ...[...g.querySelectorAll("[data-list]")].map((box) => ({ key: box.dataset.list, value: readList(box) })),
+            ];
+            b.disabled = true;
+            try {
+              await api("content-save", { entries });
+              g.querySelector("[data-saved]").textContent = "Saved " + new Date().toLocaleTimeString("en-CA", { timeStyle: "short" });
+              toast("Saved. The website now shows your changes.");
+            } catch (err) {
+              toast(err.message);
+            } finally {
+              b.disabled = false;
+            }
+          }
+        });
+        [["orderSearch", () => (drawOrders(), labelTables())], ["orderStatus", () => (drawOrders(), labelTables())], ["productSearch", () => (drawProducts(), labelTables())], ["productFilter", () => (drawProducts(), labelTables())], ["messageSearch", drawMessages]].forEach(([id, fn]) => $(id).addEventListener("input", fn));
+
         async function dashboard() {
           const s = await sessionInfo(true);
-          document.getElementById("adminLogin").hidden = s.admin;
-          document.getElementById("dashboard").hidden = !s.admin;
+          $("adminLoginWrap").hidden = s.admin;
+          $("dashboard").hidden = !s.admin;
           if (!s.admin) return;
-          const d = await api("admin-data");
-          document.getElementById("orders").innerHTML =
-            "<table><thead><tr><th>Reference / status</th><th>Customer / delivery</th><th>Total</th><th>Tracking</th><th>Actions</th></tr></thead><tbody>" +
-            d.orders
-              .map((o) => {
-                const c = JSON.parse(o.customer_json);
-                return `<tr><td>${o.id}<br>${escapeHtml(o.status)}<ul>${o.items.map((i) => `<li>${escapeHtml(i.name)} × ${Number(i.quantity)}</li>`).join("")}</ul></td><td>${escapeHtml(c.name)}<br>${escapeHtml(c.email)}<br>${escapeHtml(c.phone)}<br>${escapeHtml(c.address)}, ${escapeHtml(c.city)}, ${escapeHtml(c.province)} ${escapeHtml(c.postal)}</td><td>${money(o.total_cents / 100)}</td><td><input aria-label="Tracking for ${o.id}" id="track-${o.id}" value="${escapeHtml(o.tracking)}"></td><td><button data-reconcile="${o.id}">Check payment</button> <button data-ship="${o.id}" ${["paid", "shipped"].includes(o.status) ? "" : "disabled"}>Save tracking / shipped</button></td></tr>`;
-              })
-              .join("") +
-            "</tbody></table>";
-          document.getElementById("products").innerHTML =
-            "<table><thead><tr><th>Product</th><th>Variation / SKU</th><th>CAD</th><th>Stock</th><th>Visible</th></tr></thead><tbody>" +
-            d.products
-              .map(
-                (p) =>
-                  `<tr><td>${escapeHtml(p.name)}</td><td>${escapeHtml(p.variation_name)}<br>${escapeHtml(p.sku)}</td><td>${money(p.price_cents / 100)}</td><td>${Number(p.stock)}</td><td>${Number(p.active) ? "Yes" : "No"}</td></tr>`,
-              )
-              .join("") +
-            "</tbody></table>";
-          document.getElementById("messages").innerHTML = d.messages
-            .map(
-              (m) =>
-                `<div class="card"><b>${escapeHtml(m.subject)}</b><p>${escapeHtml(m.name)} · ${escapeHtml(m.email)}</p><p style="white-space:pre-wrap">${escapeHtml(m.message)}</p></div>`,
-            )
-            .join("");
-          document.getElementById("subscribers").textContent = d.subscribers
-            .map((s) => s.email + " · " + s.consent_at)
-            .join("\n");
+          $("admWho").textContent = s.customer?.email ? "Signed in as " + s.customer.email : "";
+          d = await api("admin-data");
+          drawAll();
+          tab(location.hash.slice(1));
         }
-        async function run(fn) {
+        async function run(fn, label = "Working…") {
           try {
-            status.textContent = "Working…";
+            status.textContent = label;
             await fn();
             await dashboard();
-            status.textContent = "Updated.";
+            status.textContent = "Updated " + new Date().toLocaleTimeString("en-CA", { timeStyle: "short" });
           } catch (e) {
-            status.textContent = e.message;
+            status.textContent = "";
+            toast(e.message);
           }
         }
-        formAction(
-          "adminLogin",
-          "admin-login",
-          (f) => Object.fromEntries(f),
-          dashboard,
-        );
-        document.getElementById("sync").addEventListener("click", (e) => {
-          e.target.disabled = true;
+        formAction("adminLogin", "admin-login", (f) => Object.fromEntries(f), dashboard);
+        $("sync").addEventListener("click", (e) => {
+          const b = e.currentTarget;
+          b.disabled = true;
           run(async () => {
             const r = await api("admin-sync", {});
-            toast(r.count + " variations imported");
-          }).finally(() => (e.target.disabled = false));
+            toast(r.count + " variations imported from Square");
+          }, "Syncing with Square…").finally(() => (b.disabled = false));
         });
-        document
-          .getElementById("refresh")
-          .addEventListener("click", () => run(dashboard));
-        document
-          .getElementById("logout")
-          .addEventListener("click", () => run(async () => api("logout", {})));
-        document.getElementById("orders").addEventListener("click", (e) => {
-          const id = e.target.dataset.reconcile || e.target.dataset.ship;
-          if (!id) return;
-          run(() =>
-            api(e.target.dataset.ship ? "admin-tracking" : "admin-refresh", {
-              id,
-              tracking: document.getElementById("track-" + id).value,
-            }),
-          );
+        $("refresh").addEventListener("click", () => run(async () => {}, "Refreshing…"));
+        $("logout").addEventListener("click", () => run(() => api("logout", {})));
+        $("orders").addEventListener("click", (e) => {
+          const b = e.target.closest("[data-ship], [data-reconcile]");
+          if (!b) return;
+          const id = b.dataset.ship || b.dataset.reconcile;
+          run(() => api(b.dataset.ship ? "admin-tracking" : "admin-refresh", { id, tracking: $("track-" + id).value }));
+        });
+        const csvCell = (v) => '"' + String(v ?? "").replaceAll('"', '""') + '"';
+        $("exportCsv").addEventListener("click", () => {
+          const csv = "email,consent_at\n" + d.subscribers.map((s) => [s.email, s.consent_at].map(csvCell).join(",")).join("\n");
+          const a = document.createElement("a");
+          a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+          a.download = "teebanj-subscribers.csv";
+          a.click();
+          setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+        });
+        $("copyEmails").addEventListener("click", async () => {
+          try {
+            await navigator.clipboard.writeText(d.subscribers.map((s) => s.email).join(", "));
+            toast("Emails copied");
+          } catch {
+            toast("Copy is not available in this browser.");
+          }
         });
         dashboard().catch((e) => {
-          document.querySelector("#adminLogin [role=status]").textContent =
-            e.message;
+          document.querySelector("#adminLogin [role=status]").textContent = e.message;
         });
       });
     </script>

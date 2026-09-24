@@ -1,0 +1,4 @@
+[functions.store]
+verify_jwt = false
+# Public catalog/contact and HMAC-verified Square webhooks share this endpoint.
+# index.ts validates Auth tokens and enforces ownership/admin checks itself.

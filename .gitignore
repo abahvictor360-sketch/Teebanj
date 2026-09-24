@@ -3,3 +3,9 @@ config.local.php
 .tools/
 node_modules/
 tests/tmp/
+supabase-site/dist/
+supabase/.temp/
+supabase-site/*-check.png
+supabase-site/.vercel/
+supabase/*.env
+supabase/secrets.local

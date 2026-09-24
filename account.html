@@ -10,107 +10,160 @@
     />
     <link rel="icon" href="assets/site/product-placeholder.svg" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <meta name="theme-color" content="#963c2d" />
+    <meta name="theme-color" content="#c4501a" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/teebanj.css" />
+    <link rel="stylesheet" href="css/refresh.css" />
   </head>
   <body>
     <div data-shell="header"></div>
     <main>
-      <div class="page-head">
+      <section class="auth-wrap">
         <div class="wrap">
-          <h1>Your account</h1>
-          <p class="crumbs"><a href="index.html">Home</a> / Your account</p>
-        </div>
-      </div>
-      <section>
-        <div class="wrap">
-          <div class="two-col" id="authForms">
-            <form class="card" id="login">
-              <h2>Welcome back</h2>
-              <div class="field">
-                <label for="loginEmail">Email</label
-                ><input
-                  id="loginEmail"
-                  name="email"
-                  type="email"
-                  autocomplete="username"
-                  required
-                />
+          <div class="auth-card" id="authForms">
+            <div class="auth-art">
+              <img
+                src="assets/site/about-couple.jpg"
+                alt="Couple in matching Ankara print outfits"
+              />
+              <div>
+                <h2>Welcome to Teebanj</h2>
+                <p>African roots, global style. Your account keeps it all in one place.</p>
+                <ul>
+                  <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>Track every order you place</li>
+                  <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>Check out faster next time</li>
+                  <li><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 5 5 9-10" /></svg>Payments secured by Square</li>
+                </ul>
               </div>
-              <div class="field">
-                <label for="loginPassword">Password</label
-                ><input
-                  id="loginPassword"
-                  name="password"
-                  type="password"
-                  autocomplete="current-password"
-                  required
-                />
+            </div>
+            <div class="auth-panel">
+              <div class="seg" role="tablist" aria-label="Account options" id="authTabs">
+                <button type="button" role="tab" data-view="login" aria-selected="true">Sign in</button>
+                <button type="button" role="tab" data-view="register" aria-selected="false">Create account</button>
               </div>
-              <button type="submit" class="btn btn-primary">Sign in</button>
-              <p role="status"></p>
-              <p>
-                <a href="contact.html">Need help accessing your account?</a>
+
+              <form id="login" data-view-panel="login">
+                <h1>Welcome back</h1>
+                <p class="sub">Sign in to see your orders and check out.</p>
+                <div class="f">
+                  <label for="loginEmail">Email address</label>
+                  <div class="input">
+                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>
+                    <input id="loginEmail" name="email" type="email" autocomplete="username" placeholder="you@example.com" required />
+                  </div>
+                </div>
+                <div class="f">
+                  <label for="loginPassword">Password <button type="button" class="linkish" data-go="reset" hidden>Forgot password?</button></label>
+                  <div class="input">
+                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
+                    <input id="loginPassword" name="password" type="password" autocomplete="current-password" placeholder="Your password" required />
+                    <button type="button" class="password-toggle" aria-label="Show password"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg></button>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                <p role="status" class="alert"></p>
+                <p class="auth-foot">New to Teebanj? <button type="button" data-go="register">Create an account</button></p>
+              </form>
+
+              <form id="register" data-view-panel="register" hidden>
+                <h1>Create your account</h1>
+                <p class="sub">It takes less than a minute.</p>
+                <div class="f">
+                  <label for="registerName">Full name</label>
+                  <div class="input">
+                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>
+                    <input id="registerName" name="name" maxlength="120" autocomplete="name" placeholder="First and last name" required />
+                  </div>
+                </div>
+                <div class="f">
+                  <label for="registerEmail">Email address</label>
+                  <div class="input">
+                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>
+                    <input id="registerEmail" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+                  </div>
+                </div>
+                <div class="f">
+                  <label for="registerPassword">Password</label>
+                  <div class="input">
+                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
+                    <input id="registerPassword" name="password" type="password" minlength="12" maxlength="72" autocomplete="new-password" placeholder="At least 12 characters" required aria-describedby="pwHint" />
+                    <button type="button" class="password-toggle" aria-label="Show password"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg></button>
+                  </div>
+                  <div class="meter" data-score="0" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+                  <p class="hint" id="pwHint">Use 12 or more characters. A short phrase is easy to remember.</p>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Create account</button>
+                <p role="status" class="alert"></p>
+                <p class="fine">By creating an account you agree to our <a class="linkish" href="privacy.html">privacy policy</a>.</p>
+                <p class="auth-foot">Already have an account? <button type="button" data-go="login">Sign in</button></p>
+              </form>
+
+              <form id="resetRequest" data-view-panel="reset" hidden>
+                <button type="button" class="back-link" data-go="login">&larr; Back to sign in</button>
+                <h1>Reset your password</h1>
+                <p class="sub">Enter your email and we will send you a secure link to choose a new password.</p>
+                <div class="f">
+                  <label for="resetEmail">Email address</label>
+                  <div class="input">
+                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>
+                    <input id="resetEmail" name="email" type="email" autocomplete="email" placeholder="you@example.com" required />
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Send reset link</button>
+                <p role="status" class="alert"></p>
+              </form>
+
+              <form id="newPassword" data-view-panel="recover" hidden>
+                <h1>Choose a new password</h1>
+                <p class="sub">You are signed in from your reset link. Set a new password to finish.</p>
+                <div class="f">
+                  <label for="newPass">New password</label>
+                  <div class="input">
+                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
+                    <input id="newPass" name="password" type="password" minlength="12" maxlength="72" autocomplete="new-password" required />
+                    <button type="button" class="password-toggle" aria-label="Show password"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z" /><circle cx="12" cy="12" r="3" /></svg></button>
+                  </div>
+                </div>
+                <div class="f">
+                  <label for="newPassConfirm">Confirm new password</label>
+                  <div class="input">
+                    <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg>
+                    <input id="newPassConfirm" name="confirm" type="password" minlength="12" maxlength="72" autocomplete="new-password" required />
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Save new password</button>
+                <p role="status" class="alert"></p>
+              </form>
+
+              <p id="accountStatus" role="status" class="alert ok"></p>
+              <p class="fine">
+                Guest checkout orders can be viewed using the order link in the same
+                browser used for payment.
               </p>
-            </form>
-            <form class="card" id="register">
-              <h2>Create an account</h2>
-              <div class="field">
-                <label for="registerName">Full name</label
-                ><input
-                  id="registerName"
-                  name="name"
-                  maxlength="120"
-                  autocomplete="name"
-                  required
-                />
-              </div>
-              <div class="field">
-                <label for="registerEmail">Email</label
-                ><input
-                  id="registerEmail"
-                  name="email"
-                  type="email"
-                  autocomplete="username"
-                  required
-                />
-              </div>
-              <div class="field">
-                <label for="registerPassword"
-                  >Password (12 characters minimum)</label
-                ><input
-                  id="registerPassword"
-                  name="password"
-                  type="password"
-                  minlength="12"
-                  maxlength="72"
-                  autocomplete="new-password"
-                  required
-                />
-              </div>
-              <button type="submit" class="btn btn-primary">
-                Create account
-              </button>
-              <p role="status"></p>
-            </form>
+            </div>
           </div>
-          <div id="signedIn" hidden>
-            <h2 id="greeting"></h2>
-            <button id="logout" class="btn btn-ghost">Sign out</button>
-            <h3>Your orders</h3>
-            <div id="orders"></div>
+
+          <div id="signedIn" class="acct" hidden>
+            <aside class="acct-side">
+              <div class="avatar" id="avatar"></div>
+              <h2 id="greeting"></h2>
+              <nav class="acct-links" aria-label="Account shortcuts">
+                <a href="shop.html"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1.2 12H6.2z" /><path d="M9 8V6.5a3 3 0 0 1 6 0V8" /></svg>Continue shopping</a>
+                <a href="wishlist.html"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-9.2-8.6C1.2 8.3 3 4.5 6.6 4.5c2.1 0 3.4 1.2 4.4 2.6 1-1.4 2.3-2.6 4.4-2.6 3.6 0 5.4 3.8 3.8 6.9C19 15.6 12 20 12 20z" /></svg>Wishlist</a>
+                <a href="contact.html"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z" /></svg>Get help</a>
+              </nav>
+              <button id="logout" class="btn btn-ghost btn-block">Sign out</button>
+            </aside>
+            <div class="panel">
+              <div class="panel-head"><h3>Your orders</h3></div>
+              <div id="orders"></div>
+            </div>
           </div>
-          <p id="accountStatus" role="status"></p>
-          <p>
-            Guest checkout orders can be viewed using the order link in the same
-            browser used for payment.
-          </p>
         </div>
       </section>
     </main>
@@ -118,44 +171,102 @@
     <script src="js/preview.js"></script>
     <script src="api/products.php"></script>
     <script src="js/products.js"></script>
+    <script src="js/content.js"></script>
     <script src="js/main.js"></script>
     <script src="js/api.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
+        const $ = (id) => document.getElementById(id);
+        const auth = window.TEEBANJ_AUTH || {};
+        const note = $("accountStatus");
+        function view(name) {
+          document.querySelectorAll("[data-view-panel]").forEach((f) => (f.hidden = f.dataset.viewPanel !== name));
+          document.querySelectorAll("#authTabs button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.view === name)));
+          $("authTabs").hidden = name === "reset" || name === "recover";
+          document.querySelector(`[data-view-panel="${name}"] input`)?.focus({ preventScroll: true });
+        }
+        document.addEventListener("click", (e) => {
+          const go = e.target.closest("[data-go], #authTabs button");
+          if (!go) return;
+          note.textContent = "";
+          view(go.dataset.go || go.dataset.view);
+          history.replaceState(null, "", go.dataset.go === "register" || go.dataset.view === "register" ? "#register" : location.pathname);
+        });
+        if (auth.reset) document.querySelector('[data-go="reset"]').hidden = false;
+        view(location.hash === "#register" ? "register" : "login");
+
+        const meter = document.querySelector(".meter");
+        $("registerPassword").addEventListener("input", (e) => {
+          const v = e.target.value;
+          const score = !v ? 0 : v.length < 12 ? 1 : 1 + (v.length >= 16) + (/[a-z]/.test(v) && /[A-Z]/.test(v)) + /[\d\W_]/.test(v);
+          meter.dataset.score = String(Math.min(score, 4));
+        });
+
+        function orderRow(o) {
+          const date = o.created_at ? new Date(o.created_at).toLocaleDateString("en-CA", { dateStyle: "medium" }) : "";
+          const status = escapeHtml(String(o.status).replace("_", " "));
+          return `<tr><td><a class="linkish" href="order.html?ref=${encodeURIComponent(o.id)}">#${escapeHtml(String(o.id).slice(0, 8).toUpperCase())}</a></td><td>${date}</td><td><span class="pill-s ${escapeHtml(o.status)}">${status}</span></td><td class="num">${money(o.total_cents / 100)}</td></tr>`;
+        }
         async function show() {
-          const s = await sessionInfo(true);
-          document.getElementById("authForms").hidden = !!s.customer;
-          document.getElementById("signedIn").hidden = !s.customer;
-          if (s.customer) {
-            document.getElementById("greeting").textContent =
-              "Hello, " + s.customer.name;
-            const { orders } = await api("my-orders");
-            document.getElementById("orders").innerHTML = orders.length
-              ? orders
-                  .map(
-                    (o) =>
-                      `<p><a href="order.html?ref=${o.id}">${o.id}</a> · ${escapeHtml(o.status)} · ${money(o.total_cents / 100)}</p>`,
-                  )
-                  .join("")
-              : "<p>No orders yet. Orders placed while signed in will appear here.</p>";
+          if (window.TEEBANJ_RECOVERY) {
+            $("authForms").hidden = false;
+            $("signedIn").hidden = true;
+            view("recover");
+            return;
           }
+          const s = await sessionInfo(true);
+          $("authForms").hidden = !!s.customer;
+          $("signedIn").hidden = !s.customer;
+          if (!s.customer) return;
+          const name = s.customer.name || s.customer.email || "there";
+          $("greeting").textContent = "Hello, " + name.split(" ")[0];
+          $("avatar").textContent = name.trim().charAt(0).toUpperCase();
+          const { orders } = await api("my-orders");
+          $("orders").innerHTML = orders.length
+            ? `<div class="table-scroll"><table class="tbl"><thead><tr><th>Order</th><th>Date</th><th>Status</th><th class="num">Total</th></tr></thead><tbody>${orders.map(orderRow).join("")}</tbody></table></div>`
+            : `<div class="empty-state"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z" /><path d="M3 7.5 12 12l9-4.5M12 12v9" /></svg><b>No orders yet</b>Orders you place while signed in will appear here.<p><a class="btn btn-primary" href="shop.html">Start shopping</a></p></div>`;
+          labelTables($("orders"));
         }
         formAction("login", "login", (f) => Object.fromEntries(f), show);
-        formAction("register", "register", (f) => Object.fromEntries(f), show);
-        document
-          .getElementById("logout")
-          .addEventListener("click", async () => {
-            try {
-              await api("logout", {});
-              await show();
-            } catch (e) {
-              toast(e.message);
-            }
-          });
+        formAction("register", "register", (f) => Object.fromEntries(f), async (_, f) => {
+          f.reset();
+          meter.dataset.score = "0";
+          await show();
+          if (!$("authForms").hidden && note.textContent) view("login");
+        });
+        formAction("resetRequest", "password-reset", (f) => Object.fromEntries(f), (_, f) => {
+          f.reset();
+          view("login");
+          note.textContent = "If that email has an account, a reset link is on its way. Check your inbox and spam folder.";
+        });
+        formAction(
+          "newPassword",
+          "update-password",
+          (f) => {
+            if (f.get("password") !== f.get("confirm")) throw Error("The passwords do not match.");
+            return { password: f.get("password") };
+          },
+          async () => {
+            window.TEEBANJ_RECOVERY = false;
+            history.replaceState(null, "", location.pathname);
+            await show();
+            toast("Your password has been updated.");
+          },
+        );
+        document.addEventListener("teebanj:recovery", () => show());
+        $("logout").addEventListener("click", async () => {
+          try {
+            await api("logout", {});
+            await show();
+            view("login");
+          } catch (e) {
+            toast(e.message);
+          }
+        });
         try {
           await show();
         } catch (e) {
-          document.getElementById("accountStatus").textContent = e.message;
+          note.textContent = e.message;
         }
       });
     </script>

@@ -10,14 +10,15 @@
     />
     <link rel="icon" href="assets/site/product-placeholder.svg" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <meta name="theme-color" content="#963c2d" />
+    <meta name="theme-color" content="#c4501a" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/teebanj.css" />
+    <link rel="stylesheet" href="css/refresh.css" />
   </head>
   <body>
     <div data-shell="header"></div>
@@ -54,6 +55,7 @@
     <script src="js/preview.js"></script>
     <script src="api/products.php"></script>
     <script src="js/products.js"></script>
+    <script src="js/content.js"></script>
     <script src="js/main.js"></script>
     <script src="js/api.js"></script>
     <script>
@@ -63,7 +65,7 @@
             ? cart
                 .map((l) => {
                   const p = PRODUCTS.find((p) => p.id === l.id);
-                  return `<div class="cart-row"><img src="${escapeHtml(p ? img(p) : "assets/site/product-placeholder.svg")}" alt=""><div><b>${escapeHtml(p?.name || "Unavailable product")}</b><p>${p ? money(p.price) : "Remove this item"}</p></div><input aria-label="Quantity" type="number" min="1" max="99" value="${l.qty}" data-qty="${escapeHtml(l.id)}"><button class="btn btn-ghost btn-sm" data-remove="${escapeHtml(l.id)}">Remove</button></div>`;
+                  return `<div class="cart-row"><img src="${escapeHtml(p ? img(p) : "assets/site/product-placeholder.svg")}" alt=""><div><b>${escapeHtml(p?.name || "Unavailable product")}</b><p>${p ? money(p.price) : "Remove this item"}</p></div><div class="cart-actions"><input aria-label="Quantity" type="number" inputmode="numeric" min="1" max="99" value="${l.qty}" data-qty="${escapeHtml(l.id)}"><button class="btn btn-ghost btn-sm" data-remove="${escapeHtml(l.id)}">Remove</button></div></div>`;
                 })
                 .join("")
             : '<p>Your bag is empty. <a href="shop.html">Explore our collection.</a></p>';

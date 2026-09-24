@@ -10,116 +10,146 @@
     />
     <link rel="icon" href="assets/site/product-placeholder.svg" />
     <link rel="manifest" href="manifest.webmanifest" />
-    <meta name="theme-color" content="#963c2d" />
+    <meta name="theme-color" content="#c4501a" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/teebanj.css" />
+    <link rel="stylesheet" href="css/refresh.css" />
   </head>
   <body>
     <div data-shell="header"></div>
     <main>
-      <section class="landing">
-        <div class="wrap landing-grid">
-          <div>
-            <span class="eyebrow">African roots. A world of possibility.</span>
-            <h1>Wear your culture.<br />Own your style.</h1>
-            <p>
-              Rich prints. Beautiful fabrics. Pieces that feel like you.
-              Discover African fashion and custom designs at Teebanj Fashion
-              World.
-            </p>
-            <div class="admin-controls">
-              <a class="btn btn-primary" href="shop.html"
-                >Explore the collection →</a
-              ><a class="btn btn-ghost" href="custom.html">Made for you</a>
+      <section
+        class="hero2"
+        aria-roledescription="carousel"
+        aria-label="Featured collections"
+      >
+        <div class="hero-track" id="heroTrack" aria-live="off"></div>
+        <div class="wrap hero-nav" id="heroNav">
+          <button class="hero-arrow" data-dir="-1" aria-label="Previous slide">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
+          </button>
+          <div class="hero-dots" id="heroDots"></div>
+          <button class="hero-arrow" data-dir="1" aria-label="Next slide">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </button>
+        </div>
+      </section>
+
+      <section class="tight">
+        <div class="wrap bento" id="tiles"></div>
+      </section>
+
+      <section>
+        <div class="wrap">
+          <div class="title-center">
+            <h2>Find your next favourite</h2>
+            <div class="flourish">
+              <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" style="fill: currentColor; stroke: none; width: 14px; height: 14px">
+                <path
+                  d="M12 20s-7-4.4-9.2-8.6C1.2 8.3 3 4.5 6.6 4.5c2.1 0 3.4 1.2 4.4 2.6 1-1.4 2.3-2.6 4.4-2.6 3.6 0 5.4 3.8 3.8 6.9C19 15.6 12 20 12 20z"
+                />
+              </svg>
             </div>
-            <p>
-              <small>Based in Moncton, New Brunswick · Prices in CAD</small>
-            </p>
           </div>
-          <div class="hero-art">
-            <img
-              src="assets/site/hero-model.webp"
-              alt="African print fashion inspiration"
-            />
-            <div class="hero-caption">
-              <span class="eyebrow">The Teebanj spirit</span><br /><b
-                >Heritage in every detail.</b
+          <div class="tabs" role="tablist" id="featuredTabs"></div>
+          <div class="product-grid" id="featured" role="tabpanel"></div>
+          <p class="center" style="margin-top: 2rem">
+            <a class="btn btn-ghost" href="shop.html">View all products</a>
+          </p>
+        </div>
+      </section>
+
+      <section class="tight">
+        <div class="wrap"><div class="perks2">
+          <div>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="6" cy="7" r="2.5" />
+              <circle cx="6" cy="17" r="2.5" />
+              <path d="M8 8.5 20 17M8 15.5 20 7" />
+            </svg>
+            <span><b>Made to measure</b><small>Custom designs for any occasion</small></span>
+          </div>
+          <div>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3 5 6v5c0 4.5 3 8.3 7 10 4-1.7 7-5.5 7-10V6z" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+            <span><b>Secure payment</b><small>Checkout handled by Square</small></span>
+          </div>
+          <div>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z" />
+              <path d="M3 7.5 12 12l9-4.5M12 12v9" />
+            </svg>
+            <span><b>Authentic fabrics</b><small>Ankara, Adire, Lace and Aso Oke</small></span>
+          </div>
+          <div>
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 5h16v11H9l-5 4z" />
+              <path d="M8 10h8M8 13h5" />
+            </svg>
+            <span><b>Here to help</b><small>Call or WhatsApp 902-593-3718</small></span>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap story">
+          <img
+            src="assets/site/about-couple.jpg"
+            data-cms-img="home.story.image"
+            alt="Teebanj Fashion World outfits"
+            loading="lazy"
+          />
+          <div>
+            <span class="eyebrow" data-cms="home.story.eyebrow"></span>
+            <h2 data-cms="home.story.title"></h2>
+            <div data-cms-paras="home.story.text"></div>
+            <a class="btn btn-dark" href="about.html">Meet Teebanj</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="tight">
+        <div class="wrap"><div class="promo">
+          <img
+            src="assets/site/hero-couple.webp"
+            data-cms-img="home.promo.image"
+            alt=""
+            loading="lazy"
+          />
+          <div class="promo-copy">
+            <small data-cms="home.promo.label"></small>
+            <h2 data-cms="home.promo.title"></h2>
+            <p data-cms="home.promo.text"></p>
+            <form id="subscribe">
+              <div class="inline-form">
+                <input
+                  type="email"
+                  id="newsletterEmail"
+                  name="email"
+                  required
+                  maxlength="254"
+                  placeholder="Enter your email"
+                  aria-label="Your email"
+                  autocomplete="email"
+                /><button class="btn btn-primary" type="submit">Subscribe</button>
+              </div>
+              <label class="consent"
+                ><input type="checkbox" name="consent" required /> I agree to
+                receive marketing emails. I can unsubscribe by contacting the
+                store.</label
               >
-            </div>
+              <p role="status" class="alert"></p>
+            </form>
           </div>
         </div>
-      </section>
-      <section>
-        <div class="wrap">
-          <div class="sec-head">
-            <div>
-              <span class="eyebrow">Find your expression</span>
-              <h2>Explore our collections</h2>
-            </div>
-          </div>
-          <div class="collection-links" id="categories"></div>
-        </div>
-      </section>
-      <section style="background: var(--cream-deep)">
-        <div class="wrap">
-          <div class="sec-head">
-            <div>
-              <span class="eyebrow">From our collection</span>
-              <h2>Find your next favourite</h2>
-            </div>
-            <a href="shop.html">Shop all →</a>
-          </div>
-          <div class="product-grid" id="featured"></div>
-        </div>
-      </section>
-      <section>
-        <div class="wrap two-col">
-          <div>
-            <span class="eyebrow">More than what you wear</span>
-            <h2>Tradition, made personal.</h2>
-          </div>
-          <div>
-            <p>
-              From ready-to-wear outfits to bespoke designs and coordinated Aso
-              Ebi attire, we bring African textiles into life's everyday moments
-              and special celebrations.
-            </p>
-            <a class="btn btn-ghost" href="about.html">Meet Teebanj →</a>
-          </div>
-        </div>
-      </section>
-      <section>
-        <div class="wrap newsletter">
-          <h2>A little inspiration in your inbox.</h2>
-          <p>Sign up for collection updates and fashion news.</p>
-          <form id="subscribe">
-            <div class="field">
-              <label for="newsletterEmail">Your email</label
-              ><input
-                type="email"
-                id="newsletterEmail"
-                name="email"
-                required
-                maxlength="254"
-              />
-            </div>
-            <label
-              ><input type="checkbox" name="consent" required /> I agree to
-              receive marketing emails. I can unsubscribe by contacting the
-              store.</label
-            >
-            <p>
-              <button class="btn btn-primary" type="submit">
-                Join the list
-              </button>
-            </p>
-            <p role="status"></p>
-          </form>
         </div>
       </section>
     </main>
@@ -127,15 +157,96 @@
     <script src="js/preview.js"></script>
     <script src="api/products.php"></script>
     <script src="js/products.js"></script>
+    <script src="js/content.js"></script>
     <script src="js/main.js"></script>
     <script src="js/api.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("categories").innerHTML = CATEGORIES.map(
-          (c) =>
-            `<a class="collection-link" style="background:${c.tint}" href="shop.html?cat=${c.slug}"><b>${c.name}</b><span>${c.blurb} →</span></a>`,
-        ).join("");
-        renderGrid(document.getElementById("featured"), PRODUCTS.slice(0, 8));
+        const arrow = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>';
+        document.getElementById("tiles").innerHTML = cms("home.tiles")
+          .slice(0, 5)
+          .map(
+            (t, i) =>
+              `<a class="tile${i === 1 ? " feature" : ""}${t.fit === "cutout" ? " cutout" : ""}" href="${escapeHtml(safeUrl(t.link, "shop.html"))}">${i === 1 ? `<img src="${escapeHtml(safeUrl(t.image, ""))}" alt="" loading="lazy">` : ""}<div><small>${escapeHtml(t.label)}</small><h3>${escapeHtml(t.title)}</h3><p>${escapeHtml(t.subtitle)}</p><span class="btn btn-dark">${escapeHtml(t.button || "Shop now")}</span></div>${i === 1 ? "" : `<img src="${escapeHtml(safeUrl(t.image, ""))}" alt="" loading="lazy">`}</a>`,
+          )
+          .join("");
+
+        const slides = cms("home.slides").filter((sl) => sl && (sl.title || sl.image));
+        const track = document.getElementById("heroTrack");
+        const dots = document.getElementById("heroDots");
+        track.innerHTML = slides
+          .map(
+            (sl, i) =>
+              `<div class="hero-slide" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${slides.length}" ${i ? 'aria-hidden="true"' : ""}><div class="wrap hero2-grid"><div class="hero2-copy">${sl.badge ? `<span class="pill">${escapeHtml(sl.badge)}</span>` : ""}<${i ? "h2" : "h1"} class="hero-title">${escapeHtml(sl.title)} <strong>${escapeHtml(sl.highlight)}</strong></${i ? "h2" : "h1"}>${sl.tagline ? `<p class="rule">${escapeHtml(sl.tagline)}</p>` : ""}${sl.text ? `<p class="lede">${escapeHtml(sl.text)}</p>` : ""}<div class="hero2-cta"><a class="btn btn-primary" href="${escapeHtml(safeUrl(sl.link, "shop.html"))}" ${i ? 'tabindex="-1"' : ""}>${escapeHtml(sl.button || "Shop now")} ${arrow}</a></div></div><div class="hero2-art"><img src="${escapeHtml(safeUrl(sl.image, "assets/site/hero-model.webp"))}" alt="" ${i ? 'loading="lazy"' : 'fetchpriority="high"'}></div></div></div>`,
+          )
+          .join("");
+        dots.innerHTML = slides
+          .map((_, i) => `<button class="hero-pip" aria-label="Go to slide ${i + 1}"></button>`)
+          .join("");
+        document.getElementById("heroNav").hidden = slides.length < 2;
+        let current = 0, timer;
+        const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        function go(n) {
+          current = (n + slides.length) % slides.length;
+          [...track.children].forEach((el, i) => {
+            const on = i === current;
+            el.classList.toggle("on", on);
+            el.setAttribute("aria-hidden", String(!on));
+            el.querySelectorAll("a").forEach((a) => (on ? a.removeAttribute("tabindex") : a.setAttribute("tabindex", "-1")));
+          });
+          [...dots.children].forEach((d, i) => d.setAttribute("aria-current", String(i === current)));
+        }
+        const stop = () => clearInterval(timer);
+        const play = () => {
+          stop();
+          if (!reduced && slides.length > 1) timer = setInterval(() => go(current + 1), 6000);
+        };
+        document.getElementById("heroNav").addEventListener("click", (e) => {
+          const b = e.target.closest("button");
+          if (!b) return;
+          go(b.dataset.dir ? current + Number(b.dataset.dir) : [...dots.children].indexOf(b));
+          play();
+        });
+        const hero = track.parentElement;
+        hero.addEventListener("mouseenter", stop);
+        hero.addEventListener("mouseleave", play);
+        hero.addEventListener("focusin", stop);
+        hero.addEventListener("focusout", play);
+        document.addEventListener("visibilitychange", () => (document.hidden ? stop() : play()));
+        let startX = null;
+        track.addEventListener("pointerdown", (e) => (startX = e.clientX));
+        track.addEventListener("pointerup", (e) => {
+          if (startX !== null && Math.abs(e.clientX - startX) > 50) {
+            go(current + (e.clientX < startX ? 1 : -1));
+            play();
+          }
+          startX = null;
+        });
+        go(0);
+        play();
+
+        const tabs = [["", "All"], ...CATEGORIES.map((c) => [c.slug, c.name])];
+        const tabEl = document.getElementById("featuredTabs");
+        const draw = (slug) => {
+          tabEl.querySelectorAll("button").forEach((b) =>
+            b.setAttribute("aria-selected", String(b.dataset.cat === slug)),
+          );
+          renderGrid(
+            document.getElementById("featured"),
+            PRODUCTS.filter((p) => !slug || p.cat === slug).slice(0, 8),
+          );
+        };
+        tabEl.innerHTML = tabs
+          .map(
+            ([slug, name]) =>
+              `<button role="tab" data-cat="${slug}" aria-selected="false">${name}</button>`,
+          )
+          .join("");
+        tabEl.addEventListener("click", (e) => {
+          const b = e.target.closest("button");
+          if (b) draw(b.dataset.cat);
+        });
+        draw("");
         formAction(
           "subscribe",
           "subscribe",
