@@ -42,8 +42,9 @@ insert into public.store_admins(user_id)
 select id from auth.users where lower(email) = lower('oasisorchardtech@gmail.com') and email_confirmed_at is not null
 on conflict do nothing;
 ```
-The designated owner is oasisorchardtech@gmail.com. That account did not exist when checked. Never grant admin based on user-editable metadata.
-Sign in at admin.html with that same account. No administrator has been assigned automatically.
+Current administrator: abahvictor760@gmail.com (confirmed, listed in store_admins, not yet signed in).
+oasisorchardtech@gmail.com exists but is unconfirmed and is not an administrator. Promote it with the query above only after it confirms its email.
+Never grant admin based on user-editable metadata. Sign in at admin.html with an administrator account.
 
 ## Database and deployments
 Migrations in supabase/migrations match the remote applied migration versions.

@@ -1,6 +1,14 @@
 import { createClient } from "@supabase/supabase-js";
 import { url, key } from "./config.js";
 const client = createClient(url, key);
+// Read before supabase-js consumes the URL fragment of a password-reset link.
+window.TEEBANJ_RECOVERY = /type=recovery/.test(location.hash);
+window.TEEBANJ_AUTH = { reset: true };
+client.auth.onAuthStateChange((event) => {
+  if (event !== "PASSWORD_RECOVERY") return;
+  window.TEEBANJ_RECOVERY = true;
+  document.dispatchEvent(new Event("teebanj:recovery"));
+});
 async function requirePasswordChange() {
   const { data: { user } } = await client.auth.getUser();
   if (!user?.user_metadata?.must_change_password) return;
@@ -25,7 +33,7 @@ async function api(action, body) {
       email: body.email,
       password: body.password,
     });
-    if (error) throw Error(error.message === "Invalid login credentials" ? "Invalid login credentials. Register this email first or use the password-reset email." : error.message);
+    if (error) throw Error(error.message === "Invalid login credentials" ? "That email and password do not match. Check them and try again, or use Forgot password." : error.message);
     await requirePasswordChange();
     if (action === "admin-login" && !(await api("session")).admin) {
       await client.auth.signOut();
@@ -38,7 +46,7 @@ async function api(action, body) {
       email: body.email,
       password: body.password,
       options: {
-        data: { name: body.name, must_change_password: true },
+        data: { name: body.name },
         emailRedirectTo: new URL("account.html", location.href).href,
       },
     });
@@ -46,6 +54,21 @@ async function api(action, body) {
     if (!data.session)
       document.getElementById("accountStatus").textContent =
         "Check your email to confirm your account, then sign in.";
+    return { ok: true };
+  }
+  if (action === "password-reset") {
+    const { error } = await client.auth.resetPasswordForEmail(body.email, {
+      redirectTo: new URL("account.html", location.href).href,
+    });
+    if (error) throw error;
+    return { ok: true };
+  }
+  if (action === "update-password") {
+    const { error } = await client.auth.updateUser({
+      password: body.password,
+      data: { must_change_password: false },
+    });
+    if (error) throw error;
     return { ok: true };
   }
   if (action === "logout") {
@@ -91,13 +114,6 @@ window.formAction = (id, action, make, success) => {
     }
   });
 };
-document.addEventListener("click", (event) => {
-  const toggle = event.target.closest(".password-toggle");
-  if (!toggle) return;
-  const input = toggle.previousElementSibling;
-  input.type = input.type === "password" ? "text" : "password";
-  toggle.setAttribute("aria-label", input.type === "password" ? "Show password" : "Hide password");
-});
 async function script(src) {
   await new Promise((resolve, reject) => {
     const s = document.createElement("script");

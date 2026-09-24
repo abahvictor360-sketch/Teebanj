@@ -29,7 +29,6 @@ for (const name of await readdir(root)) {
       /Guest checkout orders can be viewed using the order link in the same\s+browser used for payment\./,
       "Sign in to view orders placed through your account.",
     );
-  if (name === "account.html") html = html.replace(/(<input\s+[^>]*type="password"[^>]*)(\/?>)/g, '$1$2<button type="button" class="password-toggle" aria-label="Show password">◉</button>');
   if (name === "checkout.html")
     html = html
       .replace('"submittedCart"', '"submittedCart:" + r.id')
