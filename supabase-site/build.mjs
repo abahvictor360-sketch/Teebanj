@@ -16,7 +16,7 @@ for (const name of await readdir(root)) {
   let html = await readFile(path.join(root, name), "utf8");
   html = html
     .replace(
-      /<script src="(?:api\/products.php|js\/(?:products|main|api).js)"><\/script>\s*/g,
+      /<script src="(?:api\/products.php|js\/(?:products|content|main|api).js)"><\/script>\s*/g,
       "",
     )
     .replaceAll("DOMContentLoaded", "teebanj:ready")

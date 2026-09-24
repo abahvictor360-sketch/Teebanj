@@ -25,33 +25,24 @@
     <main>
       <div class="page-head">
         <div class="wrap">
-          <h1>Our story</h1>
-          <p class="crumbs"><a href="index.html">Home</a> / Our story</p>
+          <h1 data-cms="about.title">Our story</h1>
+          <p class="crumbs"><a href="index.html">Home</a> / <span data-cms="about.title">Our story</span></p>
         </div>
       </div>
       <section>
-        <div class="wrap content-page">
-          <span class="eyebrow">Moncton, Canada. African at heart.</span>
-          <h2>Where culture meets style.</h2>
-          <p>
-            Teebanj Fashion World brings African textiles and contemporary
-            design together. Based in Moncton, New Brunswick, the business
-            offers ready-to-wear fashion, custom clothing and fabrics.
-          </p>
-          <p>
-            Our collections celebrate the character of Ankara, Adire, Lace and
-            Aso Oke. Whether you are dressing for an everyday moment, a special
-            occasion or an Aso Ebi celebration, we help you make it personal.
-          </p>
-          <h3>Made for your story</h3>
-          <p>
-            Explore women's and men's collections, accessories and fabrics, or
-            talk to us about a bespoke design.
-          </p>
-          <a class="btn btn-primary" href="shop.html">Explore the collection</a>
-          <a class="btn btn-ghost" href="custom.html"
-            >Discuss a custom design</a
-          >
+        <div class="wrap story">
+          <img src="assets/site/about-couple.jpg" data-cms-img="about.image" alt="Teebanj Fashion World outfits" />
+          <div class="rich">
+            <span class="eyebrow" data-cms="about.eyebrow"></span>
+            <h2 data-cms="about.heading"></h2>
+            <div data-cms-paras="about.body"></div>
+            <h3 data-cms="about.subheading"></h3>
+            <div data-cms-paras="about.subtext"></div>
+            <div class="hero2-cta">
+              <a class="btn btn-primary" href="shop.html">Explore the collection</a>
+              <a class="btn btn-ghost" href="custom.html">Discuss a custom design</a>
+            </div>
+          </div>
         </div>
       </section>
     </main>
@@ -59,6 +50,7 @@
     <script src="js/preview.js"></script>
     <script src="api/products.php"></script>
     <script src="js/products.js"></script>
+    <script src="js/content.js"></script>
     <script src="js/main.js"></script>
     <script src="js/api.js"></script>
   </body>

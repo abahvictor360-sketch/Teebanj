@@ -619,6 +619,10 @@ export function createCommerce(db, env, checked, HttpError, transport = fetch) {
         ),
       ];
       if (ids.length) await refresh(ids);
+    } else if (event.type === "catalog.version.updated") {
+      // A product, price, photo or variation changed in Square: re-import so
+      // new items appear on the website without a manual sync.
+      await sync();
     }
     checked(
       await db

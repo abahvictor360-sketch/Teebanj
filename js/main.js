@@ -31,8 +31,11 @@ const cartTotal = () =>
     0,
   );
 const waLink = (msg) =>
-  "https://wa.me/19025933718?text=" +
+  "https://wa.me/" +
+  String(cms("contact.whatsapp")).replace(/\D/g, "") +
+  "?text=" +
   encodeURIComponent(msg || "Hello Teebanj Fashion World");
+const telLink = () => "tel:+" + String(cms("contact.phone")).replace(/\D/g, "").replace(/^(?=\d{10}$)/, "1");
 function saveCart() {
   store.set("cart", cart);
   document
@@ -99,6 +102,13 @@ const ICONS = {
   store: '<path d="M4 9 5.5 4h13L20 9M4 9h16v11H4zM4 9a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0 2.7 2.7 0 0 0 5.3 0"/><path d="M10 20v-5h4v5"/>',
   alert: '<path d="M12 3 2 20h20z"/><path d="M12 10v4M12 17h.01"/>',
   cash: '<rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/><path d="M6 9v.01M18 15v.01"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  upload: '<path d="M12 16V4M7 9l5-5 5 5M5 20h14"/>',
+  trash: '<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',
+  up: '<path d="m6 15 6-6 6 6"/>',
+  down: '<path d="m6 9 6 6 6-6"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  edit: '<path d="M4 20h4L19 9l-4-4L4 16z"/>',
   truck: '<path d="M3 6h11v10H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.8"/><circle cx="17" cy="18" r="1.8"/>',
 };
 const icon = (name, cls = "ico") =>
@@ -136,12 +146,22 @@ function renderGrid(el, list) {
       ? list.map(productCard).join("")
       : '<p class="empty">Our online collection is being updated. Please <a href="contact.html">contact us</a> for available pieces.</p>';
 }
-const brand = '<a class="logo supplied-logo" href="index.html" aria-label="Teebanj Fashion World home"><span class="supplied-logo-window"><img src="assets/site/teebanj-logo-transparent.png" alt="Teebanj Fashion World, African roots, global style" width="1254" height="1254"></span></a>';
+// The supplied PNG is a brand sheet shown through a cropping window; an
+// uploaded replacement logo is shown whole.
+const DEFAULT_LOGO = "assets/site/teebanj-logo-transparent.png";
+const brandHtml = () => {
+  const logo = safeUrl(cms("brand.logo"), DEFAULT_LOGO);
+  return logo === DEFAULT_LOGO
+    ? `<a class="logo supplied-logo" href="index.html" aria-label="Teebanj Fashion World home"><span class="supplied-logo-window"><img src="${DEFAULT_LOGO}" alt="Teebanj Fashion World, African roots, global style" width="1254" height="1254"></span></a>`
+    : `<a class="logo custom-logo" href="index.html" aria-label="Teebanj Fashion World home"><img src="${escapeHtml(logo)}" alt="Teebanj Fashion World"></a>`;
+};
+const lines = (v) => escapeHtml(v).replace(/\n/g, "<br>");
 function renderShell() {
   const h = document.querySelector('[data-shell="header"]');
   const here = location.pathname.split("/").pop() || "index.html";
+  const brand = brandHtml();
   if (h) {
-    h.innerHTML = `<div class="topbar perkbar"><span>${icon("scissors")}<b>Custom designs</b> made to measure</span><span>${icon("shield")}<b>Secure checkout</b> with Square</span><span>${icon("chat")}<b>Questions?</b> <a href="${waLink()}" target="_blank" rel="noopener">Chat on WhatsApp</a></span></div><header class="site-header"><div class="header-inner">${brand}<nav class="nav" id="nav" aria-label="Main navigation"><button class="icon-btn nav-close" id="navClose" aria-label="Close menu">${icon("close")}</button>${[
+    h.innerHTML = `<div class="topbar perkbar"><span>${icon("scissors")}${escapeHtml(cms("topbar.1"))}</span><span>${icon("shield")}${escapeHtml(cms("topbar.2"))}</span><a href="${waLink()}" target="_blank" rel="noopener">${icon("chat")}${escapeHtml(cms("topbar.3"))}</a></div><header class="site-header"><div class="header-inner">${brand}<nav class="nav" id="nav" aria-label="Main navigation"><button class="icon-btn nav-close" id="navClose" aria-label="Close menu">${icon("close")}</button>${[
       ["Home", "index.html"],
       ["Shop", "shop.html"],
       ["Our story", "about.html"],
@@ -175,7 +195,7 @@ function renderShell() {
   }
   const f = document.querySelector('[data-shell="footer"]');
   if (f)
-    f.innerHTML = `<footer class="site-footer"><div class="wrap"><div class="foot-grid"><div><span class="logo-plate">${brand}</span><p>African fabrics, ready-to-wear collections and custom designs. Where culture meets style.</p></div><div><h4>Shop</h4><ul>${CATEGORIES.map((c) => `<li><a href="shop.html?cat=${c.slug}">${c.name}</a></li>`).join("")}<li><a href="wishlist.html">Wishlist</a></li></ul></div><div><h4>Customer care</h4><ul><li><a href="account.html">My account and orders</a></li><li><a href="contact.html#faq">Shipping and returns</a></li><li><a href="custom.html">Custom designs</a></li><li><a href="privacy.html">Privacy</a></li></ul></div><div><h4>Visit or reach us</h4><div class="foot-contact"><span>${icon("pin")}Moncton, New Brunswick, Canada</span><a href="tel:+19025933718">${icon("phone")}902-593-3718</a><a href="mailto:info@teebanjfashionworld.ca">${icon("mail")}info@teebanjfashionworld.ca</a><a href="${waLink()}" target="_blank" rel="noopener">${icon("chat")}WhatsApp us</a></div><p>Monday to Saturday: 10am to 6pm<br>Sunday: closed</p></div></div><div class="foot-bottom"><span>© ${new Date().getFullYear()} Teebanj Fashion World. All rights reserved.</span><span class="pay-note">${icon("lock")}Prices in CAD. Secure payments by Square.</span></div></div></footer>`;
+    f.innerHTML = `<footer class="site-footer"><div class="wrap"><div class="foot-grid"><div><span class="logo-plate">${brand}</span><p>${lines(cms("footer.blurb"))}</p></div><div><h4>Shop</h4><ul>${CATEGORIES.map((c) => `<li><a href="shop.html?cat=${c.slug}">${c.name}</a></li>`).join("")}<li><a href="wishlist.html">Wishlist</a></li></ul></div><div><h4>Customer care</h4><ul><li><a href="account.html">My account and orders</a></li><li><a href="contact.html#faq">Shipping and returns</a></li><li><a href="custom.html">Custom designs</a></li><li><a href="privacy.html">Privacy</a></li></ul></div><div><h4>Visit or reach us</h4><div class="foot-contact"><span>${icon("pin")}${lines(cms("contact.address"))}</span><a href="${telLink()}">${icon("phone")}${escapeHtml(cms("contact.phone"))}</a><a href="mailto:${escapeHtml(cms("contact.email"))}">${icon("mail")}${escapeHtml(cms("contact.email"))}</a><a href="${waLink()}" target="_blank" rel="noopener">${icon("chat")}WhatsApp us</a></div><p>${lines(cms("contact.hours"))}</p></div></div><div class="foot-bottom"><span>© ${new Date().getFullYear()} Teebanj Fashion World. All rights reserved.</span><span class="pay-note">${icon("lock")}Prices in CAD. Secure payments by Square.</span></div></div></footer>`;
 }
 document.addEventListener("click", (e) => {
   const a = e.target.closest("[data-add]");
@@ -193,6 +213,7 @@ document.addEventListener("click", (e) => {
 });
 document.addEventListener("DOMContentLoaded", () => {
   renderShell();
+  applyCms(document);
   if ("serviceWorker" in navigator)
     navigator.serviceWorker.register("sw.js").catch(() => {});
 });

@@ -61,6 +61,7 @@
             <button data-tab="products"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z" /><path d="M3 7.5 12 12l9-4.5M12 12v9" /></svg>Products<span class="count" id="cProducts"></span></button>
             <button data-tab="messages"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" /><path d="m3 7 9 6 9-6" /></svg>Messages<span class="count" id="cMessages"></span></button>
             <button data-tab="subscribers"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5" /><path d="M2.5 20a6.5 6.5 0 0 1 13 0" /><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6" /></svg>Subscribers<span class="count" id="cSubscribers"></span></button>
+            <button data-tab="content"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z" /></svg>Site content</button>
           </nav>
           <div class="adm-side-foot">
             <a href="index.html" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9 5.5 4h13L20 9M4 9h16v11H4z" /><path d="M10 20v-5h4v5" /></svg>View store</a>
@@ -144,19 +145,25 @@
             </div>
             <div id="subscribers"></div>
           </section>
+
+          <section class="adm-panel" data-tab-panel="content" hidden>
+            <p class="adm-sub" style="margin: 0 0 1rem">Change your logo, homepage slides, contact details and page text. Each section publishes on its own when you click Save and publish.</p>
+            <div id="cmsGroups"></div>
+          </section>
         </div>
       </div>
     </main>
     <script src="js/preview.js"></script>
     <script src="api/products.php"></script>
     <script src="js/products.js"></script>
+    <script src="js/content.js"></script>
     <script src="js/main.js"></script>
     <script src="js/api.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
         const $ = (id) => document.getElementById(id);
         const status = $("adminStatus");
-        const titles = { overview: "Overview", orders: "Orders", products: "Products and inventory", messages: "Messages", subscribers: "Newsletter subscribers" };
+        const titles = { overview: "Overview", orders: "Orders", products: "Products and inventory", messages: "Messages", subscribers: "Newsletter subscribers", content: "Site content" };
         let d = { orders: [], products: [], messages: [], subscribers: [] };
         const when = (v) => (v ? new Date(String(v).replace(" ", "T")).toLocaleString("en-CA", { dateStyle: "medium", timeStyle: "short" }) : "");
         const pill = (s) => `<span class="pill-s ${escapeHtml(s)}">${escapeHtml(String(s).replace("_", " "))}</span>`;
@@ -254,7 +261,109 @@
             ? table("<th>Email</th><th>Consent given</th>", d.subscribers.map((s) => `<tr><td>${escapeHtml(s.email)}</td><td>${when(s.consent_at)}</td></tr>`).join(""))
             : empty("No subscribers yet", "Newsletter sign-ups from the homepage appear here.");
         }
-        function drawAll() { drawOverview(); drawOrders(); drawProducts(); drawMessages(); drawSubscribers(); }
+        function drawAll() { drawOverview(); drawOrders(); drawProducts(); drawMessages(); drawSubscribers(); if (!cmsEl.childElementCount) drawContent(); }
+        /* ---------- site content editor ---------- */
+        const cmsEl = $("cmsGroups");
+        const input = (f, value, attr) => {
+          const v = escapeHtml(value ?? "");
+          if (f.type === "textarea") return `<textarea ${attr} rows="${f.rows || 3}">${v}</textarea>`;
+          if (f.type === "select") return `<select ${attr}>${f.options.map(([o, l]) => `<option value="${o}" ${o === value ? "selected" : ""}>${escapeHtml(l)}</option>`).join("")}</select>`;
+          if (f.type === "image")
+            return `<div class="cms-img"><img src="${escapeHtml(safeUrl(value, "assets/site/product-placeholder.svg"))}" alt=""><div><input type="text" ${attr} value="${v}" placeholder="Image address" data-image><div class="row"><label class="btn btn-dark"><input type="file" accept="image/jpeg,image/png,image/webp,image/gif" hidden data-upload>${icon("upload")}Upload image</label>${f.default ? `<button type="button" class="btn btn-ghost" data-default="${escapeHtml(f.default)}">Use original</button>` : ""}</div></div></div>`;
+          return `<input type="text" ${attr} value="${v}">`;
+        };
+        const fieldHtml = (f, value, attr, wide) =>
+          `<div class="cms-field${wide ? " wide" : ""}"><label>${escapeHtml(f.label)}</label>${input(f, value, attr)}${f.hint ? `<p class="hint">${escapeHtml(f.hint)}</p>` : ""}</div>`;
+        const itemHtml = (f, item, i, n) =>
+          `<div class="cms-item"><div class="cms-item-head"><b>${escapeHtml(f.label.replace(/s$/, ""))} ${i + 1}</b><button type="button" data-move="-1" aria-label="Move up" ${i ? "" : "disabled"}>${icon("up")}</button><button type="button" data-move="1" aria-label="Move down" ${i < n - 1 ? "" : "disabled"}>${icon("down")}</button>${f.fixed ? "" : `<button type="button" data-remove aria-label="Remove">${icon("trash")}</button>`}</div><div class="cms-item-grid">${f.item.map((sub) => fieldHtml(sub, item[sub.key], `data-sub="${sub.key}"`, sub.type === "textarea" || sub.type === "image")).join("")}</div></div>`;
+        const listHtml = (f, items) =>
+          `<div class="cms-field wide" data-list="${f.key}"><label>${escapeHtml(f.label)}</label><div class="cms-list">${items.map((it, i) => itemHtml(f, it, i, items.length)).join("")}</div>${f.fixed ? "" : `<p><button type="button" class="btn btn-ghost btn-sm" data-add-item ${items.length >= (f.max || 10) ? "disabled" : ""}>${icon("plus")}Add ${escapeHtml(f.label.replace(/s$/, "").toLowerCase())}</button></p>`}</div>`;
+        function drawContent() {
+          cmsEl.innerHTML = CMS_GROUPS.map(
+            (g, gi) =>
+              `<details class="panel cms-group" data-group="${g.id}" ${gi ? "" : "open"}><summary><div><h3>${escapeHtml(g.title)}</h3>${g.note ? `<small>${escapeHtml(g.note)}</small>` : ""}</div></summary><div class="cms-body">${g.fields
+                .map((f) => (f.type === "list" ? listHtml(f, cms(f.key)) : fieldHtml(f, cms(f.key), `data-key="${f.key}"`)))
+                .join("")}<div class="cms-actions"><span class="muted" data-saved></span><button type="button" class="btn btn-ghost btn-sm" data-revert>Undo changes</button><button type="button" class="btn btn-primary btn-sm" data-save>Save and publish</button></div></div></details>`,
+          ).join("");
+        }
+        function readList(box) {
+          return [...box.querySelectorAll(".cms-item")].map((it) =>
+            Object.fromEntries([...it.querySelectorAll("[data-sub]")].map((el) => [el.dataset.sub, el.value.trim()])),
+          );
+        }
+        function redrawList(box, items) {
+          const f = CMS_FIELDS[box.dataset.list];
+          box.outerHTML = listHtml(f, items);
+        }
+        cmsEl.addEventListener("input", (e) => {
+          if (e.target.matches("[data-image]")) e.target.closest(".cms-img").querySelector("img").src = safeUrl(e.target.value, "assets/site/product-placeholder.svg");
+          const g = e.target.closest(".cms-group");
+          if (g) g.querySelector("[data-saved]").textContent = "Unsaved changes";
+        });
+        cmsEl.addEventListener("change", async (e) => {
+          if (!e.target.matches("[data-upload]") || !e.target.files[0]) return;
+          const wrap = e.target.closest(".cms-img");
+          const text = wrap.querySelector("[data-image]");
+          const label = e.target.closest("label");
+          label.classList.add("is-busy");
+          status.textContent = "Uploading image…";
+          try {
+            const { url } = await api("media-upload", { file: e.target.files[0] });
+            text.value = url;
+            text.dispatchEvent(new Event("input", { bubbles: true }));
+            status.textContent = "Image uploaded. Save to publish it.";
+          } catch (err) {
+            status.textContent = "";
+            toast(err.message);
+          } finally {
+            label.classList.remove("is-busy");
+            e.target.value = "";
+          }
+        });
+        cmsEl.addEventListener("click", async (e) => {
+          const b = e.target.closest("button");
+          if (!b) return;
+          const g = b.closest(".cms-group");
+          if (b.dataset.default !== undefined) {
+            const text = b.closest(".cms-img").querySelector("[data-image]");
+            text.value = b.dataset.default;
+            text.dispatchEvent(new Event("input", { bubbles: true }));
+          }
+          const box = b.closest("[data-list]");
+          if (box && (b.dataset.move || b.dataset.remove !== undefined || b.dataset.addItem !== undefined)) {
+            const items = readList(box);
+            const i = [...box.querySelectorAll(".cms-item")].indexOf(b.closest(".cms-item"));
+            if (b.dataset.move) {
+              const j = i + Number(b.dataset.move);
+              [items[i], items[j]] = [items[j], items[i]];
+            } else if (b.dataset.remove !== undefined) {
+              if (!confirm("Remove this item? It is only deleted when you save.")) return;
+              items.splice(i, 1);
+            } else items.push({});
+            redrawList(box, items);
+            g.querySelector("[data-saved]").textContent = "Unsaved changes";
+          }
+          if (b.dataset.revert !== undefined) {
+            drawContent();
+            document.querySelector(`.cms-group[data-group="${g.dataset.group}"]`).open = true;
+          }
+          if (b.dataset.save !== undefined) {
+            const entries = [
+              ...[...g.querySelectorAll("[data-key]")].map((el) => ({ key: el.dataset.key, value: el.value.trim() })),
+              ...[...g.querySelectorAll("[data-list]")].map((box) => ({ key: box.dataset.list, value: readList(box) })),
+            ];
+            b.disabled = true;
+            try {
+              await api("content-save", { entries });
+              g.querySelector("[data-saved]").textContent = "Saved " + new Date().toLocaleTimeString("en-CA", { timeStyle: "short" });
+              toast("Saved. The website now shows your changes.");
+            } catch (err) {
+              toast(err.message);
+            } finally {
+              b.disabled = false;
+            }
+          }
+        });
         [["orderSearch", drawOrders], ["orderStatus", drawOrders], ["productSearch", drawProducts], ["productFilter", drawProducts], ["messageSearch", drawMessages]].forEach(([id, fn]) => $(id).addEventListener("input", fn));
 
         async function dashboard() {

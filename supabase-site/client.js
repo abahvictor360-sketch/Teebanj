@@ -71,6 +71,22 @@ async function api(action, body) {
     if (error) throw error;
     return { ok: true };
   }
+  if (action === "content-save") {
+    const rows = body.entries.map(({ key, value }) => ({ key, value }));
+    const { error } = await client.from("site_content").upsert(rows);
+    if (error) throw Error(error.message.includes("row-level security") ? "Only administrators can change site content." : error.message);
+    rows.forEach((r) => (window.TEEBANJ_CONTENT[r.key] = r.value));
+    return { ok: true };
+  }
+  if (action === "media-upload") {
+    const file = body.file;
+    if (!/^image\/(jpeg|png|webp|gif)$/.test(file.type)) throw Error("Please choose a JPG, PNG, WebP or GIF image.");
+    if (file.size > 5 * 1024 * 1024) throw Error("Images must be 5 MB or smaller.");
+    const path = Date.now() + "-" + file.name.toLowerCase().replace(/[^a-z0-9.]+/g, "-").slice(-60);
+    const { error } = await client.storage.from("site-media").upload(path, file, { contentType: file.type, cacheControl: "31536000" });
+    if (error) throw Error(error.message.includes("row-level security") ? "Only administrators can upload images." : error.message);
+    return { url: client.storage.from("site-media").getPublicUrl(path).data.publicUrl };
+  }
   if (action === "logout") {
     const { error } = await client.auth.signOut();
     if (error) throw error;
@@ -123,7 +139,17 @@ async function script(src) {
     document.head.append(s);
   });
 }
+async function loadContent() {
+  try {
+    const { data, error } = await client.from("site_content").select("key,value");
+    if (error) throw error;
+    window.TEEBANJ_CONTENT = Object.fromEntries(data.map((r) => [r.key, r.value]));
+  } catch {
+    window.TEEBANJ_CONTENT = {};
+  }
+}
 async function start() {
+  const content = loadContent();
   try {
     const { products } = await api("catalog");
     window.TEEBANJ_CATALOG = products;
@@ -135,7 +161,9 @@ async function start() {
       "The live collection is temporarily unavailable. Preview items are shown; please contact us to order.";
     document.querySelector("main")?.prepend(note);
   }
+  await content;
   await script("js/products.js");
+  await script("js/content.js");
   await script("js/main.js");
   document.dispatchEvent(new Event("teebanj:ready"));
 }

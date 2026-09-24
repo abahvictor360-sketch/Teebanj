@@ -57,7 +57,7 @@ Deploy the store function with JWT gateway verification disabled because its own
 1. Create each product and size/colour variation in Square. Set CAD fixed prices and enable inventory tracking at your selected location. See SQUARE-SETUP.md.
 2. Add the settings shown in supabase/secrets.example to Supabase Edge Function secrets. Use Sandbox credentials first. Supabase supplies its own service role; never put it in browser configuration.
 3. Set PUBLIC_SITE_URL to the storefront origin. Configure DELIVERY_RULES_JSON with shipping in cents and your actual tax percentage for each supported province. These rates require your business configuration; no tax or shipping defaults are invented.
-4. Register the exact SQUARE_WEBHOOK_URL in Square and subscribe to payment.created, payment.updated, refund.created, refund.updated and inventory.count.updated. Copy its signing key into secrets.
+4. Register the exact SQUARE_WEBHOOK_URL in Square and subscribe to payment.created, payment.updated, refund.created, refund.updated, inventory.count.updated and catalog.version.updated. Copy its signing key into secrets.
 5. Sign in as the designated administrator and click Import / refresh Square catalogue. This atomically replaces visible previews with eligible tracked variations.
 6. Set CHECKOUT_ENABLED=true only for your Sandbox testing initially. A buyer must sign in before checkout. Check a purchase of 2 from 50, webhook redelivery (still 48), refund review and simultaneous checkout attempts.
 7. After successful testing, configure production credentials, production webhook signing key and production catalog. Keep checkout disabled while changing environments. Sandbox and production order histories should use separate Supabase projects.

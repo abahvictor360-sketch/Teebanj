@@ -25,8 +25,8 @@
     <main>
       <div class="page-head">
         <div class="wrap">
-          <h1>Let's talk</h1>
-          <p class="crumbs"><a href="index.html">Home</a> / Let's talk</p>
+          <h1 data-cms="contact.title">Let's talk</h1>
+          <p class="crumbs"><a href="index.html">Home</a> / <span data-cms="contact.title">Let's talk</span></p>
         </div>
       </div>
       <section>
@@ -64,49 +64,17 @@
             <button class="btn btn-primary" type="submit">Send message</button>
             <p role="status"></p>
           </form>
-          <aside class="card">
+          <aside class="card contact-card">
             <span class="eyebrow">Teebanj Fashion World</span>
-            <h2>Here for you.</h2>
-            <p>Moncton, New Brunswick<br />Canada</p>
-            <p><a href="tel:+19025933718">902-593-3718</a></p>
-            <p>
-              <a href="mailto:info@teebanjfashionworld.ca"
-                >info@teebanjfashionworld.ca</a
-              >
-            </p>
-            <p>Monday–Saturday: 10am–6pm<br />Sunday: closed</p>
-            <a href="https://wa.me/19025933718" class="btn btn-ghost"
-              >Chat on WhatsApp</a
-            >
+            <h2 data-cms="contact.heading"></h2>
+            <div class="foot-contact" id="contactDetails"></div>
           </aside>
         </div>
       </section>
       <section id="faq">
         <div class="wrap content-page">
           <h2>Good to know</h2>
-          <h3>Delivery</h3>
-          <p>
-            Available destinations, delivery charges and taxes are shown during
-            checkout. For international or custom orders, contact us before
-            ordering.
-          </p>
-          <h3>Custom pieces</h3>
-          <p>
-            Tell us about your design, fabric, measurements and event date. We
-            will discuss availability and a quote with you.
-          </p>
-          <h3>Returns</h3>
-          <p>
-            Please contact us before returning an item. Sale, worn, washed,
-            damaged and personalised items may not be eligible. If an item
-            arrives damaged or incorrect, contact us within seven days.
-          </p>
-          <h3>Payment and stock</h3>
-          <p>
-            Payments are processed securely by Square. Adding an item to your
-            bag does not reserve it. We confirm your order after successful
-            payment.
-          </p>
+          <div class="faq" id="faqList"></div>
         </div>
       </section>
     </main>
@@ -114,20 +82,20 @@
     <script src="js/preview.js"></script>
     <script src="api/products.php"></script>
     <script src="js/products.js"></script>
+    <script src="js/content.js"></script>
     <script src="js/main.js"></script>
     <script src="js/api.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", () =>
-        formAction(
-          "contact",
-          "contact",
-          (f) => Object.fromEntries(f),
-          (_, f) => {
-            f.reset();
-            toast("Your message has been saved for our team.");
-          },
-        ),
-      );
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("contactDetails").innerHTML = `<span>${icon("pin")}${lines(cms("contact.address"))}</span><a href="${telLink()}">${icon("phone")}${escapeHtml(cms("contact.phone"))}</a><a href="mailto:${escapeHtml(cms("contact.email"))}">${icon("mail")}${escapeHtml(cms("contact.email"))}</a><span>${icon("clock")}<span>${lines(cms("contact.hours"))}</span></span><a class="btn btn-primary" href="${waLink()}" target="_blank" rel="noopener">Chat on WhatsApp</a>`;
+        document.getElementById("faqList").innerHTML = cms("contact.faq")
+          .map((f, i) => `<details ${i ? "" : "open"}><summary>${escapeHtml(f.q)}</summary><p>${escapeHtml(f.a)}</p></details>`)
+          .join("");
+        formAction("contact", "contact", (f) => Object.fromEntries(f), (_, f) => {
+          f.reset();
+          toast("Thank you. We have received your message.");
+        });
+      });
     </script>
   </body>
 </html>

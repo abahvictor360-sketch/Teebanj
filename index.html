@@ -23,101 +23,25 @@
   <body>
     <div data-shell="header"></div>
     <main>
-      <section class="hero2" style="padding: 0">
-        <div class="wrap hero2-grid">
-          <div class="hero2-copy">
-            <span class="pill">New season</span>
-            <h1>Wear your <strong>culture</strong></h1>
-            <p class="rule">African prints, made modern</p>
-            <p class="lede">
-              Rich Ankara, Adire and Aso Oke, ready to wear or tailored to you.
-              Discover pieces that feel like home, wherever you are.
-            </p>
-            <div class="hero2-cta">
-              <a class="btn btn-primary" href="shop.html"
-                >Shop now
-                <svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M5 12h14M13 6l6 6-6 6" /></svg></a
-              ><a class="btn btn-ghost" href="custom.html">Book a custom design</a>
-            </div>
-          </div>
-          <div class="hero2-art">
-            <img
-              src="assets/site/hero-model.webp"
-              alt="Model wearing a pink African print dress"
-              width="520"
-              height="620"
-            />
-            <div class="hero2-note">
-              <i
-                ><svg class="ico" viewBox="0 0 24 24" aria-hidden="true">
-                  <path
-                    d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"
-                  />
-                  <circle cx="12" cy="9.5" r="2.5" /></svg
-              ></i>
-              <span><b>Moncton, NB</b>Visit us Monday to Saturday</span>
-            </div>
-          </div>
+      <section
+        class="hero2"
+        aria-roledescription="carousel"
+        aria-label="Featured collections"
+      >
+        <div class="hero-track" id="heroTrack" aria-live="off"></div>
+        <div class="wrap hero-nav" id="heroNav">
+          <button class="hero-arrow" data-dir="-1" aria-label="Previous slide">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>
+          </button>
+          <div class="hero-dots" id="heroDots"></div>
+          <button class="hero-arrow" data-dir="1" aria-label="Next slide">
+            <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+          </button>
         </div>
       </section>
 
       <section class="tight">
-        <div class="wrap bento">
-          <a class="tile cutout" href="shop.html?cat=women">
-            <div>
-              <small>Women</small>
-              <h3>New</h3>
-              <p>Collection</p>
-              <span class="btn btn-dark">Shop now</span>
-            </div>
-            <img src="assets/site/hero-adire.webp" alt="" loading="lazy" />
-          </a>
-          <a class="tile feature" href="shop.html?cat=accessories">
-            <img src="assets/site/hero-bag.webp" alt="" loading="lazy" />
-            <div>
-              <small>Accessories</small>
-              <h3>The finishing touch</h3>
-              <p>Bags, head ties, shoes and more</p>
-              <span class="btn btn-dark">Shop now</span>
-            </div>
-          </a>
-          <a class="tile" href="shop.html?cat=men">
-            <div>
-              <small>Men</small>
-              <h3>Tailored</h3>
-              <p>For today</p>
-              <span class="btn btn-dark">Shop now</span>
-            </div>
-            <img
-              src="assets/products/preview-100472.webp"
-              alt=""
-              loading="lazy"
-            />
-          </a>
-          <a class="tile" href="shop.html?cat=fabrics">
-            <div>
-              <small>Fabrics</small>
-              <h3>By the yard</h3>
-              <p>Ankara, Adire, Lace</p>
-              <span class="btn btn-dark">Shop now</span>
-            </div>
-            <img
-              src="assets/products/preview-100462.webp"
-              alt=""
-              loading="lazy"
-            />
-          </a>
-          <a class="tile cutout" href="custom.html">
-            <div>
-              <small>Made for you</small>
-              <h3>Custom</h3>
-              <p>Aso Ebi and couples</p>
-              <span class="btn btn-dark">Start a design</span>
-            </div>
-            <img src="assets/site/hero-couple.webp" alt="" loading="lazy" />
-          </a>
-        </div>
+        <div class="wrap bento" id="tiles"></div>
       </section>
 
       <section>
@@ -179,17 +103,14 @@
         <div class="wrap story">
           <img
             src="assets/site/about-couple.jpg"
-            alt="Couple in matching navy and Ankara print outfits"
+            data-cms-img="home.story.image"
+            alt="Teebanj Fashion World outfits"
             loading="lazy"
           />
           <div>
-            <span class="eyebrow">More than what you wear</span>
-            <h2>Tradition, made personal.</h2>
-            <p>
-              From ready-to-wear outfits to bespoke designs and coordinated Aso
-              Ebi attire, we bring African textiles into life's everyday
-              moments and special celebrations.
-            </p>
+            <span class="eyebrow" data-cms="home.story.eyebrow"></span>
+            <h2 data-cms="home.story.title"></h2>
+            <div data-cms-paras="home.story.text"></div>
             <a class="btn btn-dark" href="about.html">Meet Teebanj</a>
           </div>
         </div>
@@ -199,13 +120,14 @@
         <div class="wrap"><div class="promo">
           <img
             src="assets/site/hero-couple.webp"
+            data-cms-img="home.promo.image"
             alt=""
             loading="lazy"
           />
           <div class="promo-copy">
-            <small>Stay in the loop</small>
-            <h2>Be first to <span>new arrivals</span></h2>
-            <p>Collection updates, fabric drops and fashion news.</p>
+            <small data-cms="home.promo.label"></small>
+            <h2 data-cms="home.promo.title"></h2>
+            <p data-cms="home.promo.text"></p>
             <form id="subscribe">
               <div class="inline-form">
                 <input
@@ -235,10 +157,74 @@
     <script src="js/preview.js"></script>
     <script src="api/products.php"></script>
     <script src="js/products.js"></script>
+    <script src="js/content.js"></script>
     <script src="js/main.js"></script>
     <script src="js/api.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
+        const arrow = '<svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>';
+        document.getElementById("tiles").innerHTML = cms("home.tiles")
+          .slice(0, 5)
+          .map(
+            (t, i) =>
+              `<a class="tile${i === 1 ? " feature" : ""}${t.fit === "cutout" ? " cutout" : ""}" href="${escapeHtml(safeUrl(t.link, "shop.html"))}">${i === 1 ? `<img src="${escapeHtml(safeUrl(t.image, ""))}" alt="" loading="lazy">` : ""}<div><small>${escapeHtml(t.label)}</small><h3>${escapeHtml(t.title)}</h3><p>${escapeHtml(t.subtitle)}</p><span class="btn btn-dark">${escapeHtml(t.button || "Shop now")}</span></div>${i === 1 ? "" : `<img src="${escapeHtml(safeUrl(t.image, ""))}" alt="" loading="lazy">`}</a>`,
+          )
+          .join("");
+
+        const slides = cms("home.slides").filter((sl) => sl && (sl.title || sl.image));
+        const track = document.getElementById("heroTrack");
+        const dots = document.getElementById("heroDots");
+        track.innerHTML = slides
+          .map(
+            (sl, i) =>
+              `<div class="hero-slide" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${slides.length}" ${i ? 'aria-hidden="true"' : ""}><div class="wrap hero2-grid"><div class="hero2-copy">${sl.badge ? `<span class="pill">${escapeHtml(sl.badge)}</span>` : ""}<${i ? "h2" : "h1"} class="hero-title">${escapeHtml(sl.title)} <strong>${escapeHtml(sl.highlight)}</strong></${i ? "h2" : "h1"}>${sl.tagline ? `<p class="rule">${escapeHtml(sl.tagline)}</p>` : ""}${sl.text ? `<p class="lede">${escapeHtml(sl.text)}</p>` : ""}<div class="hero2-cta"><a class="btn btn-primary" href="${escapeHtml(safeUrl(sl.link, "shop.html"))}" ${i ? 'tabindex="-1"' : ""}>${escapeHtml(sl.button || "Shop now")} ${arrow}</a></div></div><div class="hero2-art"><img src="${escapeHtml(safeUrl(sl.image, "assets/site/hero-model.webp"))}" alt="" ${i ? 'loading="lazy"' : 'fetchpriority="high"'}></div></div></div>`,
+          )
+          .join("");
+        dots.innerHTML = slides
+          .map((_, i) => `<button class="hero-pip" aria-label="Go to slide ${i + 1}"></button>`)
+          .join("");
+        document.getElementById("heroNav").hidden = slides.length < 2;
+        let current = 0, timer;
+        const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        function go(n) {
+          current = (n + slides.length) % slides.length;
+          [...track.children].forEach((el, i) => {
+            const on = i === current;
+            el.classList.toggle("on", on);
+            el.setAttribute("aria-hidden", String(!on));
+            el.querySelectorAll("a").forEach((a) => (on ? a.removeAttribute("tabindex") : a.setAttribute("tabindex", "-1")));
+          });
+          [...dots.children].forEach((d, i) => d.setAttribute("aria-current", String(i === current)));
+        }
+        const stop = () => clearInterval(timer);
+        const play = () => {
+          stop();
+          if (!reduced && slides.length > 1) timer = setInterval(() => go(current + 1), 6000);
+        };
+        document.getElementById("heroNav").addEventListener("click", (e) => {
+          const b = e.target.closest("button");
+          if (!b) return;
+          go(b.dataset.dir ? current + Number(b.dataset.dir) : [...dots.children].indexOf(b));
+          play();
+        });
+        const hero = track.parentElement;
+        hero.addEventListener("mouseenter", stop);
+        hero.addEventListener("mouseleave", play);
+        hero.addEventListener("focusin", stop);
+        hero.addEventListener("focusout", play);
+        document.addEventListener("visibilitychange", () => (document.hidden ? stop() : play()));
+        let startX = null;
+        track.addEventListener("pointerdown", (e) => (startX = e.clientX));
+        track.addEventListener("pointerup", (e) => {
+          if (startX !== null && Math.abs(e.clientX - startX) > 50) {
+            go(current + (e.clientX < startX ? 1 : -1));
+            play();
+          }
+          startX = null;
+        });
+        go(0);
+        play();
+
         const tabs = [["", "All"], ...CATEGORIES.map((c) => [c.slug, c.name])];
         const tabEl = document.getElementById("featuredTabs");
         const draw = (slug) => {
