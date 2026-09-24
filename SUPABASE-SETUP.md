@@ -29,7 +29,7 @@ The static build copies an explicit allowlist of storefront files.
 Import the repository and set Root Directory to `supabase-site`.
 Enable Vercel's option to include source files outside that root directory, because the build reuses ../assets, ../css, ../js and HTML.
 The checked-in vercel.json sets the build command and dist output.
-The static build is live at https://dist-psi-three-80.vercel.app. The Vercel project is `dist` in `abahvictor360-3017s-projects`; its Git root is configured to `supabase-site`. The Supabase alternative is on branch `codex/supabase-store` in draft PR #1. Main remains the PHP/MySQL version until that PR is merged.
+The static build is live at https://dist-psi-three-80.vercel.app. The Vercel project is `dist` in `abahvictor360-3017s-projects`; its Git root is configured to `supabase-site`. The Supabase alternative is on branch `codex/supabase-store` in draft PR #1, and that branch is the Vercel Production Branch: every push to it deploys to the live URL. Main remains the PHP/MySQL version.
 
 ## Account setup
 In Supabase Authentication > URL Configuration, set Site URL to https://dist-psi-three-80.vercel.app.
