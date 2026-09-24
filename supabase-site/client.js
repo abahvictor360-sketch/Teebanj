@@ -1,6 +1,24 @@
 import { createClient } from "@supabase/supabase-js";
 import { url, key } from "./config.js";
 const client = createClient(url, key);
+async function requirePasswordChange() {
+  const { data: { user } } = await client.auth.getUser();
+  if (!user?.user_metadata?.must_change_password) return;
+  const form = document.createElement("form");
+  form.className = "card password-change-prompt";
+  form.innerHTML = `<h2>Change your temporary password</h2><p>For security, choose a new password before continuing.</p><div class="field"><label>New password</label><input name="password" type="password" minlength="12" maxlength="72" required autocomplete="new-password"></div><div class="field"><label>Confirm new password</label><input name="confirm" type="password" minlength="12" maxlength="72" required autocomplete="new-password"></div><button class="btn btn-primary" type="submit">Change password</button><p role="status"></p>`;
+  document.querySelector("main")?.prepend(form);
+  await new Promise((resolve) => form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const data = new FormData(form), password = String(data.get("password")), confirm = String(data.get("confirm")), status = form.querySelector("[role=status]"), button = form.querySelector("button");
+    if (password !== confirm) { status.textContent = "Passwords do not match."; return; }
+    button.disabled = true; status.textContent = "Updating…";
+    const { error } = await client.auth.updateUser({ password, data: { must_change_password: false } });
+    button.disabled = false;
+    if (error) { status.textContent = error.message; return; }
+    status.textContent = "Password changed."; form.remove(); resolve();
+  }));
+}
 async function api(action, body) {
   if (action === "login" || action === "admin-login") {
     const { error } = await client.auth.signInWithPassword({
@@ -8,6 +26,7 @@ async function api(action, body) {
       password: body.password,
     });
     if (error) throw error;
+    await requirePasswordChange();
     if (action === "admin-login" && !(await api("session")).admin) {
       await client.auth.signOut();
       throw Error("This account does not have administrator access.");
@@ -19,7 +38,7 @@ async function api(action, body) {
       email: body.email,
       password: body.password,
       options: {
-        data: { name: body.name },
+        data: { name: body.name, must_change_password: true },
         emailRedirectTo: new URL("account.html", location.href).href,
       },
     });
