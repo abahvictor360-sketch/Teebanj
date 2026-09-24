@@ -1,147 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Product | Ajusti</title>
-<meta name="description" content="Made-to-measure Ankara, adire, bags and shoes from Ajusti.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23e9574e'/><text x='16' y='23' font-size='18' font-family='Georgia' fill='white' text-anchor='middle'>A</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#e9574e">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Ajusti">
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-<link rel="stylesheet" href="css/style.css">
-</head>
-<body data-page="shop.html">
-<div data-shell="header"></div>
-
-<div class="page-head">
-  <div class="wrap">
-    <p class="crumbs"><a href="index.html">Home</a> / <a href="shop.html">Shop</a> / <span id="crumb"></span></p>
-  </div>
-</div>
-
-<section>
-  <div class="wrap">
-    <div class="pdp" id="pdp"></div>
-  </div>
-</section>
-
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head"><div><h2>You May Also Like</h2><p>Pieces from the same rail.</p></div></div>
-    <div class="product-grid" id="related"></div>
-  </div>
-</section>
-
-<div data-shell="footer"></div>
-
-<script src="js/products.js"></script>
-<script src="js/main.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const id = new URLSearchParams(location.search).get('id');
-  const p = PRODUCTS.find(x => x.id === id) || PRODUCTS[0];
-  const sizes = SIZES[p.cat] || ['One size'];
-  const sel = { size: sizes[0], color: p.colors[0], qty: 1 };
-
-  document.title = `${p.name} | Ajusti`;
-  window.WA_MESSAGE = `Hi Ajusti, I'm interested in the ${p.name} (${money(p.price)}). Is it available?`;
-  document.getElementById('crumb').textContent = p.name;
-
-  // gallery: the product itself plus three siblings for context
-  const gallery = [p, ...PRODUCTS.filter(x => x.cat === p.cat && x.id !== p.id).slice(0, 3)].map(img);
-
-  document.getElementById('pdp').innerHTML = `
-    <div>
-      <div class="pdp-media"><img id="mainShot" src="${gallery[0]}" alt="${p.name}"></div>
-      <div class="pdp-thumbs">${gallery.map((g, i) => `<img src="${g}" alt="" class="${i ? '' : 'sel'}" data-shot="${g}">`).join('')}</div>
-    </div>
-    <div>
-      <span class="pc-cat">${catName(p.cat)}</span>
-      <h1>${p.name}</h1>
-      <span class="pc-rating"><span class="stars">${starBar(p.rating)}</span> ${p.rating} · ${p.reviews} reviews</span>
-      <div class="pdp-price">${money(p.price)}${p.was ? `<del>${money(p.was)}</del>` : ''}${p.was ? `<span class="tag sale">Save ${money(p.was - p.price)}</span>` : ''}</div>
-      <p class="muted">${p.desc}</p>
-
-      <div class="opt-group">
-        <h4>Colour</h4>
-        <div class="color-dots" id="colors">
-          ${p.colors.map((c, i) => `<button data-color="${c}" class="${i ? '' : 'sel'}" style="background:${c}" aria-label="Colour ${i + 1}"></button>`).join('')}
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Product | Teebanj Fashion World</title>
+    <meta
+      name="description"
+      content="African fabrics, ready-to-wear fashion and custom designs from Teebanj Fashion World, Moncton, Canada."
+    />
+    <link rel="icon" href="assets/site/product-placeholder.svg" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#963c2d" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/teebanj.css" />
+  </head>
+  <body>
+    <div data-shell="header"></div>
+    <main>
+      <div class="page-head">
+        <div class="wrap">
+          <h1>The details</h1>
+          <p class="crumbs"><a href="index.html">Home</a> / The details</p>
         </div>
       </div>
-
-      <div class="opt-group">
-        <h4>${p.cat === 'shoes' ? 'Size (EU)' : 'Size'}</h4>
-        <div class="chips" id="sizes">
-          ${sizes.map((s, i) => `<button class="chip${i ? '' : ' sel'}" data-size="${s}">${s}</button>`).join('')}
-        </div>
-        <p class="muted" style="font-size:.82rem;margin:.6rem 0 0">
-          Choosing <b>Custom</b>? We'll WhatsApp you for measurements after checkout.
-        </p>
-      </div>
-
-      <div class="pdp-actions">
-        <div class="qty"><button id="minus" aria-label="Decrease">−</button><span id="qty">1</span><button id="plus" aria-label="Increase">+</button></div>
-        <button class="btn btn-primary" id="addBtn">Add to Bag</button>
-        <button class="btn btn-ghost" data-wish="${p.id}" id="wishBtn">♡ Wishlist</button>
-        <a class="btn btn-ghost" id="askBtn" target="_blank" rel="noopener"
-           href="${waLink(`Hi Ajusti, I'm interested in the ${p.name} (${money(p.price)}). Is it available?`)}">Ask on WhatsApp</a>
-      </div>
-
-      <div class="pdp-meta">
-        <span>✓ Ships from Lagos in 2–5 working days</span>
-        <span>✓ Pay on delivery available within Lagos</span>
-        <span>✓ 7-day returns on unworn items with tags</span>
-      </div>
-
-      <div class="accordion" style="margin-top:1.5rem">
-        <button data-acc>Fabric &amp; care <span>+</span></button>
-        <div class="body">Machine wash cold, inside out, or dry clean. Do not bleach, because Ankara and adire dyes are reactive. Warm iron on the reverse.</div>
-        <button data-acc>Delivery &amp; returns <span>+</span></button>
-        <div class="body">Lagos: 1–2 days. Other states: 3–5 days via GIG or DHL. Returns accepted within 7 days if unworn with tags. Custom-measured pieces are exchange-only.</div>
-        <button data-acc>Measurement guide <span>+</span></button>
-        <div class="body">Measure bust, waist, hips and full length over light clothing, then send the numbers on WhatsApp. If you are between sizes, choose <b>Custom</b>, and there is no extra charge.</div>
-      </div>
-    </div>`;
-
-  // gallery switching
-  document.querySelectorAll('[data-shot]').forEach(t => t.addEventListener('click', () => {
-    document.getElementById('mainShot').src = t.dataset.shot;
-    document.querySelectorAll('[data-shot]').forEach(x => x.classList.toggle('sel', x === t));
-  }));
-  // options
-  document.getElementById('colors').addEventListener('click', e => {
-    const b = e.target.closest('[data-color]'); if (!b) return;
-    sel.color = b.dataset.color;
-    document.querySelectorAll('#colors button').forEach(x => x.classList.toggle('sel', x === b));
-  });
-  document.getElementById('sizes').addEventListener('click', e => {
-    const b = e.target.closest('[data-size]'); if (!b) return;
-    sel.size = b.dataset.size;
-    document.querySelectorAll('#sizes .chip').forEach(x => x.classList.toggle('sel', x === b));
-  });
-  const qEl = document.getElementById('qty');
-  document.getElementById('plus').addEventListener('click', () => { sel.qty++; qEl.textContent = sel.qty; });
-  document.getElementById('minus').addEventListener('click', () => { if (sel.qty > 1) { sel.qty--; qEl.textContent = sel.qty; } });
-  document.getElementById('addBtn').addEventListener('click', () => addToCart(p.id, sel));
-  if (wishlist.includes(p.id)) document.getElementById('wishBtn').textContent = '♥ Saved';
-
-  // accordion
-  document.querySelectorAll('[data-acc]').forEach(b => b.addEventListener('click', () => {
-    const body = b.nextElementSibling;
-    const open = body.classList.toggle('open');
-    b.querySelector('span').textContent = open ? '−' : '+';
-  }));
-
-  renderGrid(document.getElementById('related'),
-    PRODUCTS.filter(x => x.cat === p.cat && x.id !== p.id).slice(0, 4));
-});
-</script>
-</body>
+      <section>
+        <div class="wrap"><div class="pdp" id="product"></div></div>
+      </section>
+    </main>
+    <div data-shell="footer"></div>
+    <script src="js/preview.js"></script>
+    <script src="api/products.php"></script>
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const p = PRODUCTS.find(
+          (x) => x.id === new URLSearchParams(location.search).get("id"),
+        );
+        if (!p) {
+          document.getElementById("product").textContent =
+            "This product is unavailable. Please browse our current collection.";
+          return;
+        }
+        document.title = p.name + " | Teebanj Fashion World";
+        document.getElementById("product").innerHTML =
+          `<img class="product-image" src="${escapeHtml(img(p))}" alt="${escapeHtml(p.name)}"><div><span class="eyebrow">${catName(p.cat)}</span><h1>${escapeHtml(p.name)}</h1><h2>${money(p.price)}</h2><p class="product-description">${escapeHtml(p.desc)}</p><p>Selected variation: <b>${escapeHtml(p.variation)}</b></p><p>${p.preview ? "Contact us for availability and options" : p.stock > 0 ? "Available to order" : "Currently unavailable online"}</p><label for="quantity">Quantity</label><input id="quantity" type="number" min="1" max="${Math.min(99, Math.floor(p.stock))}" value="1" style="width:90px"><p><button id="add" class="btn btn-primary" ${p.stock < 1 ? "disabled" : ""}>Add to bag</button></p><p>Delivery and applicable taxes are confirmed at checkout.</p><a href="contact.html">Need help with sizing or a custom design?</a></div>`;
+        document
+          .getElementById("add")
+          .addEventListener("click", () =>
+            addToCart(p.id, {
+              qty: Number(document.getElementById("quantity").value),
+            }),
+          );
+      });
+    </script>
+  </body>
 </html>

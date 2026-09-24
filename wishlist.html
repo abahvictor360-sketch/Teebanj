@@ -1,57 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wishlist | Ajusti</title>
-<meta name="description" content="The Ajusti pieces you have saved.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23e9574e'/><text x='16' y='23' font-size='18' font-family='Georgia' fill='white' text-anchor='middle'>A</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#e9574e">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Ajusti">
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-<link rel="stylesheet" href="css/style.css">
-</head>
-<body data-page="wishlist.html">
-<div data-shell="header"></div>
-
-<div class="page-head">
-  <div class="wrap">
-    <h1>Your Wishlist</h1>
-    <p class="crumbs"><a href="index.html">Home</a> / Wishlist</p>
-  </div>
-</div>
-
-<section>
-  <div class="wrap">
-    <div class="product-grid" id="wishGrid"></div>
-  </div>
-</section>
-
-<div data-shell="footer"></div>
-<script src="js/products.js"></script>
-<script src="js/main.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const draw = () => {
-    const list = PRODUCTS.filter(p => wishlist.includes(p.id));
-    const el = document.getElementById('wishGrid');
-    if (!list.length) {
-      el.innerHTML = `<div class="empty"><h2>Nothing saved yet</h2>
-        <p>Tap the heart on any piece to keep it here.</p>
-        <a class="btn btn-primary" href="shop.html">Browse the shop</a></div>`;
-      return;
-    }
-    renderGrid(el, list);
-  };
-  draw();
-  document.addEventListener('click', e => { if (e.target.closest('[data-wish]')) setTimeout(draw, 0); });
-});
-</script>
-</body>
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Wishlist | Teebanj Fashion World</title>
+    <meta
+      name="description"
+      content="African fabrics, ready-to-wear fashion and custom designs from Teebanj Fashion World, Moncton, Canada."
+    />
+    <link rel="icon" href="assets/site/product-placeholder.svg" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#963c2d" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/teebanj.css" />
+  </head>
+  <body>
+    <div data-shell="header"></div>
+    <main>
+      <div class="page-head">
+        <div class="wrap">
+          <h1>Your saved pieces</h1>
+          <p class="crumbs">
+            <a href="index.html">Home</a> / Your saved pieces
+          </p>
+        </div>
+      </div>
+      <section><div class="wrap product-grid" id="wishlist"></div></section>
+    </main>
+    <div data-shell="footer"></div>
+    <script src="js/preview.js"></script>
+    <script src="api/products.php"></script>
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () =>
+        renderGrid(
+          document.getElementById("wishlist"),
+          PRODUCTS.filter((p) => wishlist.includes(p.id)),
+        ),
+      );
+    </script>
+  </body>
 </html>

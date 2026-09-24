@@ -1,351 +1,151 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ajusti | Ankara Dresses, Bags, Shoes &amp; Locally Made Fashion</title>
-<meta name="description" content="Ajusti sells Ankara dresses, adire, bags, shoes and locally made Nigerian fashion. Made-to-measure pieces from Lagos tailors, shipped nationwide.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23e9574e'/><text x='16' y='23' font-size='18' font-family='Georgia' fill='white' text-anchor='middle'>A</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#e9574e">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Ajusti">
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-<link rel="stylesheet" href="css/style.css">
-</head>
-<body data-page="index.html">
-<div data-shell="header"></div>
-
-<!-- ============ HERO CAROUSEL ============ -->
-<section class="hero" id="hero" aria-roledescription="carousel" aria-label="Featured collections">
-  <div class="hero-slides" id="heroSlides">
-    <div class="hero-slide on anim" data-slide="0"
-         style="--disc:#c8402f;--art-h:560px"
-         role="group" aria-roledescription="slide" aria-label="1 of 4">
-      <div class="hero-inner">
-        <div class="hero-copy">
-          <span class="eyebrow">✺ New Ankara Collection</span>
-          <h1>Bold Prints.<br>Everyday <em>You.</em></h1>
-          <p>Ankara gowns, adire, bags and heels, cut to your measurements by tailors we know by name.</p>
-          <div class="hero-cta">
-            <a class="btn btn-primary" href="shop.html?cat=ankara-dresses">Shop Now →</a>
-            <a class="btn btn-ghost" href="#categories">Explore Collections</a>
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Where culture meets style | Teebanj Fashion World</title>
+    <meta
+      name="description"
+      content="African fabrics, ready-to-wear fashion and custom designs from Teebanj Fashion World, Moncton, Canada."
+    />
+    <link rel="icon" href="assets/site/product-placeholder.svg" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#963c2d" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/teebanj.css" />
+  </head>
+  <body>
+    <div data-shell="header"></div>
+    <main>
+      <section class="landing">
+        <div class="wrap landing-grid">
+          <div>
+            <span class="eyebrow">African roots. A world of possibility.</span>
+            <h1>Wear your culture.<br />Own your style.</h1>
+            <p>
+              Rich prints. Beautiful fabrics. Pieces that feel like you.
+              Discover African fashion and custom designs at Teebanj Fashion
+              World.
+            </p>
+            <div class="admin-controls">
+              <a class="btn btn-primary" href="shop.html"
+                >Explore the collection →</a
+              ><a class="btn btn-ghost" href="custom.html">Made for you</a>
+            </div>
+            <p>
+              <small>Based in Moncton, New Brunswick · Prices in CAD</small>
+            </p>
+          </div>
+          <div class="hero-art">
+            <img
+              src="assets/site/hero-model.webp"
+              alt="African print fashion inspiration"
+            />
+            <div class="hero-caption">
+              <span class="eyebrow">The Teebanj spirit</span><br /><b
+                >Heritage in every detail.</b
+              >
+            </div>
           </div>
         </div>
-        <div class="hero-art">
-          <div class="hero-blob"></div>
-          <span class="hero-dot d1"></span><span class="hero-dot d2"></span><span class="hero-dot d3"></span>
-          <img src="assets/site/hero-model.webp" alt="Model wearing a fuchsia Ankara ruffle gown" width="476" height="1000" fetchpriority="high">
-          <div class="hero-proof">
-            <span class="avatars"><span style="background-image:url(assets/products/magenta-ankara-ruffle-dress.jpg)"></span><span style="background-image:url(assets/products/ankara-boubou-maxi.jpg)"></span><span style="background-image:url(assets/products/turquoise-lace-boubou.jpg)"></span></span>
-            <span><b>Loved by 10K+ customers</b><small><span class="stars">★★★★★</span> 4.8 &nbsp;(2.5K reviews)</small></span>
+      </section>
+      <section>
+        <div class="wrap">
+          <div class="sec-head">
+            <div>
+              <span class="eyebrow">Find your expression</span>
+              <h2>Explore our collections</h2>
+            </div>
+          </div>
+          <div class="collection-links" id="categories"></div>
+        </div>
+      </section>
+      <section style="background: var(--cream-deep)">
+        <div class="wrap">
+          <div class="sec-head">
+            <div>
+              <span class="eyebrow">From our collection</span>
+              <h2>Find your next favourite</h2>
+            </div>
+            <a href="shop.html">Shop all →</a>
+          </div>
+          <div class="product-grid" id="featured"></div>
+        </div>
+      </section>
+      <section>
+        <div class="wrap two-col">
+          <div>
+            <span class="eyebrow">More than what you wear</span>
+            <h2>Tradition, made personal.</h2>
+          </div>
+          <div>
+            <p>
+              From ready-to-wear outfits to bespoke designs and coordinated Aso
+              Ebi attire, we bring African textiles into life's everyday moments
+              and special celebrations.
+            </p>
+            <a class="btn btn-ghost" href="about.html">Meet Teebanj →</a>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="hero-slide" data-slide="1"
-         style="--disc:#b5622f;--art-h:560px" aria-hidden="true"
-         role="group" aria-roledescription="slide" aria-label="2 of 4">
-      <div class="hero-inner">
-        <div class="hero-copy">
-          <span class="eyebrow">✺ His &amp; Hers</span>
-          <h1>Step Out.<br><em>Together.</em></h1>
-          <p>Matching Ankara sets and senator suits, tailored for both of you and sent out as one order.</p>
-          <div class="hero-cta">
-            <a class="btn btn-primary" href="shop.html?cat=mens-native">Shop Men's Native →</a>
-            <a class="btn btn-ghost" href="product.html?id=couple-ankara-set">See couple sets</a>
-          </div>
+      </section>
+      <section>
+        <div class="wrap newsletter">
+          <h2>A little inspiration in your inbox.</h2>
+          <p>Sign up for collection updates and fashion news.</p>
+          <form id="subscribe">
+            <div class="field">
+              <label for="newsletterEmail">Your email</label
+              ><input
+                type="email"
+                id="newsletterEmail"
+                name="email"
+                required
+                maxlength="254"
+              />
+            </div>
+            <label
+              ><input type="checkbox" name="consent" required /> I agree to
+              receive marketing emails. I can unsubscribe by contacting the
+              store.</label
+            >
+            <p>
+              <button class="btn btn-primary" type="submit">
+                Join the list
+              </button>
+            </p>
+            <p role="status"></p>
+          </form>
         </div>
-        <div class="hero-art">
-          <div class="hero-blob"></div>
-          <span class="hero-dot d1"></span><span class="hero-dot d2"></span><span class="hero-dot d3"></span>
-          <img src="assets/site/hero-couple.webp" alt="Couple in matching navy and Ankara outfits" width="593" height="1000" loading="lazy">
-          <div class="hero-proof">
-            <span class="avatars"><span style="background-image:url(assets/products/couple-ankara-set.jpg)"></span><span style="background-image:url(assets/products/emerald-senator-suit.jpg)"></span><span style="background-image:url(assets/products/kente-agbada-suit.jpg)"></span></span>
-            <span><b>Dressed 500+ couples</b><small>Aso-ebi and family orders welcome</small></span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="hero-slide" data-slide="2"
-         style="--disc:#e9574e;--art-h:560px" aria-hidden="true"
-         role="group" aria-roledescription="slide" aria-label="3 of 4">
-      <div class="hero-inner">
-        <div class="hero-copy">
-          <span class="eyebrow">✺ Hand-Dyed in Nigeria</span>
-          <h1>Adire.<br><em>One of One.</em></h1>
-          <p>Indigo dyed by hand, then cut to order. No two pieces ever come out of the vat the same.</p>
-          <div class="hero-cta">
-            <a class="btn btn-primary" href="shop.html?cat=locally-made">Shop Locally Made →</a>
-            <a class="btn btn-ghost" href="blog.html">How adire is made</a>
-          </div>
-        </div>
-        <div class="hero-art">
-          <div class="hero-blob"></div>
-          <span class="hero-dot d1"></span><span class="hero-dot d2"></span><span class="hero-dot d3"></span>
-          <img src="assets/site/hero-adire.webp" alt="Model wearing an indigo adire evening gown" width="609" height="1000" loading="lazy">
-          <div class="hero-proof">
-            <span class="avatars"><span style="background-image:url(assets/products/indigo-adire-flare-dress.jpg)"></span><span style="background-image:url(assets/products/monochrome-adire-handkerchief-dress.jpg)"></span><span style="background-image:url(assets/products/turquoise-lace-boubou.jpg)"></span></span>
-            <span><b>Cut to order in 10–14 days</b><small>Free custom measurements on every piece</small></span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="hero-slide" data-slide="3"
-         style="--disc:#c9a227;--art-h:470px" aria-hidden="true"
-         role="group" aria-roledescription="slide" aria-label="4 of 4">
-      <div class="hero-inner">
-        <div class="hero-copy">
-          <span class="eyebrow">✺ Bags &amp; Heels</span>
-          <h1>Finish the<br><em>Look.</em></h1>
-          <p>Leather bags built for Lagos traffic, and heels with a padded insole you can actually walk in.</p>
-          <div class="hero-cta">
-            <a class="btn btn-primary" href="shop.html?cat=bags">Shop Bags →</a>
-            <a class="btn btn-ghost" href="shop.html?cat=shoes">Shop Shoes</a>
-          </div>
-        </div>
-        <div class="hero-art">
-          <div class="hero-blob"></div>
-          <span class="hero-dot d1"></span><span class="hero-dot d2"></span><span class="hero-dot d3"></span>
-          <img src="assets/site/hero-bag.webp" alt="Black leather work tote with gold hardware" width="592" height="700" loading="lazy">
-          <div class="hero-proof">
-            <span class="avatars"><span style="background-image:url(assets/products/black-classic-tote.jpg)"></span><span style="background-image:url(assets/products/black-bow-stiletto.jpg)"></span><span style="background-image:url(assets/products/nude-pearl-handbag.jpg)"></span></span>
-            <span><b>Free delivery above ₦150,000</b><small>Pay on delivery within Lagos</small></span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="hero-controls">
-    <button class="hero-arrow" id="heroPrev" aria-label="Previous slide">‹</button>
-    <div class="hero-dots" id="heroDots" aria-label="Choose slide"><button class="hero-dot-btn on" data-goto="0" aria-label="Show slide 1" aria-current="true"></button><button class="hero-dot-btn" data-goto="1" aria-label="Show slide 2"></button><button class="hero-dot-btn" data-goto="2" aria-label="Show slide 3"></button><button class="hero-dot-btn" data-goto="3" aria-label="Show slide 4"></button></div>
-    <button class="hero-arrow" id="heroNext" aria-label="Next slide">›</button>
-  </div>
-</section>
-
-<!-- ============ TRUST STRIP ============ -->
-<div class="wrap">
-  <div class="trust" id="trust"></div>
-</div>
-
-<!-- ============ CATEGORIES ============ -->
-<section id="categories">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <h2>Shop by Category</h2>
-        <p>Five ways into the wardrobe.</p>
-      </div>
-      <a class="link-more" href="shop.html">View All Categories →</a>
-    </div>
-    <div class="cat-grid" id="catGrid"></div>
-  </div>
-</section>
-
-<!-- ============ NEW ARRIVALS ============ -->
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <h2>New Arrivals</h2>
-        <p>Fresh off the tailor's table this week.</p>
-      </div>
-      <a class="link-more" href="shop.html?sort=new">View All Products →</a>
-    </div>
-    <div class="product-grid" id="newGrid"></div>
-  </div>
-</section>
-
-<!-- ============ DEAL BANNER ============ -->
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="deal">
-      <div class="deal-stamp">Limited<br>Time<br>Offer</div>
-      <div class="deal-copy with-stamp">
-        <h2>Up To 30% Off</h2>
-        <p>On selected Ankara gowns, bags and heels, while the fabric lasts.</p>
-        <a class="btn btn-ghost" href="deals.html">Grab the Deal →</a>
-      </div>
-      <div class="deal-img"><img src="assets/site/deal-banner.jpg" alt="Rainbow Ankara kimono on a rail"></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ BEST SELLERS ============ -->
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <h2>Best Sellers</h2>
-        <p>What Ajusti customers keep coming back for.</p>
-      </div>
-      <a class="link-more" href="shop.html?sort=rating">View All Products →</a>
-    </div>
-    <div class="product-grid" id="bestGrid"></div>
-  </div>
-</section>
-
-<!-- ============ PERKS ============ -->
-<div class="wrap">
-  <div class="perks" id="perks"></div>
-</div>
-
-<!-- ============ TESTIMONIALS ============ -->
-<section>
-  <div class="wrap">
-    <div class="sec-head"><div><h2>What Our Customers Say</h2><p>Real orders, real owambe.</p></div></div>
-    <div class="quote-grid">
-      <div class="quote">
-        <span class="stars">★★★★★</span>
-        <p>"I sent my measurements on WhatsApp and the gown fit perfectly, with no adjustments. Wore it to my sister's introduction and got asked for the vendor all night."</p>
-        <div class="who"><div>AO</div><span><b>Adaeze O.</b><small>Enugu · Fan-Collar Ankara Gown</small></span></div>
-      </div>
-      <div class="quote">
-        <span class="stars">★★★★★</span>
-        <p>"The leather on the black tote is genuinely good. It has carried my laptop every workday for seven months and still looks new."</p>
-        <div class="who"><div>BK</div><span><b>Bimpe K.</b><small>Lagos · Classic Black Work Tote</small></span></div>
-      </div>
-      <div class="quote">
-        <span class="stars">★★★★★</span>
-        <p>"Ordered the emerald senator on a Monday, it arrived in Abuja on Thursday. My tailor could not have done it faster or cleaner."</p>
-        <div class="who"><div>TI</div><span><b>Tunde I.</b><small>Abuja · Emerald Senator Suit</small></span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ NEWSLETTER ============ -->
-<section style="padding-top:0">
-  <div class="wrap">
-    <div class="newsletter">
-      <h2>Get first look at new drops</h2>
-      <p>New Ankara cuts land every Thursday. Join the list for early access and ₦5,000 off your first order.</p>
-      <form data-fake-submit="You're on the list. Check your inbox for the ₦5,000 code.">
-        <input type="email" required placeholder="you@email.com" aria-label="Email address">
-        <button class="btn btn-primary" type="submit">Subscribe</button>
-      </form>
-    </div>
-  </div>
-</section>
-
-<div data-shell="footer"></div>
-
-<script src="js/products.js"></script>
-<script src="js/main.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  // trust + perks strips
-  const strip = (el, items) => el.innerHTML = items.map(([i, t, s]) =>
-    `<div><span class="trust-ico">${svg(i)}</span><span><b>${t}</b><small>${s}</small></span></div>`).join('');
-  strip(document.getElementById('trust'), [
-    ['shield', 'Premium Fabric', 'Hand-picked Ankara &amp; adire'],
-    ['truck', 'Fast Delivery', '2–5 days nationwide'],
-    ['refresh', 'Easy Returns', '7-day return policy'],
-    ['medal', 'Made to Measure', 'Tailored to your size']
-  ]);
-  strip(document.getElementById('perks'), [
-    ['gift', 'Exclusive Offers', 'Save more every week'],
-    ['percent', 'Secure Payments', 'Paystack &amp; Flutterwave'],
-    ['headset', '24/7 Support', 'WhatsApp us anytime'],
-    ['crown', 'Loyalty Rewards', 'Earn points, get discounts']
-  ]);
-
-  // category cards
-  const COVER = {
-    'ankara-dresses': 'fuchsia-ruffle-highlow', 'bags': 'nude-pearl-handbag', 'shoes': 'black-bow-stiletto',
-    'mens-native': 'emerald-senator-suit', 'locally-made': 'indigo-adire-evening-gown'
-  };
-  document.getElementById('catGrid').innerHTML = CATEGORIES.map(c => {
-    const n = PRODUCTS.filter(p => p.cat === c.slug).length;
-    return `<a class="cat-card" href="shop.html?cat=${c.slug}" style="background:${c.tint}">
-      <img src="assets/products/${COVER[c.slug]}.jpg" alt="">
-      <b>${c.name}</b>
-      <small>${n} items</small>
-      <span class="arrow">→</span>
-    </a>`;
-  }).join('');
-
-  // grids
-  const byTag = t => PRODUCTS.filter(p => (p.tags || []).includes(t));
-  const newest = [...byTag('new'), ...PRODUCTS.filter(p => !(p.tags || []).includes('new'))].slice(0, 8);
-  renderGrid(document.getElementById('newGrid'), newest);
-  renderGrid(document.getElementById('bestGrid'),
-    [...PRODUCTS].sort((a, b) => (b.rating * 100 + b.reviews / 10) - (a.rating * 100 + a.reviews / 10)).slice(0, 4));
-
-
-  /* ---------- hero carousel ---------- */
-  const slides = [...document.querySelectorAll('.hero-slide')];
-  if (slides.length > 1) {
-    const dots = [...document.querySelectorAll('.hero-dot-btn')];
-    const hero = document.getElementById('hero');
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const DELAY = 6500;
-    let current = 0, timer = null, paused = false;
-
-    function show(next) {
-      next = (next + slides.length) % slides.length;
-      if (next === current) return;
-      slides.forEach((s, i) => {
-        const on = i === next;
-        s.classList.toggle('on', on);
-        s.toggleAttribute('aria-hidden', !on);
-        // restart the entrance animation for the slide coming in
-        s.classList.remove('anim');
-        if (on) { void s.offsetWidth; s.classList.add('anim'); }
+      </section>
+    </main>
+    <div data-shell="footer"></div>
+    <script src="js/preview.js"></script>
+    <script src="api/products.php"></script>
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("categories").innerHTML = CATEGORIES.map(
+          (c) =>
+            `<a class="collection-link" style="background:${c.tint}" href="shop.html?cat=${c.slug}"><b>${c.name}</b><span>${c.blurb} →</span></a>`,
+        ).join("");
+        renderGrid(document.getElementById("featured"), PRODUCTS.slice(0, 8));
+        formAction(
+          "subscribe",
+          "subscribe",
+          (f) => ({ email: f.get("email"), consent: f.has("consent") }),
+          (_, f) => {
+            f.reset();
+            toast("You are on the list. Thank you!");
+          },
+        );
       });
-      dots.forEach((d, i) => {
-        d.classList.toggle('on', i === next);
-        i === next ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current');
-      });
-      current = next;
-    }
-
-    const stop  = () => { clearInterval(timer); timer = null; };
-    const start = () => {
-      stop();
-      if (reduced || paused) return;
-      timer = setInterval(() => show(current + 1), DELAY);
-    };
-
-    document.getElementById('heroNext').addEventListener('click', () => { show(current + 1); start(); });
-    document.getElementById('heroPrev').addEventListener('click', () => { show(current - 1); start(); });
-    dots.forEach(d => d.addEventListener('click', () => { show(+d.dataset.goto); start(); }));
-
-    // pause while someone is reading or interacting, and when the tab is hidden
-    ['mouseenter', 'focusin'].forEach(ev =>
-      hero.addEventListener(ev, () => { paused = true; stop(); }));
-    ['mouseleave', 'focusout'].forEach(ev =>
-      hero.addEventListener(ev, () => { paused = false; start(); }));
-    document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
-
-    // swipe
-    let x0 = null;
-    hero.addEventListener('touchstart', e => { x0 = e.touches[0].clientX; stop(); }, { passive: true });
-    hero.addEventListener('touchend', e => {
-      if (x0 === null) return;
-      const dx = e.changedTouches[0].clientX - x0;
-      if (Math.abs(dx) > 45) show(current + (dx < 0 ? 1 : -1));
-      x0 = null; start();
-    }, { passive: true });
-
-    // arrow keys when focus is inside the hero
-    hero.addEventListener('keydown', e => {
-      if (e.key === 'ArrowRight') { show(current + 1); start(); }
-      if (e.key === 'ArrowLeft')  { show(current - 1); start(); }
-    });
-
-    start();
-  }
-
-  // demo form handling
-  document.querySelectorAll('[data-fake-submit]').forEach(f => f.addEventListener('submit', e => {
-    e.preventDefault(); toast(f.dataset.fakeSubmit); f.reset();
-  }));
-});
-</script>
-</body>
+    </script>
+  </body>
 </html>

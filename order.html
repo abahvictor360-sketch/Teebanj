@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Order status | Teebanj Fashion World</title>
+    <meta
+      name="description"
+      content="African fabrics, ready-to-wear fashion and custom designs from Teebanj Fashion World, Moncton, Canada."
+    />
+    <link rel="icon" href="assets/site/product-placeholder.svg" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#963c2d" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/teebanj.css" />
+  </head>
+  <body>
+    <div data-shell="header"></div>
+    <main>
+      <div class="page-head">
+        <div class="wrap">
+          <h1>Your order</h1>
+          <p class="crumbs"><a href="index.html">Home</a> / Your order</p>
+        </div>
+      </div>
+      <section>
+        <div class="wrap content-page">
+          <div class="card">
+            <h2 id="orderTitle">Checking payment…</h2>
+            <p id="orderStatus" role="status">
+              Please wait while we confirm your payment.
+            </p>
+            <button id="check" class="btn btn-primary">Refresh status</button>
+            <a href="shop.html" class="btn btn-ghost">Continue shopping</a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div data-shell="footer"></div>
+    <script src="js/preview.js"></script>
+    <script src="api/products.php"></script>
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const ref = new URLSearchParams(location.search).get("ref") || "";
+        async function check() {
+          const btn = document.getElementById("check");
+          btn.disabled = true;
+          try {
+            const { order: o } = await api(
+              "order&ref=" + encodeURIComponent(ref),
+            );
+            document.getElementById("orderTitle").textContent =
+              o.status === "pending"
+                ? "Payment awaiting confirmation"
+                : "Order " + o.status.replaceAll("_", " ");
+            document.getElementById("orderStatus").textContent =
+              "Reference: " +
+              o.id +
+              "\nTotal: " +
+              money(o.total_cents / 100) +
+              (o.tracking ? "\nTracking: " + o.tracking : "");
+            if (
+              ["paid", "shipped", "refund_review"].includes(o.status) &&
+              store.get("clearedOrder", null) !== ref
+            ) {
+              const submitted = store.get("submittedCart", []);
+              cart = cart
+                .map((l) => ({
+                  ...l,
+                  qty: l.qty - (submitted.find((s) => s.id === l.id)?.qty || 0),
+                }))
+                .filter((l) => l.qty > 0);
+              saveCart();
+              store.set("clearedOrder", ref);
+              store.set("checkoutAttempt", null);
+            }
+          } catch (e) {
+            document.getElementById("orderStatus").textContent = e.message;
+          } finally {
+            btn.disabled = false;
+          }
+        }
+        document.getElementById("check").addEventListener("click", check);
+        check();
+      });
+    </script>
+  </body>
+</html>

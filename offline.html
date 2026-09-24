@@ -1,37 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>You're offline | Ajusti</title>
-<link rel="icon" href="assets/icons/icon-192.png">
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#e9574e">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Ajusti">
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-<link rel="stylesheet" href="css/style.css">
-</head>
-<body data-page="index.html" style="display:grid;place-items:center;min-height:100vh">
-  <main class="wrap center" style="max-width:460px;padding:2rem 20px">
-    <img src="assets/icons/icon-192.png" alt="" width="84" height="84" style="margin:0 auto 1.4rem;border-radius:22px">
-    <h1 style="font-size:2rem">No connection</h1>
-    <p class="muted">You're offline, so we can't load new pieces right now. Pages you've already
-    visited will still open, and anything in your bag is saved on this device.</p>
-    <div class="hero-cta" style="justify-content:center">
-      <button class="btn btn-primary" onclick="location.reload()">Try again</button>
-      <a class="btn btn-ghost" href="index.html">Go home</a>
-    </div>
-    <p class="muted" style="font-size:.85rem;margin-top:2rem">
-      Ready to order? Message us on
-      <a href="https://wa.me/2347018317175" style="color:var(--coral)">WhatsApp</a>
-      when you're back online.
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>Offline | Teebanj Fashion World</title>
+  <body>
+    <h1>You are offline</h1>
+    <p>
+      Reconnect to view current prices, stock and order status. Your bag is
+      saved in this browser.
     </p>
-  </main>
-  <script>
-    // Slip straight back to the site the moment the network returns.
-    addEventListener('online', () => location.replace('index.html'));
-  </script>
-</body>
+    <a href="index.html">Try again</a>
+  </body>
 </html>

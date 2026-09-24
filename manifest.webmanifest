@@ -1,40 +1,20 @@
 {
-  "name": "Ajusti | Wear Your Culture",
-  "short_name": "Ajusti",
-  "description": "Ankara dresses, adire, bags, shoes and locally made Nigerian fashion, made to measure and shipped nationwide.",
-  "id": "/",
+  "name": "Teebanj Fashion World",
+  "short_name": "Teebanj",
+  "description": "African fabrics and fashion from Moncton, Canada.",
+  "id": "./",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait-primary",
-  "theme_color": "#e9574e",
-  "background_color": "#fdf6f1",
-  "lang": "en-NG",
-  "dir": "ltr",
-  "categories": ["shopping", "lifestyle"],
+  "theme_color": "#963c2d",
+  "background_color": "#faf7f0",
+  "lang": "en-CA",
   "icons": [
-    { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
-  ],
-  "shortcuts": [
     {
-      "name": "Shop all",
-      "short_name": "Shop",
-      "url": "./shop.html",
-      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "Today's deals",
-      "short_name": "Deals",
-      "url": "./deals.html",
-      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "My bag",
-      "short_name": "Bag",
-      "url": "./cart.html",
-      "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }]
+      "src": "assets/site/product-placeholder.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
     }
   ]
 }

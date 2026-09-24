@@ -1,151 +1,102 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Shop | Ajusti</title>
-<meta name="description" content="Browse every Ajusti piece: Ankara dresses, adire, bags, shoes and men's native wear. Filter by category, price and size.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23e9574e'/><text x='16' y='23' font-size='18' font-family='Georgia' fill='white' text-anchor='middle'>A</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#e9574e">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Ajusti">
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-<link rel="stylesheet" href="css/style.css">
-</head>
-<body data-page="shop.html">
-<div data-shell="header"></div>
-
-<div class="page-head">
-  <div class="wrap">
-    <h1 id="shopTitle">Shop All</h1>
-    <p class="crumbs"><a href="index.html">Home</a> / <span id="crumbNow">Shop</span></p>
-  </div>
-</div>
-
-<section>
-  <div class="wrap shop-layout">
-    <aside class="filters" id="filters">
-      <div class="filter-block">
-        <h4>Category</h4>
-        <div id="catFilters"></div>
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Shop | Teebanj Fashion World</title>
+    <meta
+      name="description"
+      content="African fabrics, ready-to-wear fashion and custom designs from Teebanj Fashion World, Moncton, Canada."
+    />
+    <link rel="icon" href="assets/site/product-placeholder.svg" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#963c2d" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/teebanj.css" />
+  </head>
+  <body>
+    <div data-shell="header"></div>
+    <main>
+      <div class="page-head">
+        <div class="wrap">
+          <h1>Shop the collection</h1>
+          <p class="crumbs">
+            <a href="index.html">Home</a> / Shop the collection
+          </p>
+        </div>
       </div>
-      <div class="filter-block">
-        <h4>Max price</h4>
-        <input type="range" id="priceRange" min="25000" max="130000" step="5000" value="130000">
-        <div class="muted" style="font-size:.85rem">Up to <span id="priceLabel">₦130,000</span></div>
-      </div>
-      <div class="filter-block">
-        <h4>Availability</h4>
-        <label><input type="checkbox" id="onlySale"> On offer only</label>
-        <label><input type="checkbox" id="onlyNew"> New arrivals</label>
-      </div>
-      <div class="filter-block">
-        <h4>Rating</h4>
-        <label><input type="radio" name="rate" value="0" checked> All ratings</label>
-        <label><input type="radio" name="rate" value="4.5"> 4.5 &amp; up</label>
-        <label><input type="radio" name="rate" value="4.8"> 4.8 &amp; up</label>
-      </div>
-      <button class="btn btn-ghost btn-block btn-sm" id="clearFilters" style="margin-top:1.3rem">Clear filters</button>
-    </aside>
-
-    <div>
-      <div class="shop-toolbar">
-        <button class="btn btn-ghost btn-sm filter-toggle" id="filterToggle">Filters</button>
-        <span class="muted" id="resultCount"></span>
-        <select id="sort" aria-label="Sort products">
-          <option value="featured">Sort: Featured</option>
-          <option value="new">Newest first</option>
-          <option value="low">Price: low to high</option>
-          <option value="high">Price: high to low</option>
-          <option value="rating">Top rated</option>
-        </select>
-      </div>
-      <div class="product-grid" id="grid"></div>
-    </div>
-  </div>
-</section>
-
-<div data-shell="footer"></div>
-
-<script src="js/products.js"></script>
-<script src="js/main.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const params = new URLSearchParams(location.search);
-  const state = {
-    cats: new Set(params.get('cat') ? [params.get('cat')] : []),
-    q: (params.get('q') || '').trim().toLowerCase(),
-    max: 130000, sale: params.get('tag') === 'sale', fresh: false, rate: 0,
-    sort: params.get('sort') || 'featured'
-  };
-  document.getElementById('sort').value = state.sort;
-
-  if (state.cats.size) {
-    const name = catName([...state.cats][0]);
-    document.getElementById('shopTitle').textContent = name;
-    document.getElementById('crumbNow').textContent = name;
-  } else if (state.q) {
-    document.getElementById('shopTitle').textContent = `Results for “${params.get('q')}”`;
-  }
-
-  // category checkboxes
-  document.getElementById('catFilters').innerHTML = CATEGORIES.map(c => {
-    const n = PRODUCTS.filter(p => p.cat === c.slug).length;
-    return `<label><input type="checkbox" value="${c.slug}" ${state.cats.has(c.slug) ? 'checked' : ''}> ${c.name} <span class="muted" style="margin-left:auto;font-size:.8rem">${n}</span></label>`;
-  }).join('');
-
-  function apply() {
-    let list = PRODUCTS.filter(p =>
-      (!state.cats.size || state.cats.has(p.cat)) &&
-      p.price <= state.max &&
-      (!state.sale || p.was) &&
-      (!state.fresh || (p.tags || []).includes('new')) &&
-      p.rating >= state.rate &&
-      (!state.q || (p.name + ' ' + p.desc + ' ' + catName(p.cat)).toLowerCase().includes(state.q))
-    );
-    const s = state.sort;
-    if (s === 'low') list.sort((a, b) => a.price - b.price);
-    else if (s === 'high') list.sort((a, b) => b.price - a.price);
-    else if (s === 'rating') list.sort((a, b) => b.rating - a.rating || b.reviews - a.reviews);
-    else if (s === 'new') list.sort((a, b) => ((b.tags || []).includes('new') ? 1 : 0) - ((a.tags || []).includes('new') ? 1 : 0));
-    document.getElementById('resultCount').textContent = `${list.length} piece${list.length === 1 ? '' : 's'}`;
-    renderGrid(document.getElementById('grid'), list);
-  }
-
-  document.getElementById('catFilters').addEventListener('change', e => {
-    e.target.checked ? state.cats.add(e.target.value) : state.cats.delete(e.target.value);
-    apply();
-  });
-  const range = document.getElementById('priceRange');
-  range.addEventListener('input', () => {
-    state.max = +range.value;
-    document.getElementById('priceLabel').textContent = money(state.max);
-    apply();
-  });
-  document.getElementById('onlySale').checked = state.sale;
-  document.getElementById('onlySale').addEventListener('change', e => { state.sale = e.target.checked; apply(); });
-  document.getElementById('onlyNew').addEventListener('change', e => { state.fresh = e.target.checked; apply(); });
-  document.querySelectorAll('input[name=rate]').forEach(r =>
-    r.addEventListener('change', e => { state.rate = +e.target.value; apply(); }));
-  document.getElementById('sort').addEventListener('change', e => { state.sort = e.target.value; apply(); });
-  document.getElementById('filterToggle').addEventListener('click', () =>
-    document.getElementById('filters').classList.toggle('open'));
-  document.getElementById('clearFilters').addEventListener('click', () => {
-    state.cats.clear(); state.max = 130000; state.sale = state.fresh = false; state.rate = 0; state.q = '';
-    document.querySelectorAll('#catFilters input').forEach(i => i.checked = false);
-    document.getElementById('onlySale').checked = document.getElementById('onlyNew').checked = false;
-    document.querySelector('input[name=rate]').checked = true;
-    range.value = 130000; document.getElementById('priceLabel').textContent = money(130000);
-    apply();
-  });
-
-  apply();
-});
-</script>
-</body>
+      <section>
+        <div class="wrap">
+          <div class="shop-toolbar">
+            <label
+              >Category
+              <select id="category">
+                <option value="">All collections</option>
+              </select></label
+            ><label
+              >Search
+              <input
+                id="search"
+                type="search"
+                placeholder="Find your style" /></label
+            ><label
+              >Sort
+              <select id="sort">
+                <option value="">Featured</option>
+                <option value="low">Price: low to high</option>
+                <option value="high">Price: high to low</option>
+              </select></label
+            >
+          </div>
+          <p class="muted" id="count"></p>
+          <div id="grid" class="product-grid"></div>
+        </div>
+      </section>
+    </main>
+    <div data-shell="footer"></div>
+    <script src="js/preview.js"></script>
+    <script src="api/products.php"></script>
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const params = new URLSearchParams(location.search);
+        const category = document.getElementById("category");
+        category.innerHTML += CATEGORIES.map(
+          (c) => `<option value="${c.slug}">${c.name}</option>`,
+        ).join("");
+        category.value = params.get("cat") || "";
+        document.getElementById("search").value = params.get("q") || "";
+        function draw() {
+          let list = PRODUCTS.filter(
+            (p) =>
+              (!category.value || p.cat === category.value) &&
+              (p.name + " " + p.desc)
+                .toLowerCase()
+                .includes(
+                  document.getElementById("search").value.toLowerCase(),
+                ),
+          );
+          const sort = document.getElementById("sort").value;
+          if (sort)
+            list.sort((a, b) =>
+              sort === "low" ? a.price - b.price : b.price - a.price,
+            );
+          document.getElementById("count").textContent =
+            list.length + " product variations · CAD";
+          renderGrid(document.getElementById("grid"), list);
+        }
+        ["category", "search", "sort"].forEach((id) =>
+          document.getElementById(id).addEventListener("input", draw),
+        );
+        draw();
+      });
+    </script>
+  </body>
 </html>

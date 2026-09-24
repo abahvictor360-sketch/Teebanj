@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Store administration | Teebanj Fashion World</title>
+    <meta
+      name="description"
+      content="African fabrics, ready-to-wear fashion and custom designs from Teebanj Fashion World, Moncton, Canada."
+    />
+    <link rel="icon" href="assets/site/product-placeholder.svg" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#963c2d" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/teebanj.css" />
+  </head>
+  <body>
+    <div data-shell="header"></div>
+    <main>
+      <div class="page-head">
+        <div class="wrap">
+          <h1>Store administration</h1>
+          <p class="crumbs">
+            <a href="index.html">Home</a> / Store administration
+          </p>
+        </div>
+      </div>
+      <section>
+        <div class="wrap admin-layout">
+          <form class="card" id="adminLogin" style="max-width: 500px">
+            <h2>Administrator sign in</h2>
+            <div class="field">
+              <label for="email">Email</label
+              ><input
+                id="email"
+                name="email"
+                type="email"
+                autocomplete="username"
+                required
+              />
+            </div>
+            <div class="field">
+              <label for="password">Password</label
+              ><input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                required
+              />
+            </div>
+            <button type="submit" class="btn btn-primary">Sign in</button>
+            <p role="status"></p>
+          </form>
+          <div id="dashboard" hidden>
+            <div class="admin-controls">
+              <button id="sync" class="btn btn-primary">
+                Import / refresh Square catalogue</button
+              ><button id="refresh" class="btn btn-ghost">
+                Refresh dashboard</button
+              ><button id="logout" class="btn btn-ghost">Sign out</button>
+            </div>
+            <p>
+              Set products, CAD prices, variations, photos and stock in Square
+              first. Enable inventory tracking at the configured location.
+              Importing refreshes this website from Square.
+            </p>
+            <p id="adminStatus" role="status"></p>
+            <div class="admin-section">
+              <h2>Orders</h2>
+              <div id="orders" class="table-wrap"></div>
+            </div>
+            <div class="admin-section">
+              <h2>Products and inventory</h2>
+              <div id="products" class="table-wrap"></div>
+            </div>
+            <div class="admin-section">
+              <h2>Messages</h2>
+              <div id="messages"></div>
+            </div>
+            <div class="admin-section">
+              <h2>Newsletter subscribers</h2>
+              <div id="subscribers"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <div data-shell="footer"></div>
+    <script src="js/preview.js"></script>
+    <script src="api/products.php"></script>
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const status = document.getElementById("adminStatus");
+        async function dashboard() {
+          const s = await sessionInfo(true);
+          document.getElementById("adminLogin").hidden = s.admin;
+          document.getElementById("dashboard").hidden = !s.admin;
+          if (!s.admin) return;
+          const d = await api("admin-data");
+          document.getElementById("orders").innerHTML =
+            "<table><thead><tr><th>Reference / status</th><th>Customer / delivery</th><th>Total</th><th>Tracking</th><th>Actions</th></tr></thead><tbody>" +
+            d.orders
+              .map((o) => {
+                const c = JSON.parse(o.customer_json);
+                return `<tr><td>${o.id}<br>${escapeHtml(o.status)}<ul>${o.items.map((i) => `<li>${escapeHtml(i.name)} × ${Number(i.quantity)}</li>`).join("")}</ul></td><td>${escapeHtml(c.name)}<br>${escapeHtml(c.email)}<br>${escapeHtml(c.phone)}<br>${escapeHtml(c.address)}, ${escapeHtml(c.city)}, ${escapeHtml(c.province)} ${escapeHtml(c.postal)}</td><td>${money(o.total_cents / 100)}</td><td><input aria-label="Tracking for ${o.id}" id="track-${o.id}" value="${escapeHtml(o.tracking)}"></td><td><button data-reconcile="${o.id}">Check payment</button> <button data-ship="${o.id}" ${["paid", "shipped"].includes(o.status) ? "" : "disabled"}>Save tracking / shipped</button></td></tr>`;
+              })
+              .join("") +
+            "</tbody></table>";
+          document.getElementById("products").innerHTML =
+            "<table><thead><tr><th>Product</th><th>Variation / SKU</th><th>CAD</th><th>Stock</th><th>Visible</th></tr></thead><tbody>" +
+            d.products
+              .map(
+                (p) =>
+                  `<tr><td>${escapeHtml(p.name)}</td><td>${escapeHtml(p.variation_name)}<br>${escapeHtml(p.sku)}</td><td>${money(p.price_cents / 100)}</td><td>${Number(p.stock)}</td><td>${Number(p.active) ? "Yes" : "No"}</td></tr>`,
+              )
+              .join("") +
+            "</tbody></table>";
+          document.getElementById("messages").innerHTML = d.messages
+            .map(
+              (m) =>
+                `<div class="card"><b>${escapeHtml(m.subject)}</b><p>${escapeHtml(m.name)} · ${escapeHtml(m.email)}</p><p style="white-space:pre-wrap">${escapeHtml(m.message)}</p></div>`,
+            )
+            .join("");
+          document.getElementById("subscribers").textContent = d.subscribers
+            .map((s) => s.email + " · " + s.consent_at)
+            .join("\n");
+        }
+        async function run(fn) {
+          try {
+            status.textContent = "Working…";
+            await fn();
+            await dashboard();
+            status.textContent = "Updated.";
+          } catch (e) {
+            status.textContent = e.message;
+          }
+        }
+        formAction(
+          "adminLogin",
+          "admin-login",
+          (f) => Object.fromEntries(f),
+          dashboard,
+        );
+        document.getElementById("sync").addEventListener("click", (e) => {
+          e.target.disabled = true;
+          run(async () => {
+            const r = await api("admin-sync", {});
+            toast(r.count + " variations imported");
+          }).finally(() => (e.target.disabled = false));
+        });
+        document
+          .getElementById("refresh")
+          .addEventListener("click", () => run(dashboard));
+        document
+          .getElementById("logout")
+          .addEventListener("click", () => run(async () => api("logout", {})));
+        document.getElementById("orders").addEventListener("click", (e) => {
+          const id = e.target.dataset.reconcile || e.target.dataset.ship;
+          if (!id) return;
+          run(() =>
+            api(e.target.dataset.ship ? "admin-tracking" : "admin-refresh", {
+              id,
+              tracking: document.getElementById("track-" + id).value,
+            }),
+          );
+        });
+        dashboard().catch((e) => {
+          document.querySelector("#adminLogin [role=status]").textContent =
+            e.message;
+        });
+      });
+    </script>
+  </body>
+</html>

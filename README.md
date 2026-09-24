@@ -1,113 +1,52 @@
-# Ajusti: Wear Your Culture
+# Teebanj Fashion World
 
-Storefront for **Ajusti**, an e-commerce site selling Ankara dresses, bags, shoes,
-men's native wear and locally made pieces (adire, aso-oke, lace) from Nigerian tailors.
+PHP 8.2+ storefront and MySQL database for cPanel with Square-hosted checkout and inventory synchronisation. Rebranded for Teebanj Fashion World, Moncton, Canada. Prices are CAD.
 
-Built as a static site: plain HTML, CSS and vanilla JavaScript. No build step,
-no dependencies. Open `index.html` or serve the folder and it runs.
+## Installation
+Read CPANEL-SETUP.md, then SQUARE-SETUP.md. Import database/schema.sql into your selected database. Optionally import database/preview.sql for the 20 enquiry-only product previews. Copy config.example.php to config.local.php and configure your own credentials.
 
-```bash
-python3 -m http.server 8000   # then visit http://localhost:8000
-```
+A SQL import alone cannot connect payments: MySQL credentials, Square token/location, webhook settings, delivery/tax rules and an administrator password hash are required.
 
-## Pages
+## Features
+- Responsive catalogue, product details, cart and wishlist.
+- Square product variations stored in MySQL; server-side price and availability validation.
+- Customer registration/sign-in and account order history.
+- Guest checkout or account-linked orders through one-time Square payment links.
+- Persisted checkout requests and idempotency keys for retry safety.
+- Signed webhooks and independent payment verification.
+- Protected admin dashboard: product import, order line items, delivery details, tracking, contact messages and subscribers.
+- Inventory refresh following Square sales; completed refunds flagged for review.
+- CLI catalogue sync and payment reconciliation.
 
-| File | What it does |
-| --- | --- |
-| `index.html` | Home: four-slide hero carousel, categories, new arrivals, deal banner, best sellers, reviews |
-| `shop.html` | Full catalogue with category/price/rating/offer filters, sorting and search (`?cat=`, `?q=`, `?sort=`) |
-| `product.html` | Product detail (`?id=<product-id>`): gallery, colour and size pickers, quantity, accordions, related items |
-| `deals.html` | Everything currently marked down, plus an under-₦40,000 rail |
-| `cart.html` | Bag with quantity controls, promo code (`AJUSTI10` = 10% off), live totals |
-| `checkout.html` | Delivery form, payment method choice, order confirmation |
-| `wishlist.html` | Saved pieces |
-| `about.html` | Brand story, stats, principles |
-| `blog.html` | Journal: styling, fabric care, measurements |
-| `contact.html` | Contact form, studio details, FAQ accordion |
-| `account.html` | Sign in / register / track order |
+## Inventory
+Square performs the sale adjustment for an itemized, paid order. The website reads back the resulting stock. Buying 2 from 50 results in 48, with no second manual deduction.
 
-## Hero carousel
+The initial stock check does not reserve stock during hosted checkout. Concurrent in-store/online purchases can race. Review low-stock exceptions and refunds in Square.
 
-Four slides, each selling a different category with its own copy, cut-out
-image, disc colour and pair of calls to action. They are authored as static
-markup in `index.html` (so the first slide is the LCP image and needs no JS
-to appear) and driven by the script at the bottom of that file.
+## Scope and launch dependencies
+- Public website previews deliberately have zero sellable stock. Square import replaces them.
+- Products and inventory are managed in Square. Only fixed-price, tracked CAD variations at the configured location are imported.
+- Delivery rules support Canadian provinces/territories. International, weight-based shipping and carrier labels are not implemented.
+- Contact/newsletter data is stored, not emailed. Tracking is entered manually. Email marketing, order emails and password-reset emails are not implemented.
+- Guest status requires the original session/browser; account orders require the original account.
+- Refunds/cancellations and any restocking decision are handled in Square. Refund callbacks flag orders for review.
+- Existing WordPress customers and historical orders are not migrated.
+- No real merchant account was connected or charged during development.
 
-Slides share one CSS grid cell, so the section is as tall as the tallest
-slide and nothing jumps on change. Autoplay runs every 6.5s and pauses on
-hover, on focus, on touch, when the tab is hidden, and entirely under
-`prefers-reduced-motion`. Arrows, dots, swipe and arrow keys all navigate;
-inactive slides are `visibility: hidden` so their links stay out of the tab
-order.
+## Verification
+Local tests used PHP 8.2.12 and an isolated XAMPP MariaDB 10.4 database. Target schema is compatible with MySQL 8+ / MariaDB 10.4+.
 
-To edit a slide, change its `.hero-slide` block: `--disc` sets the disc
-colour and `--art-h` the figure height.
+tests/unit.php checks quantity validation, HMAC signatures and order construction.
+tests/commerce-integration.php uses the real local database with a deterministic Square double to check retries, failed payments, tampered amounts, stock validation and 50 → 48 reconciliation.
+tests/http-integration.cjs checks real PHP routes, CSRF, accounts, protected admin access, form persistence and checkout gating.
+Browser checks cover desktop/mobile layout and navigation.
 
-## Installable (PWA)
+A real Square Sandbox payment and webhook delivery remain required before launch. The release ZIP excludes development configuration, tests and Git history.
 
-The site is a progressive web app: `manifest.webmanifest` describes it,
-`sw.js` caches it, and Android/desktop visitors get an install prompt.
-iOS users add it from Safari's Share sheet.
-
-The service worker picks a strategy per request type:
-
-| Request | Strategy | Why |
-| --- | --- | --- |
-| Pages | Network first, cache fallback, then `offline.html` | Prices and stock are never served stale |
-| CSS / JS | Stale-while-revalidate | Instant load, updates quietly in the background |
-| Images | Cache first, capped at 80 files | They never change in place, so re-fetching wastes data |
-
-Bump `VERSION` in `sw.js` when you need to force every client onto a fresh
-shell; old caches are deleted on activate.
-
-## Structure
-
-```
-css/style.css     all styling, one file, CSS custom properties at the top
-js/products.js    catalogue data: 49 products across 5 categories, sizes, helpers
-js/main.js        shared header/footer, cart + wishlist state, product card rendering
-assets/products/  product photography (800×800)
-assets/site/      hero cut-out, deal banner and about imagery
-assets/icons/     PWA and home-screen icons
-manifest.webmanifest, sw.js, offline.html   PWA files
-```
-
-The header and footer are injected by `js/main.js` so every page stays in sync.
-Edit `NAV_LINKS` or the footer template there once and it applies everywhere.
-
-Cart and wishlist state persist in `localStorage` under the `ajusti.*` keys.
-
-## Adding a product
-
-Drop an 800×800 JPEG into `assets/products/<id>.jpg`, then add an entry to
-`PRODUCTS` in `js/products.js` using that same `<id>`:
-
-```js
-{ id: 'my-new-gown', name: 'My New Gown', cat: 'ankara-dresses', price: 55000,
-  was: 65000, rating: 4.7, reviews: 12, tags: ['new'], colors: ['#b3282d', '#111'],
-  desc: 'One or two sentences about the piece.' }
-```
-
-`tags` accepts `hot`, `new` and `sale`; `was` adds a strikethrough price and puts
-the piece on the deals page. It appears across the site automatically.
-
-## Responsive
-
-Verified with a scripted sweep over 19 viewports across every page,
-including portrait shapes (625×1100, 768×1280, 834×1194, 1080×1920,
-1200×1920) as well as the usual landscape ones. The sweep checks for
-horizontal scroll, elements past the viewport edge, the deal stamp
-colliding with its heading, carousel controls sitting on hero text, and
-product cards squeezed below 150px.
-
-Breakpoints, widest first: 1040 (4→3 product columns), 880 (side-by-side
-layouts stack), 760 (→2 product columns), 700 (carousel controls shrink),
-620 (single-column grids, logo tagline hidden), 430 (compact header), 380
-(trust strips and footer stack), 360 (→1 product column).
-
-## Notes
-
-- Prices are in naira and formatted through `money()` in `js/products.js`.
-- Forms (newsletter, contact, account, checkout) are front-end only. They confirm
-  on screen but post nowhere. Wire them to a backend or a form service before launch.
-- Payment is not integrated; the checkout page collects no card details.
+## Sources
+Brand: https://teebanjfashionworld.ca/about-us/
+Contact: https://teebanjfashionworld.ca/contact-us/
+Products/photos: public WooCommerce Store API at teebanjfashionworld.ca, retrieved 2026-09-24.
+Square: https://developer.squareup.com/docs/checkout-api/square-order-checkout
+Inventory: https://developer.squareup.com/docs/inventory-api/how-it-works
+Webhooks: https://developer.squareup.com/docs/webhooks/step3validate

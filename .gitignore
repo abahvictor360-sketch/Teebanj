@@ -1,0 +1,5 @@
+config.local.php
+*.zip
+.tools/
+node_modules/
+tests/tmp/

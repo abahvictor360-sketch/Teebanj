@@ -1,120 +1,213 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Checkout | Ajusti</title>
-<meta name="description" content="Complete your Ajusti order.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23e9574e'/><text x='16' y='23' font-size='18' font-family='Georgia' fill='white' text-anchor='middle'>A</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#e9574e">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Ajusti">
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-<link rel="stylesheet" href="css/style.css">
-</head>
-<body data-page="cart.html">
-<div data-shell="header"></div>
-
-<div class="page-head">
-  <div class="wrap">
-    <h1>Checkout</h1>
-    <p class="crumbs"><a href="index.html">Home</a> / <a href="cart.html">Bag</a> / Checkout</p>
-  </div>
-</div>
-
-<section>
-  <div class="wrap cart-layout">
-    <form class="card" id="checkoutForm">
-      <h3 style="margin-top:0">Delivery details</h3>
-      <div class="two-col">
-        <div class="field"><label for="fn">First name</label><input id="fn" required></div>
-        <div class="field"><label for="ln">Last name</label><input id="ln" required></div>
-      </div>
-      <div class="two-col">
-        <div class="field"><label for="em">Email</label><input id="em" type="email" required></div>
-        <div class="field"><label for="ph">Phone (WhatsApp)</label><input id="ph" type="tel" required placeholder="+234…"></div>
-      </div>
-      <div class="field"><label for="ad">Street address</label><input id="ad" required></div>
-      <div class="two-col">
-        <div class="field"><label for="ct">City</label><input id="ct" required></div>
-        <div class="field">
-          <label for="st">State</label>
-          <select id="st" required>
-            <option>Lagos</option><option>Abuja (FCT)</option><option>Rivers</option><option>Oyo</option>
-            <option>Enugu</option><option>Kano</option><option>Kaduna</option><option>Anambra</option><option>Other</option>
-          </select>
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Checkout | Teebanj Fashion World</title>
+    <meta
+      name="description"
+      content="African fabrics, ready-to-wear fashion and custom designs from Teebanj Fashion World, Moncton, Canada."
+    />
+    <link rel="icon" href="assets/site/product-placeholder.svg" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#963c2d" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/teebanj.css" />
+  </head>
+  <body>
+    <div data-shell="header"></div>
+    <main>
+      <div class="page-head">
+        <div class="wrap">
+          <h1>Checkout</h1>
+          <p class="crumbs"><a href="index.html">Home</a> / Checkout</p>
         </div>
       </div>
-      <div class="field"><label for="nt">Measurements or delivery notes (optional)</label><textarea id="nt" rows="3" placeholder="Bust / waist / hips, landmark near your address…"></textarea></div>
-
-      <h3>Payment</h3>
-      <div class="chips" id="payChips">
-        <button type="button" class="chip sel" data-pay="Paystack card">Card · Paystack</button>
-        <button type="button" class="chip" data-pay="Bank transfer">Bank transfer</button>
-        <button type="button" class="chip" data-pay="Pay on delivery">Pay on delivery (Lagos)</button>
-      </div>
-      <p class="muted" style="font-size:.82rem">This is a demo storefront. No payment is taken and no card details are collected.</p>
-      <button class="btn btn-primary btn-block" type="submit" style="margin-top:1rem">Place Order</button>
-    </form>
-
-    <aside class="summary">
-      <h3 style="margin-top:0">Your order</h3>
-      <div id="lines"></div>
-      <div class="summary-row"><span>Subtotal</span><b id="sub">₦0</b></div>
-      <div class="summary-row"><span>Delivery</span><b id="ship">Free</b></div>
-      <div class="summary-row"><span>Discount</span><b id="disc">−₦0</b></div>
-      <div class="summary-row total"><span>Total</span><b id="total">₦0</b></div>
-      <a class="btn btn-ghost btn-block btn-sm" href="cart.html" style="margin-top:1rem">Edit bag</a>
-    </aside>
-  </div>
-</section>
-
-<div data-shell="footer"></div>
-
-<script src="js/products.js"></script>
-<script src="js/main.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  let pay = 'Paystack card';
-  const t = store.get('totals', null) || (() => {
-    const sub = cartTotal(); const ship = sub >= 150000 || !sub ? 0 : 5000;
-    return { sub, ship, disc: 0, total: sub + ship };
-  })();
-
-  document.getElementById('lines').innerHTML = cart.length
-    ? cart.map(l => `<div class="summary-row"><span>${l.name} <span class="muted">×${l.qty}</span></span><b>${money(l.price * l.qty)}</b></div>`).join('')
-    : '<p class="muted">Your bag is empty. <a href="shop.html" style="color:var(--coral)">Add something first.</a></p>';
-  document.getElementById('sub').textContent = money(t.sub);
-  document.getElementById('ship').textContent = t.ship ? money(t.ship) : 'Free';
-  document.getElementById('disc').textContent = '−' + money(t.disc);
-  document.getElementById('total').textContent = money(t.total);
-
-  document.getElementById('payChips').addEventListener('click', e => {
-    const b = e.target.closest('[data-pay]'); if (!b) return;
-    pay = b.dataset.pay;
-    document.querySelectorAll('#payChips .chip').forEach(c => c.classList.toggle('sel', c === b));
-  });
-
-  document.getElementById('checkoutForm').addEventListener('submit', e => {
-    e.preventDefault();
-    if (!cart.length) { toast('Your bag is empty'); return; }
-    const ref = 'AJ-' + Math.random().toString(36).slice(2, 7).toUpperCase();
-    cart.length = 0; saveCart(); store.set('promo', false);
-    document.querySelector('.cart-layout').innerHTML = `
-      <div class="card center" style="grid-column:1/-1;padding:3rem 1.5rem">
-        <div style="font-size:3rem">✓</div>
-        <h2>Order placed</h2>
-        <p class="muted">Reference <b>${ref}</b> · paying by ${pay}.<br>
-        We'll WhatsApp you within an hour to confirm measurements and delivery.</p>
-        <a class="btn btn-primary" href="shop.html">Keep shopping</a>
-      </div>`;
-  });
-});
-</script>
-</body>
+      <section>
+        <div class="wrap cart-layout">
+          <form class="card" id="checkout">
+            <h2>Delivery details</h2>
+            <p>
+              Delivery is currently available to the Canadian provinces listed
+              below.
+            </p>
+            <div class="field">
+              <label for="name">Full name</label
+              ><input
+                name="name"
+                id="name"
+                autocomplete="name"
+                maxlength="120"
+                required
+              />
+            </div>
+            <div class="two-col">
+              <div class="field">
+                <label for="email">Email</label
+                ><input
+                  name="email"
+                  id="email"
+                  type="email"
+                  autocomplete="email"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="phone">Phone</label
+                ><input
+                  name="phone"
+                  id="phone"
+                  type="tel"
+                  autocomplete="tel"
+                  maxlength="40"
+                  required
+                />
+              </div>
+            </div>
+            <div class="field">
+              <label for="address">Street address</label
+              ><input
+                name="address"
+                id="address"
+                autocomplete="street-address"
+                maxlength="200"
+                required
+              />
+            </div>
+            <div class="two-col">
+              <div class="field">
+                <label for="city">City</label
+                ><input
+                  name="city"
+                  id="city"
+                  autocomplete="address-level2"
+                  maxlength="100"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="province">Province / territory</label
+                ><select name="province" id="province" required>
+                  <option value="">Select province</option>
+                </select>
+              </div>
+            </div>
+            <div class="field">
+              <label for="postal">Postal code</label
+              ><input
+                name="postal"
+                id="postal"
+                autocomplete="postal-code"
+                maxlength="10"
+                required
+              />
+            </div>
+            <p>
+              Review your delivery address carefully. You will review the final
+              total and pay securely on Square.
+            </p>
+            <button
+              class="btn btn-primary btn-block"
+              type="submit"
+              id="payButton"
+              disabled
+            >
+              Continue to secure payment
+            </button>
+            <p role="status" id="checkoutStatus"></p>
+          </form>
+          <aside class="summary">
+            <h3>Your bag</h3>
+            <div id="summaryLines"></div>
+            <p>
+              Prices are in CAD. Your order is confirmed after successful
+              payment.
+            </p>
+            <a href="cart.html">Edit bag</a>
+          </aside>
+        </div>
+      </section>
+    </main>
+    <div data-shell="footer"></div>
+    <script src="js/preview.js"></script>
+    <script src="api/products.php"></script>
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        document.getElementById("summaryLines").innerHTML = cart
+          .map((l) => {
+            const p = PRODUCTS.find((p) => p.id === l.id);
+            return `<p>${escapeHtml(p?.name || "Unavailable item")} × ${l.qty} <b>${money((p?.price || 0) * l.qty)}</b></p>`;
+          })
+          .join("");
+        try {
+          const s = await sessionInfo();
+          const names = {
+            AB: "Alberta",
+            BC: "British Columbia",
+            MB: "Manitoba",
+            NB: "New Brunswick",
+            NL: "Newfoundland and Labrador",
+            NS: "Nova Scotia",
+            NT: "Northwest Territories",
+            NU: "Nunavut",
+            ON: "Ontario",
+            PE: "Prince Edward Island",
+            QC: "Quebec",
+            SK: "Saskatchewan",
+            YT: "Yukon",
+          };
+          document.getElementById("province").innerHTML += s.provinces
+            .map(
+              (p) =>
+                `<option value="${escapeHtml(p)}">${escapeHtml(names[p] || p)}</option>`,
+            )
+            .join("");
+          document.getElementById("payButton").disabled =
+            !s.checkout_enabled || !cart.length || !s.provinces.length;
+          if (!s.checkout_enabled)
+            document.getElementById("checkoutStatus").textContent =
+              "Online checkout is not open yet. Contact us for help with your order.";
+          if (s.customer) {
+            document.getElementById("name").value = s.customer.name;
+            document.getElementById("email").value = s.customer.email;
+          }
+        } catch (e) {
+          document.getElementById("checkoutStatus").textContent = e.message;
+        }
+        formAction(
+          "checkout",
+          "checkout",
+          (f) => {
+            const customer = Object.fromEntries(f);
+            const items = cart.map((l) => ({ id: l.id, qty: l.qty }));
+            const fingerprint = JSON.stringify({ customer, items });
+            let pending = store.get("checkoutAttempt", null);
+            if (!pending || pending.fingerprint !== fingerprint) {
+              pending = {
+                fingerprint,
+                id: crypto.randomUUID().replaceAll("-", ""),
+              };
+              store.set("checkoutAttempt", pending);
+            }
+            return { id: pending.id, customer, items };
+          },
+          (r) => {
+            store.set(
+              "submittedCart",
+              cart.map((l) => ({ ...l })),
+            );
+            location.assign(r.url);
+          },
+        );
+      });
+    </script>
+  </body>
 </html>

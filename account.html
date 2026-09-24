@@ -1,70 +1,163 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>My Account | Ajusti</title>
-<meta name="description" content="Sign in to your Ajusti account to track orders and manage addresses.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%23e9574e'/><text x='16' y='23' font-size='18' font-family='Georgia' fill='white' text-anchor='middle'>A</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#e9574e">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Ajusti">
-<link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
-<link rel="stylesheet" href="css/style.css">
-</head>
-<body data-page="account.html">
-<div data-shell="header"></div>
-
-<div class="page-head">
-  <div class="wrap">
-    <h1>My Account</h1>
-    <p class="crumbs"><a href="index.html">Home</a> / Account</p>
-  </div>
-</div>
-
-<section>
-  <div class="wrap" style="max-width:940px">
-    <div class="two-col" style="gap:2rem;align-items:start">
-      <form class="card" data-fake-submit="Demo store: sign-in is not wired up yet.">
-        <h3 style="margin-top:0">Sign in</h3>
-        <div class="field"><label for="e1">Email</label><input id="e1" type="email" required></div>
-        <div class="field"><label for="p1">Password</label><input id="p1" type="password" required></div>
-        <button class="btn btn-primary btn-block" type="submit">Sign in</button>
-        <p class="muted center" style="font-size:.85rem;margin-bottom:0">Forgot your password? <a href="contact.html" style="color:var(--coral)">Ask us</a></p>
-      </form>
-      <form class="card" data-fake-submit="Thanks, we'll set your account up and email you.">
-        <h3 style="margin-top:0">Create an account</h3>
-        <div class="field"><label for="n2">Full name</label><input id="n2" required></div>
-        <div class="field"><label for="e2">Email</label><input id="e2" type="email" required></div>
-        <div class="field"><label for="w2">WhatsApp number</label><input id="w2" type="tel" required placeholder="+234…"></div>
-        <button class="btn btn-dark btn-block" type="submit">Create account</button>
-      </form>
-    </div>
-
-    <div class="card" style="margin-top:2rem">
-      <h3 style="margin-top:0">Track an order</h3>
-      <form class="two-col" data-fake-submit="Order not found in this demo. Try AJ-XXXXX from a real order email.">
-        <div class="field" style="margin-bottom:0"><label for="ref">Order reference</label><input id="ref" placeholder="AJ-…" required></div>
-        <div class="field" style="margin-bottom:0;display:flex;align-items:flex-end"><button class="btn btn-primary" type="submit">Track order</button></div>
-      </form>
-    </div>
-  </div>
-</section>
-
-<div data-shell="footer"></div>
-<script src="js/products.js"></script>
-<script src="js/main.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('[data-fake-submit]').forEach(f => f.addEventListener('submit', e => {
-    e.preventDefault(); toast(f.dataset.fakeSubmit);
-  }));
-});
-</script>
-</body>
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Your account | Teebanj Fashion World</title>
+    <meta
+      name="description"
+      content="African fabrics, ready-to-wear fashion and custom designs from Teebanj Fashion World, Moncton, Canada."
+    />
+    <link rel="icon" href="assets/site/product-placeholder.svg" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#963c2d" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/teebanj.css" />
+  </head>
+  <body>
+    <div data-shell="header"></div>
+    <main>
+      <div class="page-head">
+        <div class="wrap">
+          <h1>Your account</h1>
+          <p class="crumbs"><a href="index.html">Home</a> / Your account</p>
+        </div>
+      </div>
+      <section>
+        <div class="wrap">
+          <div class="two-col" id="authForms">
+            <form class="card" id="login">
+              <h2>Welcome back</h2>
+              <div class="field">
+                <label for="loginEmail">Email</label
+                ><input
+                  id="loginEmail"
+                  name="email"
+                  type="email"
+                  autocomplete="username"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="loginPassword">Password</label
+                ><input
+                  id="loginPassword"
+                  name="password"
+                  type="password"
+                  autocomplete="current-password"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">Sign in</button>
+              <p role="status"></p>
+              <p>
+                <a href="contact.html">Need help accessing your account?</a>
+              </p>
+            </form>
+            <form class="card" id="register">
+              <h2>Create an account</h2>
+              <div class="field">
+                <label for="registerName">Full name</label
+                ><input
+                  id="registerName"
+                  name="name"
+                  maxlength="120"
+                  autocomplete="name"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="registerEmail">Email</label
+                ><input
+                  id="registerEmail"
+                  name="email"
+                  type="email"
+                  autocomplete="username"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="registerPassword"
+                  >Password (12 characters minimum)</label
+                ><input
+                  id="registerPassword"
+                  name="password"
+                  type="password"
+                  minlength="12"
+                  maxlength="72"
+                  autocomplete="new-password"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Create account
+              </button>
+              <p role="status"></p>
+            </form>
+          </div>
+          <div id="signedIn" hidden>
+            <h2 id="greeting"></h2>
+            <button id="logout" class="btn btn-ghost">Sign out</button>
+            <h3>Your orders</h3>
+            <div id="orders"></div>
+          </div>
+          <p id="accountStatus" role="status"></p>
+          <p>
+            Guest checkout orders can be viewed using the order link in the same
+            browser used for payment.
+          </p>
+        </div>
+      </section>
+    </main>
+    <div data-shell="footer"></div>
+    <script src="js/preview.js"></script>
+    <script src="api/products.php"></script>
+    <script src="js/products.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/api.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        async function show() {
+          const s = await sessionInfo(true);
+          document.getElementById("authForms").hidden = !!s.customer;
+          document.getElementById("signedIn").hidden = !s.customer;
+          if (s.customer) {
+            document.getElementById("greeting").textContent =
+              "Hello, " + s.customer.name;
+            const { orders } = await api("my-orders");
+            document.getElementById("orders").innerHTML = orders.length
+              ? orders
+                  .map(
+                    (o) =>
+                      `<p><a href="order.html?ref=${o.id}">${o.id}</a> · ${escapeHtml(o.status)} · ${money(o.total_cents / 100)}</p>`,
+                  )
+                  .join("")
+              : "<p>No orders yet. Orders placed while signed in will appear here.</p>";
+          }
+        }
+        formAction("login", "login", (f) => Object.fromEntries(f), show);
+        formAction("register", "register", (f) => Object.fromEntries(f), show);
+        document
+          .getElementById("logout")
+          .addEventListener("click", async () => {
+            try {
+              await api("logout", {});
+              await show();
+            } catch (e) {
+              toast(e.message);
+            }
+          });
+        try {
+          await show();
+        } catch (e) {
+          document.getElementById("accountStatus").textContent = e.message;
+        }
+      });
+    </script>
+  </body>
 </html>
