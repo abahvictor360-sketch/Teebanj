@@ -51,11 +51,19 @@
           return;
         }
         document.title = p.name + " | Teebanj Fashion World";
+        const avail = p.preview
+          ? '<span class="pill-s pending">Enquire for availability</span>'
+          : p.stock > 0
+            ? `<span class="pill-s paid">${p.stock <= 3 ? "Only " + Number(p.stock) + " left" : "In stock"}</span>`
+            : '<span class="pill-s out">Sold out</span>';
+        const buy = p.preview
+          ? `<div class="pdp-buy"><a class="btn btn-primary" href="contact.html">Enquire about this piece</a><a class="btn btn-ghost" href="${waLink("Hello Teebanj, I am interested in " + p.name)}" target="_blank" rel="noopener">${icon("chat")}WhatsApp us</a></div>`
+          : `<div class="pdp-buy"><label class="qty"><span class="sr-only">Quantity</span><input id="quantity" type="number" inputmode="numeric" min="1" max="${Math.max(1, Math.min(99, Math.floor(p.stock)))}" value="1" ${p.stock < 1 ? "disabled" : ""}></label><button id="add" class="btn btn-primary" ${p.stock < 1 ? "disabled" : ""}>${icon("bag")}Add to bag</button></div>`;
         document.getElementById("product").innerHTML =
-          `<img class="product-image" src="${escapeHtml(img(p))}" alt="${escapeHtml(p.name)}"><div><span class="eyebrow">${catName(p.cat)}</span><h1>${escapeHtml(p.name)}</h1><h2>${money(p.price)}</h2><p class="product-description">${escapeHtml(p.desc)}</p><p>Selected variation: <b>${escapeHtml(p.variation)}</b></p><p>${p.preview ? "Contact us for availability and options" : p.stock > 0 ? "Available to order" : "Currently unavailable online"}</p><label for="quantity">Quantity</label><input id="quantity" type="number" min="1" max="${Math.min(99, Math.floor(p.stock))}" value="1" style="width:90px"><p><button id="add" class="btn btn-primary" ${p.stock < 1 ? "disabled" : ""}>Add to bag</button></p><p>Delivery and applicable taxes are confirmed at checkout.</p><a href="contact.html">Need help with sizing or a custom design?</a></div>`;
+          `<div class="pdp-media"><img class="product-image" src="${escapeHtml(img(p))}" alt="${escapeHtml(p.name)}"></div><div class="pdp-info"><span class="eyebrow">${catName(p.cat)}</span><h1>${escapeHtml(p.name)}</h1><p class="pdp-price">${money(p.price)}</p>${avail}${p.desc ? `<p class="product-description">${escapeHtml(p.desc)}</p>` : ""}<p class="muted">Option: <b>${escapeHtml(p.variation)}</b></p>${buy}<ul class="pdp-notes"><li>${icon("shield")}Secure payment with Square</li><li>${icon("truck")}Delivery and taxes confirmed at checkout</li><li>${icon("scissors")}<a href="custom.html">Need a custom size or design?</a></li></ul></div>`;
         document
           .getElementById("add")
-          .addEventListener("click", () =>
+          ?.addEventListener("click", () =>
             addToCart(p.id, {
               qty: Number(document.getElementById("quantity").value),
             }),

@@ -65,7 +65,7 @@
             ? cart
                 .map((l) => {
                   const p = PRODUCTS.find((p) => p.id === l.id);
-                  return `<div class="cart-row"><img src="${escapeHtml(p ? img(p) : "assets/site/product-placeholder.svg")}" alt=""><div><b>${escapeHtml(p?.name || "Unavailable product")}</b><p>${p ? money(p.price) : "Remove this item"}</p></div><input aria-label="Quantity" type="number" min="1" max="99" value="${l.qty}" data-qty="${escapeHtml(l.id)}"><button class="btn btn-ghost btn-sm" data-remove="${escapeHtml(l.id)}">Remove</button></div>`;
+                  return `<div class="cart-row"><img src="${escapeHtml(p ? img(p) : "assets/site/product-placeholder.svg")}" alt=""><div><b>${escapeHtml(p?.name || "Unavailable product")}</b><p>${p ? money(p.price) : "Remove this item"}</p></div><div class="cart-actions"><input aria-label="Quantity" type="number" inputmode="numeric" min="1" max="99" value="${l.qty}" data-qty="${escapeHtml(l.id)}"><button class="btn btn-ghost btn-sm" data-remove="${escapeHtml(l.id)}">Remove</button></div></div>`;
                 })
                 .join("")
             : '<p>Your bag is empty. <a href="shop.html">Explore our collection.</a></p>';

@@ -178,18 +178,25 @@
           document.querySelectorAll("[data-tab-panel]").forEach((p) => (p.hidden = p.dataset.tabPanel !== name));
           document.querySelectorAll("#admNav button").forEach((b) => b.classList.toggle("on", b.dataset.tab === name));
           $("admTitle").textContent = titles[name];
-          $("admSide").classList.remove("open");
-          $("admMenu").setAttribute("aria-expanded", "false");
+          if ($("admSide").classList.contains("open")) setSide(false);
           if (location.hash.slice(1) !== name) history.replaceState(null, "", "#" + name);
         }
         document.addEventListener("click", (e) => {
           const t = e.target.closest("[data-tab]");
           if (t) tab(t.dataset.tab);
         });
-        $("admMenu").addEventListener("click", (e) => {
-          const open = $("admSide").classList.toggle("open");
-          e.currentTarget.setAttribute("aria-expanded", String(open));
-        });
+        const setSide = (open) => {
+          $("admSide").classList.toggle("open", open);
+          $("admMenu").setAttribute("aria-expanded", String(open));
+          document.querySelector(".adm-scrim")?.remove();
+          if (open) {
+            const scrim = Object.assign(document.createElement("div"), { className: "adm-scrim" });
+            scrim.addEventListener("click", () => setSide(false));
+            document.body.append(scrim);
+          }
+        };
+        $("admMenu").addEventListener("click", () => setSide(!$("admSide").classList.contains("open")));
+        document.addEventListener("keydown", (e) => e.key === "Escape" && setSide(false));
 
         function drawOverview() {
           const paid = d.orders.filter((o) => ["paid", "shipped"].includes(o.status));
@@ -261,7 +268,7 @@
             ? table("<th>Email</th><th>Consent given</th>", d.subscribers.map((s) => `<tr><td>${escapeHtml(s.email)}</td><td>${when(s.consent_at)}</td></tr>`).join(""))
             : empty("No subscribers yet", "Newsletter sign-ups from the homepage appear here.");
         }
-        function drawAll() { drawOverview(); drawOrders(); drawProducts(); drawMessages(); drawSubscribers(); if (!cmsEl.childElementCount) drawContent(); }
+        function drawAll() { drawOverview(); drawOrders(); drawProducts(); drawMessages(); drawSubscribers(); if (!cmsEl.childElementCount) drawContent(); labelTables(); }
         /* ---------- site content editor ---------- */
         const cmsEl = $("cmsGroups");
         const input = (f, value, attr) => {
@@ -364,7 +371,7 @@
             }
           }
         });
-        [["orderSearch", drawOrders], ["orderStatus", drawOrders], ["productSearch", drawProducts], ["productFilter", drawProducts], ["messageSearch", drawMessages]].forEach(([id, fn]) => $(id).addEventListener("input", fn));
+        [["orderSearch", () => (drawOrders(), labelTables())], ["orderStatus", () => (drawOrders(), labelTables())], ["productSearch", () => (drawProducts(), labelTables())], ["productFilter", () => (drawProducts(), labelTables())], ["messageSearch", drawMessages]].forEach(([id, fn]) => $(id).addEventListener("input", fn));
 
         async function dashboard() {
           const s = await sessionInfo(true);

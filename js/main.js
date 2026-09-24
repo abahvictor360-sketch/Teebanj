@@ -140,6 +140,16 @@ function productCard(p) {
     : `<button class="btn btn-dark" data-add="${escapeHtml(p.id)}" ${p.stock < 1 ? "disabled" : ""}>${p.stock < 1 ? "Sold out" : "Add to bag"}</button>`;
   return `<article class="product-card"><div class="pc-media">${productBadge(p)}<a href="${href}" tabindex="-1"><img src="${escapeHtml(img(p))}" alt="${name}" loading="lazy"></a><button class="wish${wishlist.includes(p.id) ? " on" : ""}" data-wish="${escapeHtml(p.id)}" aria-label="Save ${name} to wishlist">${icon("heart")}</button><div class="pc-quick">${action}</div></div><div class="pc-body"><span class="pc-cat">${catName(p.cat)}</span><a class="pc-name" href="${href}">${name}</a><span class="pc-price">${money(p.price)}</span>${p.preview ? '<span class="pc-note">Ask about sizes and colours</span>' : ""}</div></article>`;
 }
+// Copies each table's column headings onto its cells so narrow screens can
+// show rows as labelled cards (see .tbl in refresh.css).
+function labelTables(root = document) {
+  root.querySelectorAll("table.tbl").forEach((t) => {
+    const heads = [...t.querySelectorAll("thead th")].map((th) => th.textContent.trim());
+    t.querySelectorAll("tbody tr").forEach((tr) =>
+      [...tr.children].forEach((td, i) => heads[i] && td.setAttribute("data-label", heads[i])),
+    );
+  });
+}
 function renderGrid(el, list) {
   if (el)
     el.innerHTML = list.length
@@ -169,7 +179,7 @@ function renderShell() {
       ["Contact", "contact.html"],
     ]
       .map(([t, u]) => `<a href="${u}" ${here === u ? 'class="active" aria-current="page"' : ""}>${t}</a>`)
-      .join("")}</nav><div class="header-actions"><button class="icon-btn" id="searchToggle" aria-label="Search" aria-expanded="false" aria-controls="searchPanel">${icon("search")}</button><a class="icon-btn hide-sm" href="account.html" aria-label="Your account">${icon("user")}</a><a class="icon-btn" href="wishlist.html" aria-label="Wishlist">${icon("heart")}<span class="badge" data-wish-count>${wishlist.length}</span></a><a class="icon-btn bag-link" href="cart.html" aria-label="Shopping bag">${icon("bag")}<span class="badge" data-cart-count>${cartCount()}</span></a><button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav">${icon("menu")}</button></div></div><div class="search-panel" id="searchPanel"><form action="shop.html" role="search"><input type="search" name="q" placeholder="Search dresses, Ankara, head ties" aria-label="Search products"><button class="btn btn-primary" type="submit">Search</button></form></div></header>`;
+      .join("")}<a class="nav-sm" href="account.html">${icon("user")}My account</a><a class="nav-sm" href="${waLink()}" target="_blank" rel="noopener">${icon("chat")}WhatsApp us</a></nav><div class="header-actions"><button class="icon-btn" id="searchToggle" aria-label="Search" aria-expanded="false" aria-controls="searchPanel">${icon("search")}</button><a class="icon-btn hide-sm" href="account.html" aria-label="Your account">${icon("user")}</a><a class="icon-btn" href="wishlist.html" aria-label="Wishlist">${icon("heart")}<span class="badge" data-wish-count>${wishlist.length}</span></a><a class="icon-btn bag-link" href="cart.html" aria-label="Shopping bag">${icon("bag")}<span class="badge" data-cart-count>${cartCount()}</span></a><button class="icon-btn menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav">${icon("menu")}</button></div></div><div class="search-panel" id="searchPanel"><form action="shop.html" role="search"><input type="search" name="q" placeholder="Search dresses, Ankara, head ties" aria-label="Search products"><button class="btn btn-primary" type="submit">Search</button></form></div></header>`;
     const nav = document.getElementById("nav");
     const toggle = document.getElementById("menuToggle");
     const setNav = (open) => {
